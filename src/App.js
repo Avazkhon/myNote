@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 function NoteRender(props) {
-  console.log(props.noteSore)
   return (
   	<ul>
 	  { props.noteSore.map((note, index) => {
@@ -16,12 +15,11 @@ function NoteRender(props) {
 class App extends React.Component{
   
   handleAdd() {
-    console.log('input', this.input.value);
-    this.props.onNote(this.input.value)
+    this.props.onNote(this.input.value);
+    this.input.value= '';
   }
 
   render() {
-  	console.log(this.props.noteSore)
   	return (
   	  <div>
   	  	<input type='text' ref={(input) => {this.input = input}}/>
