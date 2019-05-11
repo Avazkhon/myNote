@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {connect} from 'react-redux';
 
-function App() {
+function NoteRender(props) {
+  console.log(props.noteSore)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  	<ul>
+	  { props.noteSore.map((note, index) => {
+		return <li key={index}>{note}</li>
+		}
+	  )}
+	</ul>
+  )
 }
 
-export default App;
+class App extends React.Component{
+  
+  handleAdd() {
+    console.log('input', this.input.value);
+    this.props.onNote(this.input.value)
+  }
+
+  render() {
+  	console.log(this.props.noteSore)
+  	return (
+  	  <div>
+  	  	<input type='text' ref={(input) => {this.input = input}}/>
+  	  	<button onClick={ this.handleAdd.bind(this) } >Add</button>
+		<NoteRender noteSore={this.props.noteSore}/>
+  	  </div>
+  	)
+  }
+}
+
+export default connect(
+  state => ({
+	noteSore: state
+  }),
+  dispatch => ({
+  	onNote: (note) => {
+  	  dispatch({ type: 'ADD_TEXT', 'payload': note})
+  	}
+  })
+)(App);
