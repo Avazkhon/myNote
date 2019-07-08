@@ -18,7 +18,7 @@ let initState = [
 	},
 ]
 
-export function addNote(state = initState, action) {
+export function note(state = initState, action) {
 	if (action.type === ADD_NOTE) {
 		return [
 		...state,
