@@ -1,42 +1,27 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux'
 
-function NoteRender(props) {
-  return (
-  	<ul>
-	  { props.noteSore.map((note, index) => {
-		return <li key={index}>{note}</li>
-		}
-	  )}
-	</ul>
-  )
+import store from './store/index';
+
+console.log(store.getState())
+
+class App extends Component {
+	render () {
+		return (
+			<Provider store={store} >
+				<div>
+					<h3>title</h3>
+					<input type='text' />
+					<input type='button' value='add' />
+					<div>
+						<h3>List</h3>
+						<ul>
+						</ul>
+					</div>
+				</div>
+			</Provider>
+		)
+	}
 }
 
-class App extends React.Component{
-  
-  handleAdd() {
-    this.props.onNote(this.input.value);
-    this.input.value= '';
-  }
-
-  render() {
-  	return (
-  	  <div>
-  	  	<input type='text' ref={(input) => {this.input = input}}/>
-  	  	<button onClick={ this.handleAdd.bind(this) } >Add</button>
-		<NoteRender noteSore={this.props.noteSore}/>
-  	  </div>
-  	)
-  }
-}
-
-export default connect(
-  state => ({
-	noteSore: state
-  }),
-  dispatch => ({
-  	onNote: (note) => {
-  	  dispatch({ type: 'ADD_TEXT', 'payload': note})
-  	}
-  })
-)(App);
+export default App;
