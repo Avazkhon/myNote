@@ -1,1 +1,1 @@
-export const ADD_NOTE = 'ADD_NOTE';
+export const SAVE_NOTE = 'SAVE_NOTE';
