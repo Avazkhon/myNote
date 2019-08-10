@@ -9,6 +9,7 @@ class Main extends Component {
 		this.state = {
 			chengeTetx: '',
 			chengeTetxId: null,
+			isSettingShow: false,
 			setting: [
 				{
 					id: 1,
@@ -67,6 +68,12 @@ class Main extends Component {
 				});
 		}
 
+		handleSettingShow = () => {
+			this.setState((prevState) => (
+				{isSettingShow: !prevState.isSettingShow}
+			))
+		}
+
 
 	render () {
 		const {
@@ -77,12 +84,15 @@ class Main extends Component {
 			chengeTetx,
 			setting,
 			chengeTetxId,
+			isSettingShow,
 		} = this.state;
 
 		return (
 			<div>
 				<div>
-					<div>Setting</div>
+					<div onClick={this.handleSettingShow}>Setting</div>
+					{
+						isSettingShow &&
 						<ul>
 							{
 								setting.map((item) => {
@@ -94,6 +104,7 @@ class Main extends Component {
 								})
 							}
 						</ul>
+					}
 					<div>
 					</div>
 				</div>
