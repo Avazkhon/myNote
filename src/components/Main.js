@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveNote } from '../actions/index'
+import { createNewNote } from '../actions/index'
 
 
 class Main extends Component {
@@ -8,8 +8,29 @@ class Main extends Component {
 		super(props);
 		this.state = {
 			chengeTetx: '',
+			chengeTetxId: null,
+			isSettingShow: false,
+			setting: [
+				{
+					id: 1,
+					title: 'New note',
+				},
+				{
+					id: 2,
+					title: 'Open note',
+				}
+			]
 		}
+	}
 
+	componentWillReceiveProps(nexProps) {
+		const {
+			chengeTetx,
+			chengeTetxId,
+		} = this.state;
+		if (chengeTetxId) {
+			this.openNote(chengeTetxId)
+		}
 	}
 
 	handleChenge = (event) => {
@@ -26,18 +47,67 @@ class Main extends Component {
 
 	}
 
+	handleCreateNewNote = () => {
+		const id = Date.now();
+		this.props.createNewNote(id, '')
+
+		this.setState({
+				chengeTetxId: id,
+			});
+
+		}
+
+		openNote = (id) => {
+			const note = this.props.note.find(item => {
+				return item.id === id;
+			})
+
+			this.setState({
+					chengeTetx: note.text,
+					chengeTetxId: null,
+				});
+		}
+
+		handleSettingShow = () => {
+			this.setState((prevState) => (
+				{isSettingShow: !prevState.isSettingShow}
+			))
+		}
+
+
 	render () {
 		const {
-			note
+			note,
 		} = this.props;
 
 		const {
-			chengeTetx
+			chengeTetx,
+			setting,
+			chengeTetxId,
+			isSettingShow,
 		} = this.state;
-
 
 		return (
 			<div>
+				<div>
+					<div onClick={this.handleSettingShow}>Setting</div>
+					{
+						isSettingShow &&
+						<ul>
+							{
+								setting.map((item) => {
+									return (
+										<li key={item.id} onClick={this.handleCreateNewNote}>
+											{item.title}
+										</li>
+									)
+								})
+							}
+						</ul>
+					}
+					<div>
+					</div>
+				</div>
 				<h3>text</h3>
 				<textarea name="chengeTetx" value={chengeTetx} onChange={this.handleChenge}/>
 				<input type='button' value='save' onClick={this.handleSave}/>
@@ -52,5 +122,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-	saveNote,
+	createNewNote,
 })(Main);

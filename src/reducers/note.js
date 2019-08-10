@@ -1,4 +1,4 @@
-import { SAVE_NOTE } from '../constants/index';
+import { CREATE_NEW_NOTE } from '../constants/index';
 
 let initState = [
 	{
@@ -16,7 +16,7 @@ let initState = [
 ]
 
 export function note(state = initState, action) {
-	if (action.type === SAVE_NOTE) {
+	if (action.type === CREATE_NEW_NOTE) {
 		return [
 		...state,
 			{

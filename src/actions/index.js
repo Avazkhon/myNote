@@ -1,9 +1,9 @@
-import { SAVE_NOTE } from '../constants/index';
+import { CREATE_NEW_NOTE } from '../constants/index';
 
-export function saveNote(id, text, range) {
+export function createNewNote(id, text, range) {
 	return (
 		{
-			type: SAVE_NOTE,
+			type: CREATE_NEW_NOTE,
 			id,
 			text,
 			range,
