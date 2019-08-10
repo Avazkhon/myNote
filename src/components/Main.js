@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createNewNote } from '../actions/index'
+
+import {
+	createNewNote,
+	saveNote,
+} from '../actions/index'
 
 
 class Main extends Component {
@@ -40,7 +44,7 @@ class Main extends Component {
 	}
 
 	handleSave = () => {
-		const id = Date.now();
+		const id = this.state.chengeTetxId;
 		const text = this.state.chengeTetx;
 		this.props.saveNote(id, text)
 		this.setState({chengeTetx: ''});
@@ -123,4 +127,5 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
 	createNewNote,
+	saveNote,
 })(Main);
