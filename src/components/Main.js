@@ -39,10 +39,10 @@ class Main extends Component {
 	}
 
 	handleSave = () => {
-		// const id = Date.now();
-		// const text = this.state.chengeTetx;
-		// this.props.saveNote(id, text)
-		// this.setState({chengeTetx: ''});
+		const id = Date.now();
+		const text = this.state.chengeTetx;
+		this.props.saveNote(id, text)
+		this.setState({chengeTetx: ''});
 
 	}
 
