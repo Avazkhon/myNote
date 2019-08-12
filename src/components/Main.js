@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../cssStyle/main.css'
 
 import {
 	createNewNote,
@@ -125,26 +126,34 @@ class Main extends Component {
 		} = this.state;
 
 		return (
-			<div>
-					<div onClick={this.handleSettingShow}>Setting</div>
-					{
+			<div className="main-note">
+				<input
+					className="main-note_button"
+					type="button"
+					onClick={this.handleSettingShow}
+					value="Setting"
+				/>
+				{
 						isSettingShow &&
-						<ul>
-							{
-								setting.map((item) => {
-									return (
-										<li key={item.id}>
-											<input
-												type='button'
-												name={item.name}
-												onClick={this.handleChengeIsShow}
-												value={item.title}
-											/>
-										</li>
-									)
-								})
-							}
-						</ul>
+						<div className="main-note_setting-buttons">
+							<ul>
+								{
+									setting.map((item) => {
+										return (
+											<li key={item.id}>
+												<input
+													className="main-note_button"
+													type='button'
+													name={item.name}
+													onClick={this.handleChengeIsShow}
+													value={item.title}
+												/>
+											</li>
+										)
+									})
+								}
+							</ul>
+						</div>
 					}
 					{ isShowCreateNewNote &&
 						<div>
@@ -155,6 +164,7 @@ class Main extends Component {
 								value={newTitleNote}
 								onChange={this.handleChenge}/>
 							<input
+								className="main-note_button"
 								type='button'
 								value='create new note'
 								onClick={this.handleCreateNewNote}
@@ -170,6 +180,7 @@ class Main extends Component {
 										return (
 											<li key={note.id}>
 												<input
+													className="main-note_button"
 													type='button'
 													name={note.id}
 													value={note.title}
@@ -192,6 +203,7 @@ class Main extends Component {
 								onChange={this.handleChenge}
 								/>
 							<input
+								className="main-note_button"
 								type='button'
 								value='save'
 								onClick={this.handleSave}
