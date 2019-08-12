@@ -25,9 +25,9 @@ export function saveNote(id, text) {
 	)
 };
 
-export function selectNote(node) {
+export function selectNote(id) {
 	return ({
 		type: SELECT_NOTE,
-		activeNote: node,
+		activeNote: id,
 	})
 }

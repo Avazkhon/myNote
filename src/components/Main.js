@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
 	createNewNote,
 	saveNote,
+	selectNote,
 } from '../actions/index'
 
 
@@ -17,7 +18,7 @@ class Main extends Component {
 			newTitleNote: '',
 			isSettingShow: false,
 			isShowCreateNewNote: false,
-			isShowOpenNote: false,
+			isShowSelectNote: false,
 			setting: [
 				{
 					id: 1,
@@ -26,8 +27,8 @@ class Main extends Component {
 				},
 				{
 					id: 2,
-					title: 'Open note',
-					name: 'isShowOpenNote'
+					title: 'Select note',
+					name: 'isShowSelectNote'
 				}
 			]
 		}
@@ -64,7 +65,6 @@ class Main extends Component {
 	handleSave = () => {
 		const id = this.state.chengeTetxId;
 		const text = this.state.newChengeTetx;
-		console.log(text)
 		this.props.saveNote(id, text)
 	}
 
@@ -74,10 +74,10 @@ class Main extends Component {
 		this.props.createNewNote(id, '', title)
 		this.setState( prevProps =>(
 			{
-					chengeTetxId: id,
-					newChengeTetx: '',
-					newTitleNote: '',
-					titleNote: title,
+				chengeTetxId: id,
+				newChengeTetx: '',
+				newTitleNote: '',
+				titleNote: title,
 			}
 		));
 
@@ -96,6 +96,17 @@ class Main extends Component {
 		))
 	}
 
+	handSelectNote = (event) => {
+		const id = event.target.name;
+		this.props.selectNote(id)
+		const { note } = this.props;
+		const activeNote = note.noteItems.find(item => item.id === Number(id))
+		this.setState({
+			newChengeTetx: activeNote.text,
+			chengeTetxId: id,
+		})
+	}
+
 
 	render () {
 		const {
@@ -108,6 +119,7 @@ class Main extends Component {
 			chengeTetxId,
 			isSettingShow,
 			isShowCreateNewNote,
+			isShowSelectNote,
 			newTitleNote,
 			titleNote,
 		} = this.state;
@@ -149,10 +161,31 @@ class Main extends Component {
 			       />
 						</div>
 					}
+					{isShowSelectNote &&
+						<div>
+							<div>Select note</div>
+							<ul>
+								{
+									(note.noteItems.map((note) => {
+										return (
+											<li key={note.id}>
+												<input
+													type='button'
+													name={note.id}
+													value={note.title}
+													onClick={this.handSelectNote}
+												/>
+											</li>
+										)
+									}))
+								}
+							</ul>
+						</div>
+					}
 					<h3>Note</h3>
 					{note.activeNote &&
 						<div>
-							<div>{titleNote}</div>
+							<div>{note.activeNote.title}</div>
 							<textarea
 								name="newChengeTetx"
 								value={newChengeTetx}
@@ -178,4 +211,5 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
 	createNewNote,
 	saveNote,
+	selectNote,
 })(Main);

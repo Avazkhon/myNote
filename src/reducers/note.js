@@ -10,6 +10,7 @@ let initState = {
 		{
 			id: 0,
 			text: 'tar tar',
+			title: 'tar tar',
 		},
 	]
 }
@@ -36,7 +37,7 @@ export function note(state = initState, action) {
 			...state,
 			noteItems: [
 				...state.noteItems.map((note)=> {
-					if (note.id === action.id) {
+					if (note.id === Number(action.id)) {
 						return {
 							...note,
 							text: action.text
@@ -51,11 +52,7 @@ export function note(state = initState, action) {
 	if (action.type === SELECT_NOTE) {
 		return {
 			...state,
-			activeNote: state.noteItems.find((note) => {
-				if (note.id === action.id) {
-					return note.id
-				}
-			})
+			activeNote: state.noteItems.find((n) => n.id === Number(action.activeNote))
 		}
 	}
 
