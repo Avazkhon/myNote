@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../cssStyle/main.css'
 
 import {
 	createNewNote,
@@ -54,7 +55,7 @@ class Main extends Component {
 	handleChengeIsShow = (event) => {
 		let name = event;
 		if (event.target) {
-			name = event.target.name;
+			name = event.target.dataset.name;
 		}
 
 		this.setState((prevState) => (
@@ -125,79 +126,93 @@ class Main extends Component {
 		} = this.state;
 
 		return (
-			<div>
-					<div onClick={this.handleSettingShow}>Setting</div>
-					{
+			<div className="main-note">
+				<input
+					className="main-note_button"
+					type="button"
+					onClick={this.handleSettingShow}
+					value="Setting"
+				/>
+				{
 						isSettingShow &&
-						<ul>
-							{
-								setting.map((item) => {
-									return (
-										<li key={item.id}>
-											<input
-												type='button'
-												name={item.name}
-												onClick={this.handleChengeIsShow}
-												value={item.title}
-											/>
-										</li>
-									)
-								})
-							}
-						</ul>
-					}
-					{ isShowCreateNewNote &&
-						<div>
-							<div>Title for new note</div>
-							<input
-								type='text'
-								name='newTitleNote'
-								value={newTitleNote}
-								onChange={this.handleChenge}/>
-							<input
-								type='button'
-								value='create new note'
-								onClick={this.handleCreateNewNote}
-			       />
-						</div>
-					}
-					{isShowSelectNote &&
-						<div>
-							<div>Select note</div>
+						<div className="main-note_setting-buttons">
 							<ul>
 								{
-									(note.noteItems.map((note) => {
+									setting.map((item) => {
 										return (
-											<li key={note.id}>
-												<input
-													type='button'
-													name={note.id}
-													value={note.title}
-													onClick={this.handSelectNote}
-												/>
+											<li key={item.id}>
+												<div
+													onClick={this.handleChengeIsShow}
+													className="main-note_button"
+													data-name={item.name}
+												>{item.title}</div>
 											</li>
 										)
-									}))
+									})
 								}
 							</ul>
 						</div>
 					}
-					<h3>Note</h3>
-					{note.activeNote &&
-						<div>
-							<div>{note.activeNote.title}</div>
-							<textarea
-								name="newChengeTetx"
-								value={newChengeTetx}
-								onChange={this.handleChenge}
-								/>
-							<input
-								type='button'
-								value='save'
-								onClick={this.handleSave}
-								/>
-						</div>
-					}
+					<div className="main-note__setting-form" >
+						{ isShowCreateNewNote &&
+							<div>
+								<div>Title for new note</div>
+								<input
+									type='text'
+									name='newTitleNote'
+									value={newTitleNote}
+									onChange={this.handleChenge}/>
+								<input
+									className="main-note_button"
+									type='button'
+									value='create new note'
+									onClick={this.handleCreateNewNote}
+				       />
+							</div>
+						}
+						{isShowSelectNote &&
+							<div>
+								<div>Select note</div>
+								<ul>
+									{
+										(note.noteItems.map((note) => {
+											return (
+												<li key={note.id}>
+													<input
+														className="main-note_button"
+														type='button'
+														name={note.id}
+														value={note.title}
+														onClick={this.handSelectNote}
+													/>
+												</li>
+											)
+										}))
+									}
+								</ul>
+							</div>
+						}
+					</div>
+					<div className="note-canvas">
+						<h3>Note</h3>
+						{note.activeNote &&
+							<div>
+								<div>{note.activeNote.title}</div>
+								<textarea
+									className="main-note__main-text"
+									name="newChengeTetx"
+									value={newChengeTetx}
+									onChange={this.handleChenge}
+									/>
+								<input
+									className="main-note_button"
+									type='button'
+									value='save'
+									onClick={this.handleSave}
+									/>
+							</div>
+						}
+					</div>
 			</div>
 		)
 	}
