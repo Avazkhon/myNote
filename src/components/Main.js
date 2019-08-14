@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import '../cssStyle/main.css'
+
+import '../cssStyle/main.css';
+
+import Setting  from './setting/Setting';
 
 import {
 	createNewNote,
@@ -127,93 +130,41 @@ class Main extends Component {
 
 		return (
 			<div className="main-note">
-				<input
-					className="main-note_button"
-					type="button"
-					onClick={this.handleSettingShow}
-					value="Setting"
-				/>
-				{
-						isSettingShow &&
-						<div className="main-note_setting-buttons">
-							<ul>
-								{
-									setting.map((item) => {
-										return (
-											<li key={item.id}>
-												<div
-													onClick={this.handleChengeIsShow}
-													className="main-note_button"
-													data-name={item.name}
-												>{item.title}</div>
-											</li>
-										)
-									})
-								}
-							</ul>
+			<Setting
+			isSettingShow={isSettingShow}
+			setting={setting}
+			isShowCreateNewNote={isShowCreateNewNote}
+			isShowSelectNote={isShowSelectNote}
+			newTitleNote={newTitleNote}
+			note={note}
+
+			handleChenge={this.handleChenge}
+			handleCreateNewNote={this.handleCreateNewNote}
+			handSelectNote={this.handSelectNote}
+			handleChengeIsShow={this.handleChengeIsShow}
+			handleSettingShow={this.handleSettingShow}
+			/>
+				<div className="note-canvas">
+					<h3>Note</h3>
+					{note.activeNote &&
+						<div>
+							<div>{note.activeNote.title}</div>
+							<textarea
+								className="main-note__main-text"
+								name="newChengeTetx"
+								value={newChengeTetx}
+								onChange={this.handleChenge}
+								/>
+							<input
+								className="main-note_button"
+								type='button'
+								value='save'
+								onClick={this.handleSave}
+								/>
 						</div>
 					}
-					<div className="main-note__setting-form" >
-						{ isShowCreateNewNote &&
-							<div>
-								<div>Title for new note</div>
-								<input
-									type='text'
-									name='newTitleNote'
-									value={newTitleNote}
-									onChange={this.handleChenge}/>
-								<input
-									className="main-note_button"
-									type='button'
-									value='create new note'
-									onClick={this.handleCreateNewNote}
-				       />
-							</div>
-						}
-						{isShowSelectNote &&
-							<div>
-								<div>Select note</div>
-								<ul>
-									{
-										(note.noteItems.map((note) => {
-											return (
-												<li key={note.id}>
-													<input
-														className="main-note_button"
-														type='button'
-														name={note.id}
-														value={note.title}
-														onClick={this.handSelectNote}
-													/>
-												</li>
-											)
-										}))
-									}
-								</ul>
-							</div>
-						}
-					</div>
-					<div className="note-canvas">
-						<h3>Note</h3>
-						{note.activeNote &&
-							<div>
-								<div>{note.activeNote.title}</div>
-								<textarea
-									className="main-note__main-text"
-									name="newChengeTetx"
-									value={newChengeTetx}
-									onChange={this.handleChenge}
-									/>
-								<input
-									className="main-note_button"
-									type='button'
-									value='save'
-									onClick={this.handleSave}
-									/>
-							</div>
-						}
-					</div>
-			</div>
+				</div>
+		</div>
 		)
 	}
 }
