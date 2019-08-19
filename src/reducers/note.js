@@ -12,6 +12,18 @@ let initState = {
 			text: 'tar tar',
 			title: 'tar tar',
 		},
+	],
+	setting: [
+		{
+			id: 1,
+			title: 'New note',
+			name: 'isShowCreateNewNote'
+		},
+		{
+			id: 2,
+			title: 'Select note',
+			name: 'isShowSelectNote'
+		}
 	]
 }
 

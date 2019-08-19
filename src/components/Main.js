@@ -23,18 +23,6 @@ class Main extends Component {
 			isSettingShow: false,
 			isShowCreateNewNote: false,
 			isShowSelectNote: false,
-			setting: [
-				{
-					id: 1,
-					title: 'New note',
-					name: 'isShowCreateNewNote'
-				},
-				{
-					id: 2,
-					title: 'Select note',
-					name: 'isShowSelectNote'
-				}
-			]
 		}
 	}
 
@@ -119,7 +107,6 @@ class Main extends Component {
 
 		const {
 			newChengeTetx,
-			setting,
 			chengeTetxId,
 			isSettingShow,
 			isShowCreateNewNote,
@@ -132,7 +119,7 @@ class Main extends Component {
 			<div className="main-note">
 			<Setting
 			isSettingShow={isSettingShow}
-			setting={setting}
+			setting={note.setting}
 			isShowCreateNewNote={isShowCreateNewNote}
 			isShowSelectNote={isShowSelectNote}
 			newTitleNote={newTitleNote}
