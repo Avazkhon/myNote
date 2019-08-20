@@ -11,8 +11,6 @@ class Setting extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-			newChengeTetx: '',
-			titleNote: '',
 			chengeTetxId: null,
 			newTitleNote: '',
 			isSettingShow: false,
@@ -23,7 +21,6 @@ class Setting extends Component {
 
 	componentWillReceiveProps(nexProps) {
 		const {
-			newChengeTetx,
 			chengeTetxId,
 		} = this.state;
 
@@ -56,9 +53,7 @@ class Setting extends Component {
 		this.setState( prevProps =>(
 			{
 				chengeTetxId: id,
-				newChengeTetx: '',
 				newTitleNote: '',
-				titleNote: title,
 			}
 		));
 
@@ -83,7 +78,6 @@ class Setting extends Component {
 		const { note } = this.props;
 		const activeNote = note.noteItems.find(item => item.id === Number(id))
 		this.setState({
-			newChengeTetx: activeNote.text,
 			chengeTetxId: id,
 		})
 	}
@@ -91,12 +85,12 @@ class Setting extends Component {
   render() {
     const {
       setting,
-      newTitleNote,
       note,
 
     } = this.props;
 
     const {
+      newTitleNote,
       isSettingShow,
       isShowCreateNewNote,
       isShowSelectNote,

@@ -33,6 +33,8 @@ export function note(state = initState, action) {
 			...state,
 			activeNote: {
 				id: action.id,
+				text: action.text,
+				title: action.title,
 			},
 			noteItems: [
 			...state.noteItems,
