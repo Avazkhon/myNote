@@ -1,33 +1,113 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
+import {
+	createNewNote,
+	selectNote,
+} from '../../actions/index'
 
 class Setting extends Component {
   constructor(props) {
-    super(props)
-  }
+		super(props);
+		this.state = {
+			newChengeTetx: '',
+			titleNote: '',
+			chengeTetxId: null,
+			newTitleNote: '',
+			isSettingShow: false,
+			isShowCreateNewNote: false,
+			isShowSelectNote: false,
+		}
+	}
+
+	componentWillReceiveProps(nexProps) {
+		const {
+			newChengeTetx,
+			chengeTetxId,
+		} = this.state;
+
+		if (chengeTetxId) {
+			this.openNote(chengeTetxId)
+		}
+	}
+
+	handleChenge = (event) => {
+		const name = event.target.name;
+		const value = event.target.value;
+		this.setState({[name]: value});
+	}
+
+	handleChengeIsShow = (event) => {
+		let name = event;
+		if (event.target) {
+			name = event.target.dataset.name;
+		}
+
+		this.setState((prevState) => (
+			{[name]: !prevState[name]}
+		));
+	}
+
+	handleCreateNewNote = () => {
+		const id = Date.now();
+		const title = this.state.newTitleNote;
+		this.props.createNewNote(id, '', title)
+		this.setState( prevProps =>(
+			{
+				chengeTetxId: id,
+				newChengeTetx: '',
+				newTitleNote: '',
+				titleNote: title,
+			}
+		));
+
+		this.handleChengeIsShow('isShowCreateNewNote')
+	}
+
+	openNote = (id) => {
+		const note = this.props.note.noteItems.find(item => {
+			return item.id === id;
+		})
+	}
+
+	handleSettingShow = () => {
+		this.setState((prevState) => (
+			{isSettingShow: !prevState.isSettingShow}
+		))
+	}
+
+	handSelectNote = (event) => {
+		const id = event.target.name;
+		this.props.selectNote(id)
+		const { note } = this.props;
+		const activeNote = note.noteItems.find(item => item.id === Number(id))
+		this.setState({
+			newChengeTetx: activeNote.text,
+			chengeTetxId: id,
+		})
+	}
 
   render() {
     const {
-      isSettingShow,
       setting,
-      isShowCreateNewNote,
-      isShowSelectNote,
       newTitleNote,
       note,
 
-      handleChenge,
-      handleCreateNewNote,
-      handSelectNote,
-      handleChengeIsShow,
-      handleSettingShow,
     } = this.props;
+
+    const {
+      isSettingShow,
+      isShowCreateNewNote,
+      isShowSelectNote,
+    } = this.state;
 
     return(
       <div>
         <input
   				className="main-note_button"
   				type="button"
-  				onClick={handleSettingShow}
+  				onClick={this.handleSettingShow}
   				value="Setting"
   			/>
         {
@@ -35,11 +115,11 @@ class Setting extends Component {
           <div className="main-note_setting-buttons">
             <ul>
               {
-                setting.map((item) => {
+                note.setting.map((item) => {
                   return (
                     <li key={item.id}>
                       <div
-                        onClick={handleChengeIsShow}
+                        onClick={this.handleChengeIsShow}
                         className="main-note_button"
                         data-name={item.name}
                       >{item.title}</div>
@@ -58,12 +138,12 @@ class Setting extends Component {
 								type='text'
 								name='newTitleNote'
 								value={newTitleNote}
-								onChange={handleChenge}/>
+								onChange={this.handleChenge}/>
 							<input
 								className="main-note_button"
 								type='button'
 								value='create new note'
-								onClick={handleCreateNewNote}
+								onClick={this.handleCreateNewNote}
 			       />
 						</div>
 					}
@@ -80,7 +160,7 @@ class Setting extends Component {
 													type='button'
 													name={note.id}
 													value={note.title}
-													onClick={handSelectNote}
+													onClick={this.handSelectNote}
 												/>
 											</li>
 										)
@@ -95,19 +175,13 @@ class Setting extends Component {
   }
 }
 
-Setting.propTypes = {
-  isSettingShow: PropTypes.bool,
-  isShowCreateNewNote: PropTypes.bool,
-  isShowSelectNote: PropTypes.bool,
-  setting: PropTypes.array,
-  newTitleNote: PropTypes.string,
-  note: PropTypes.object,
-
-  handleChenge: PropTypes.func,
-  handleCreateNewNote: PropTypes.func,
-  handSelectNote: PropTypes.func,
-  handleChengeIsShow: PropTypes.func,
-  handleSettingShow: PropTypes.func,
+function mapStateToProps({
+  note,
+}) {
+  return { note }
 }
 
-export default Setting
+export default connect(mapStateToProps, {
+  createNewNote,
+  selectNote,
+})(Setting);
