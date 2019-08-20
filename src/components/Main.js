@@ -118,18 +118,18 @@ class Main extends Component {
 		return (
 			<div className="main-note">
 			<Setting
-			isSettingShow={isSettingShow}
-			setting={note.setting}
-			isShowCreateNewNote={isShowCreateNewNote}
-			isShowSelectNote={isShowSelectNote}
-			newTitleNote={newTitleNote}
-			note={note}
+				isSettingShow={isSettingShow}
+				setting={note.setting}
+				isShowCreateNewNote={isShowCreateNewNote}
+				isShowSelectNote={isShowSelectNote}
+				newTitleNote={newTitleNote}
+				note={note}
 
-			handleChenge={this.handleChenge}
-			handleCreateNewNote={this.handleCreateNewNote}
-			handSelectNote={this.handSelectNote}
-			handleChengeIsShow={this.handleChengeIsShow}
-			handleSettingShow={this.handleSettingShow}
+				handleChenge={this.handleChenge}
+				handleCreateNewNote={this.handleCreateNewNote}
+				handSelectNote={this.handSelectNote}
+				handleChengeIsShow={this.handleChengeIsShow}
+				handleSettingShow={this.handleSettingShow}
 			/>
 				<div className="note-canvas">
 					<h3>Note</h3>

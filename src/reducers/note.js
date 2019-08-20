@@ -30,6 +30,7 @@ let initState = {
 export function note(state = initState, action) {
 	if (action.type === CREATE_NEW_NOTE) {
 		return {
+			...state,
 			activeNote: {
 				id: action.id,
 			},
