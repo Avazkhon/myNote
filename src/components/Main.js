@@ -17,7 +17,24 @@ class Main extends Component {
 			newChengeTetx: '',
 			titleNote: '',
 			chengeTetxId: null,
-			newTitleNote: '',
+		}
+	}
+
+	componentWillReceiveProps(nexProps) {
+		console.log('nexProps', nexProps)
+		console.log('this.props', this.props)
+
+		if (
+			!this.props.note.activeNote
+			||
+			this.props.note.activeNote.id
+			!==
+			nexProps.note.activeNote.id
+		) {
+			this.setState({
+				newChengeTetx: nexProps.note.activeNote.text,
+				chengeTetxId: nexProps.note.activeNote.id,
+			});
 		}
 	}
 
@@ -30,6 +47,7 @@ class Main extends Component {
 
 	handleSave = () => {
 		const id = this.state.chengeTetxId;
+		console.log(id)
 		const text = this.state.newChengeTetx;
 		this.props.saveNote(id, text)
 	}
@@ -43,27 +61,13 @@ class Main extends Component {
 		const {
 			newChengeTetx,
 			chengeTetxId,
-			isSettingShow,
-			isShowCreateNewNote,
-			isShowSelectNote,
 			newTitleNote,
 			titleNote,
 		} = this.state;
 
 		return (
 			<div className="main-note">
-				<Setting
-					isSettingShow={isSettingShow}
-					setting={note.setting}
-					isShowCreateNewNote={isShowCreateNewNote}
-					isShowSelectNote={isShowSelectNote}
-					newTitleNote={newTitleNote}
-					note={note}
-
-					handleCreateNewNote={this.handleCreateNewNote}
-					handSelectNote={this.handSelectNote}
-					handleSettingShow={this.handleSettingShow}
-				/>
+				<Setting />
 				<div className="note-canvas">
 					<h3>Note</h3>
 					{note.activeNote &&

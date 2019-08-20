@@ -19,16 +19,6 @@ class Setting extends Component {
 		}
 	}
 
-	componentWillReceiveProps(nexProps) {
-		const {
-			chengeTetxId,
-		} = this.state;
-
-		if (chengeTetxId) {
-			this.openNote(chengeTetxId)
-		}
-	}
-
 	handleChenge = (event) => {
 		const name = event.target.name;
 		const value = event.target.value;
@@ -60,12 +50,6 @@ class Setting extends Component {
 		this.handleChengeIsShow('isShowCreateNewNote')
 	}
 
-	openNote = (id) => {
-		const note = this.props.note.noteItems.find(item => {
-			return item.id === id;
-		})
-	}
-
 	handleSettingShow = () => {
 		this.setState((prevState) => (
 			{isSettingShow: !prevState.isSettingShow}
@@ -75,12 +59,18 @@ class Setting extends Component {
 	handSelectNote = (event) => {
 		const id = event.target.name;
 		this.props.selectNote(id)
-		const { note } = this.props;
-		const activeNote = note.noteItems.find(item => item.id === Number(id))
-		this.setState({
-			chengeTetxId: id,
-		})
 	}
+
+// 	handSelectNote = (event) => {
+// 	const id = event.target.name;
+// 	this.props.selectNote(id)
+// 	const { note } = this.props;
+// 	const activeNote = note.noteItems.find(item => item.id === Number(id))
+// 	this.setState({
+// 		newChengeTetx: activeNote.text,
+// 		chengeTetxId: id,
+// 	})
+// }
 
   render() {
     const {
