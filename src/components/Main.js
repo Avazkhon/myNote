@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import '../cssStyle/main.css';
-import '../cssStyle/main_element.css'
+import '../cssStyle/main_element.css';
+import '../cssStyle/setting.css';
 
 import Setting  from './setting/Setting';
 

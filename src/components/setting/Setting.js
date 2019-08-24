@@ -130,7 +130,7 @@ class Setting extends Component {
 					}
 					{(note.setting.isContentSetting === 'isShowSelectNote') &&
 						<div>
-							<div>Select note</div>
+							<div className="note-setting_items-title" >Select note</div>
 							<ul>
 								{
 									(note.noteItems.map((note) => {
