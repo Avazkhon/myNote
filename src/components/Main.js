@@ -23,8 +23,8 @@ class Main extends Component {
 
 	componentWillReceiveProps(nexProps) {
 		if (
-			!this.props.note.activeNote
-			|| this.props.note.activeNote.id
+			this.props.note.activeNote
+			&& this.props.note.activeNote.id
 			!== nexProps.note.activeNote.id
 		) {
 			this.setState({

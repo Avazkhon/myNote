@@ -2,7 +2,17 @@ import {
 	CREATE_NEW_NOTE,
 	SAVE_NOTE,
 	SELECT_NOTE,
+	SELECT_SETTING,
 } from '../constants/index';
+
+export function selectSetting(nameSetting) {
+	return (
+		{
+			type: SELECT_SETTING,
+			nameSetting
+		}
+	)
+};
 
 export function createNewNote(id, text, title) {
 	return (
