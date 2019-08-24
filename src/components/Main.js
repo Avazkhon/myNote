@@ -21,15 +21,10 @@ class Main extends Component {
 	}
 
 	componentWillReceiveProps(nexProps) {
-		console.log('nexProps', nexProps)
-		console.log('this.props', this.props)
-
 		if (
 			!this.props.note.activeNote
-			||
-			this.props.note.activeNote.id
-			!==
-			nexProps.note.activeNote.id
+			|| this.props.note.activeNote.id
+			!== nexProps.note.activeNote.id
 		) {
 			this.setState({
 				newChengeTetx: nexProps.note.activeNote.text,

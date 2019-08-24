@@ -56,21 +56,18 @@ class Setting extends Component {
 		))
 	}
 
+	handleCloseSettingShow = (e) => {
+		if (e.target.className === 'main-note_button') {
+			this.setState({
+				isSettingShow: false,
+			})
+		}
+	}
+
 	handSelectNote = (event) => {
 		const id = event.target.name;
 		this.props.selectNote(id)
 	}
-
-// 	handSelectNote = (event) => {
-// 	const id = event.target.name;
-// 	this.props.selectNote(id)
-// 	const { note } = this.props;
-// 	const activeNote = note.noteItems.find(item => item.id === Number(id))
-// 	this.setState({
-// 		newChengeTetx: activeNote.text,
-// 		chengeTetxId: id,
-// 	})
-// }
 
   render() {
     const {
@@ -87,9 +84,9 @@ class Setting extends Component {
     } = this.state;
 
     return(
-      <div>
+      <div onClick={this.handleCloseSettingShow}>
         <input
-  				className="main-note_button"
+  				className="main-note_setting-show"
   				type="button"
   				onClick={this.handleSettingShow}
   				value="Setting"
