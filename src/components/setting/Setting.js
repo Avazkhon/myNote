@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import {
 	createNewNote,
@@ -80,8 +79,6 @@ class Setting extends Component {
     const {
       newTitleNote,
       isSettingShow,
-      isShowCreateNewNote,
-      isShowSelectNote,
     } = this.state;
 
     return(

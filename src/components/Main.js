@@ -8,6 +8,7 @@ import Setting  from './setting/Setting';
 
 import {
 	saveNote,
+	selectNote,
 } from '../actions/index'
 
 
@@ -16,8 +17,15 @@ class Main extends Component {
 		super(props);
 		this.state = {
 			newChengeTetx: '',
-			titleNote: '',
 			chengeTetxId: null,
+		}
+	}
+	componentDidMount() {
+		if (this.props.note.activeNote) {
+			this.setState({
+				newChengeTetx: this.props.note.activeNote.text,
+				chengeTetxId: this.props.note.activeNote.id,
+			});
 		}
 	}
 
@@ -43,9 +51,9 @@ class Main extends Component {
 
 	handleSave = () => {
 		const id = this.state.chengeTetxId;
-		console.log(id)
 		const text = this.state.newChengeTetx;
-		this.props.saveNote(id, text)
+		this.props.saveNote(id, text);
+		this.props.selectNote(id);
 	}
 
 
@@ -56,9 +64,6 @@ class Main extends Component {
 
 		const {
 			newChengeTetx,
-			chengeTetxId,
-			newTitleNote,
-			titleNote,
 		} = this.state;
 
 		return (
@@ -96,4 +101,5 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
 	saveNote,
+	selectNote,
 })(Main);

@@ -1,3 +1,4 @@
+import { load } from 'redux-localstorage-simple';
 import {
 	CREATE_NEW_NOTE,
 	SAVE_NOTE,
@@ -5,33 +6,39 @@ import {
 	SELECT_SETTING,
 } from '../constants/index';
 
-let initState = {
-	activeNote: null,
-	noteItems: [
-		{
-			id: 0,
-			text: 'tar tar',
-			title: 'tar tar',
-		},
-	],
-	setting: {
-		isContentSetting: null,
-		itemsSetting: [
-			{
-				id: 1,
-				title: 'New note',
-				name: 'isShowCreateNewNote'
-			},
-			{
-				id: 2,
-				title: 'Select note',
-				name: 'isShowSelectNote'
-			}
-		]
-	}
-}
+let initState = load({'namespace': 'reduxState'})
 
-export function note(state = initState, action) {
+if (!initState || !initState.note) {
+	initState = {
+		note: {
+			activeNote: null,
+			noteItems: [
+				{
+					id: 0,
+					text: 'tar tar',
+					title: 'tar tar',
+				},
+			],
+			setting: {
+				isContentSetting: null,
+				itemsSetting: [
+					{
+						id: 1,
+						title: 'New note',
+						name: 'isShowCreateNewNote'
+					},
+					{
+						id: 2,
+						title: 'Select note',
+						name: 'isShowSelectNote'
+					}
+				]
+			}
+		}
+	};
+};
+
+export function note(state = initState.note, action) {
 	if (action.type === CREATE_NEW_NOTE) {
 		return {
 			...state,
