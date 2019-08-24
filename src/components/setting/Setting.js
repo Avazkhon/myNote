@@ -86,7 +86,7 @@ class Setting extends Component {
     return(
       <div onClick={this.handleCloseSettingShow}>
         <input
-  				className="main-note_setting-show"
+  				className="main-note_setting-show btn"
   				type="button"
   				onClick={this.handleSettingShow}
   				value="Setting"
