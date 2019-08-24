@@ -37,16 +37,18 @@ class Setting extends Component {
 	handleCreateNewNote = () => {
 		const id = Date.now();
 		const title = this.state.newTitleNote;
-		this.props.createNewNote(id, '', title)
-		this.setState( prevProps =>(
-			{
-				chengeTetxId: id,
-				newTitleNote: '',
-			}
-		));
+		if (title.length >= 2) {
+			this.props.createNewNote(id, '', title)
+			this.setState( prevProps =>(
+				{
+					chengeTetxId: id,
+					newTitleNote: '',
+				}
+			));
 
-		this.handleChengeIsShow('isShowCreateNewNote')
-		this.props.selectSetting();
+			this.handleChengeIsShow('isShowCreateNewNote')
+			this.props.selectSetting();
+		}
 	}
 
 	handleSettingShow = () => {
