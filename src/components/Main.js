@@ -21,13 +21,21 @@ class Main extends Component {
 			chengeTetxId: null,
 		}
 	}
-
-	componentWillReceiveProps(nexProps) {
+	componentDidMount() {
 		if (this.props.note.activeNote) {
 			this.setState({
 				newChengeTetx: this.props.note.activeNote.text,
 				chengeTetxId: this.props.note.activeNote.id,
 			});
+		}
+	}
+	componentWillReceiveProps(nexProps) {
+
+		if (this.props.note.activeNote) {
+			this.setState((p) => ({
+				newChengeTetx: nexProps.note.activeNote.text,
+				chengeTetxId: nexProps.note.activeNote.id,
+			}), console.log('state', this.state));
 		}
 	}
 
@@ -59,13 +67,15 @@ class Main extends Component {
 		const {
 			newChengeTetx,
 		} = this.state;
+		console.log('newChengeTetx', newChengeTetx)
+		console.log('this.props.note.activeNote.text', this.props.note.activeNote)
 
 		return (
 			<div className="main-note">
 				<Setting />
 				<div className="note-canvas">
 					<h3>Note</h3>
-					{note.activeNote &&
+					{note.activeNote.title &&
 						<div>
 							<div>{note.activeNote.title}</div>
 							<textarea
