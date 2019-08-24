@@ -3,6 +3,7 @@ import {
 	SAVE_NOTE,
 	SELECT_NOTE,
 	SELECT_SETTING,
+	DELETE_NOTE,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -31,6 +32,15 @@ export function saveNote(id, text) {
 			type: SAVE_NOTE,
 			id,
 			text,
+		}
+	)
+};
+
+export function deleteNote(id) {
+	return (
+		{
+			type: DELETE_NOTE,
+			id,
 		}
 	)
 };
