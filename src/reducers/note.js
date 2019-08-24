@@ -2,6 +2,7 @@ import {
 	CREATE_NEW_NOTE,
 	SAVE_NOTE,
 	SELECT_NOTE,
+	SELECT_SETTING,
 } from '../constants/index';
 
 let initState = {
@@ -13,18 +14,21 @@ let initState = {
 			title: 'tar tar',
 		},
 	],
-	setting: [
-		{
-			id: 1,
-			title: 'New note',
-			name: 'isShowCreateNewNote'
-		},
-		{
-			id: 2,
-			title: 'Select note',
-			name: 'isShowSelectNote'
-		}
-	]
+	setting: {
+		isContentSetting: null,
+		itemsSetting: [
+			{
+				id: 1,
+				title: 'New note',
+				name: 'isShowCreateNewNote'
+			},
+			{
+				id: 2,
+				title: 'Select note',
+				name: 'isShowSelectNote'
+			}
+		]
+	}
 }
 
 export function note(state = initState, action) {
@@ -68,6 +72,16 @@ export function note(state = initState, action) {
 		return {
 			...state,
 			activeNote: state.noteItems.find((n) => n.id === Number(action.activeNote))
+		}
+	}
+
+	if (action.type === SELECT_SETTING) {
+		return {
+			...state,
+			setting:{
+				...state.setting,
+				isContentSetting: action.nameSetting,
+			}
 		}
 	}
 

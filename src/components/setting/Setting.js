@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {
 	createNewNote,
 	selectNote,
+	selectSetting,
 } from '../../actions/index'
 
 class Setting extends Component {
@@ -31,9 +32,7 @@ class Setting extends Component {
 			name = event.target.dataset.name;
 		}
 
-		this.setState((prevState) => (
-			{[name]: !prevState[name]}
-		));
+		this.props.selectSetting(name);
 	}
 
 	handleCreateNewNote = () => {
@@ -48,12 +47,14 @@ class Setting extends Component {
 		));
 
 		this.handleChengeIsShow('isShowCreateNewNote')
+		this.props.selectSetting();
 	}
 
 	handleSettingShow = () => {
 		this.setState((prevState) => (
 			{isSettingShow: !prevState.isSettingShow}
 		))
+		this.props.selectSetting();
 	}
 
 	handleCloseSettingShow = (e) => {
@@ -67,11 +68,11 @@ class Setting extends Component {
 	handSelectNote = (event) => {
 		const id = event.target.name;
 		this.props.selectNote(id)
+		this.props.selectSetting();
 	}
 
   render() {
     const {
-      setting,
       note,
 
     } = this.props;
@@ -86,7 +87,7 @@ class Setting extends Component {
     return(
       <div onClick={this.handleCloseSettingShow}>
         <input
-  				className="main-note_setting-show"
+  				className="main-note_setting-show btn"
   				type="button"
   				onClick={this.handleSettingShow}
   				value="Setting"
@@ -96,7 +97,7 @@ class Setting extends Component {
           <div className="main-note_setting-buttons">
             <ul>
               {
-                note.setting.map((item) => {
+                note.setting.itemsSetting.map((item) => {
                   return (
                     <li key={item.id}>
                       <div
@@ -112,7 +113,7 @@ class Setting extends Component {
           </div>
         }
 				<div className="main-note__setting-form" >
-					{ isShowCreateNewNote &&
+					{ (note.setting.isContentSetting === 'isShowCreateNewNote') &&
 						<div>
 							<div>Title for new note</div>
 							<input
@@ -128,7 +129,7 @@ class Setting extends Component {
 			       />
 						</div>
 					}
-					{isShowSelectNote &&
+					{(note.setting.isContentSetting === 'isShowSelectNote') &&
 						<div>
 							<div>Select note</div>
 							<ul>
@@ -165,4 +166,5 @@ function mapStateToProps({
 export default connect(mapStateToProps, {
   createNewNote,
   selectNote,
+	selectSetting,
 })(Setting);

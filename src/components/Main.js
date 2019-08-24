@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import '../cssStyle/main.css';
+import '../cssStyle/main_element.css'
 
 import Setting  from './setting/Setting';
 
@@ -22,8 +23,8 @@ class Main extends Component {
 
 	componentWillReceiveProps(nexProps) {
 		if (
-			!this.props.note.activeNote
-			|| this.props.note.activeNote.id
+			this.props.note.activeNote
+			&& this.props.note.activeNote.id
 			!== nexProps.note.activeNote.id
 		) {
 			this.setState({
