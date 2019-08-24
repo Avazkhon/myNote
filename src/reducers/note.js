@@ -4,6 +4,7 @@ import {
 	SAVE_NOTE,
 	SELECT_NOTE,
 	SELECT_SETTING,
+	DELETE_NOTE,
 } from '../constants/index';
 
 let initState = load({'namespace': 'reduxState'})
@@ -71,6 +72,16 @@ export function note(state = initState.note, action) {
 					}
 					return note
 				})
+			]
+		}
+	}
+
+	if (action.type === DELETE_NOTE) {
+		return {
+			...state,
+			activeNote: {id: null},
+			noteItems: [
+				...state.noteItems.filter( note => note.id !== action.id)
 			]
 		}
 	}

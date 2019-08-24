@@ -9,6 +9,7 @@ import Setting  from './setting/Setting';
 import {
 	saveNote,
 	selectNote,
+	deleteNote,
 } from '../actions/index'
 
 
@@ -20,24 +21,12 @@ class Main extends Component {
 			chengeTetxId: null,
 		}
 	}
-	componentDidMount() {
+
+	componentWillReceiveProps(nexProps) {
 		if (this.props.note.activeNote) {
 			this.setState({
 				newChengeTetx: this.props.note.activeNote.text,
 				chengeTetxId: this.props.note.activeNote.id,
-			});
-		}
-	}
-
-	componentWillReceiveProps(nexProps) {
-		if (
-			this.props.note.activeNote
-			&& this.props.note.activeNote.id
-			!== nexProps.note.activeNote.id
-		) {
-			this.setState({
-				newChengeTetx: nexProps.note.activeNote.text,
-				chengeTetxId: nexProps.note.activeNote.id,
 			});
 		}
 	}
@@ -54,6 +43,11 @@ class Main extends Component {
 		const text = this.state.newChengeTetx;
 		this.props.saveNote(id, text);
 		this.props.selectNote(id);
+	}
+
+	handleDelete = () => {
+		const id = this.state.chengeTetxId;
+		this.props.deleteNote(id);
 	}
 
 
@@ -86,6 +80,15 @@ class Main extends Component {
 								value='save'
 								onClick={this.handleSave}
 								/>
+								{note.activeNote.id &&
+
+									<input
+										className="main-note_button"
+										type='button'
+										value='delete'
+										onClick={this.handleDelete}
+									/>
+								}
 						</div>
 					}
 				</div>
@@ -102,4 +105,5 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
 	saveNote,
 	selectNote,
+	deleteNote,
 })(Main);
