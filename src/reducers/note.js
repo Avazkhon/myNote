@@ -15,7 +15,7 @@ if (!initState || !initState.note) {
 			activeNote: null,
 			noteItems: [
 				{
-					id: 0,
+					id: 1,
 					text: 'tar tar',
 					title: 'tar tar',
 				},
