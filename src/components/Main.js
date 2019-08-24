@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import '../cssStyle/main.css'
+
+import '../cssStyle/main.css';
+
+import Setting  from './setting/Setting';
 
 import {
-	createNewNote,
 	saveNote,
-	selectNote,
 } from '../actions/index'
 
 
@@ -16,33 +17,19 @@ class Main extends Component {
 			newChengeTetx: '',
 			titleNote: '',
 			chengeTetxId: null,
-			newTitleNote: '',
-			isSettingShow: false,
-			isShowCreateNewNote: false,
-			isShowSelectNote: false,
-			setting: [
-				{
-					id: 1,
-					title: 'New note',
-					name: 'isShowCreateNewNote'
-				},
-				{
-					id: 2,
-					title: 'Select note',
-					name: 'isShowSelectNote'
-				}
-			]
 		}
 	}
 
 	componentWillReceiveProps(nexProps) {
-		const {
-			newChengeTetx,
-			chengeTetxId,
-		} = this.state;
-
-		if (chengeTetxId) {
-			this.openNote(chengeTetxId)
+		if (
+			!this.props.note.activeNote
+			|| this.props.note.activeNote.id
+			!== nexProps.note.activeNote.id
+		) {
+			this.setState({
+				newChengeTetx: nexProps.note.activeNote.text,
+				chengeTetxId: nexProps.note.activeNote.id,
+			});
 		}
 	}
 
@@ -52,60 +39,12 @@ class Main extends Component {
 		this.setState({[name]: value});
 	}
 
-	handleChengeIsShow = (event) => {
-		let name = event;
-		if (event.target) {
-			name = event.target.dataset.name;
-		}
-
-		this.setState((prevState) => (
-			{[name]: !prevState[name]}
-		));
-	}
 
 	handleSave = () => {
 		const id = this.state.chengeTetxId;
+		console.log(id)
 		const text = this.state.newChengeTetx;
 		this.props.saveNote(id, text)
-	}
-
-	handleCreateNewNote = () => {
-		const id = Date.now();
-		const title = this.state.newTitleNote;
-		this.props.createNewNote(id, '', title)
-		this.setState( prevProps =>(
-			{
-				chengeTetxId: id,
-				newChengeTetx: '',
-				newTitleNote: '',
-				titleNote: title,
-			}
-		));
-
-		this.handleChengeIsShow('isShowCreateNewNote')
-	}
-
-	openNote = (id) => {
-		const note = this.props.note.noteItems.find(item => {
-			return item.id === id;
-		})
-	}
-
-	handleSettingShow = () => {
-		this.setState((prevState) => (
-			{isSettingShow: !prevState.isSettingShow}
-		))
-	}
-
-	handSelectNote = (event) => {
-		const id = event.target.name;
-		this.props.selectNote(id)
-		const { note } = this.props;
-		const activeNote = note.noteItems.find(item => item.id === Number(id))
-		this.setState({
-			newChengeTetx: activeNote.text,
-			chengeTetxId: id,
-		})
 	}
 
 
@@ -116,104 +55,35 @@ class Main extends Component {
 
 		const {
 			newChengeTetx,
-			setting,
 			chengeTetxId,
-			isSettingShow,
-			isShowCreateNewNote,
-			isShowSelectNote,
 			newTitleNote,
 			titleNote,
 		} = this.state;
 
 		return (
 			<div className="main-note">
-				<input
-					className="main-note_button"
-					type="button"
-					onClick={this.handleSettingShow}
-					value="Setting"
-				/>
-				{
-						isSettingShow &&
-						<div className="main-note_setting-buttons">
-							<ul>
-								{
-									setting.map((item) => {
-										return (
-											<li key={item.id}>
-												<div
-													onClick={this.handleChengeIsShow}
-													className="main-note_button"
-													data-name={item.name}
-												>{item.title}</div>
-											</li>
-										)
-									})
-								}
-							</ul>
+				<Setting />
+				<div className="note-canvas">
+					<h3>Note</h3>
+					{note.activeNote &&
+						<div>
+							<div>{note.activeNote.title}</div>
+							<textarea
+								className="main-note__main-text"
+								name="newChengeTetx"
+								value={newChengeTetx}
+								onChange={this.handleChenge}
+								/>
+							<input
+								className="main-note_button"
+								type='button'
+								value='save'
+								onClick={this.handleSave}
+								/>
 						</div>
 					}
-					<div className="main-note__setting-form" >
-						{ isShowCreateNewNote &&
-							<div>
-								<div>Title for new note</div>
-								<input
-									type='text'
-									name='newTitleNote'
-									value={newTitleNote}
-									onChange={this.handleChenge}/>
-								<input
-									className="main-note_button"
-									type='button'
-									value='create new note'
-									onClick={this.handleCreateNewNote}
-				       />
-							</div>
-						}
-						{isShowSelectNote &&
-							<div>
-								<div>Select note</div>
-								<ul>
-									{
-										(note.noteItems.map((note) => {
-											return (
-												<li key={note.id}>
-													<input
-														className="main-note_button"
-														type='button'
-														name={note.id}
-														value={note.title}
-														onClick={this.handSelectNote}
-													/>
-												</li>
-											)
-										}))
-									}
-								</ul>
-							</div>
-						}
-					</div>
-					<div className="note-canvas">
-						<h3>Note</h3>
-						{note.activeNote &&
-							<div>
-								<div>{note.activeNote.title}</div>
-								<textarea
-									className="main-note__main-text"
-									name="newChengeTetx"
-									value={newChengeTetx}
-									onChange={this.handleChenge}
-									/>
-								<input
-									className="main-note_button"
-									type='button'
-									value='save'
-									onClick={this.handleSave}
-									/>
-							</div>
-						}
-					</div>
-			</div>
+				</div>
+		</div>
 		)
 	}
 }
@@ -224,7 +94,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-	createNewNote,
 	saveNote,
-	selectNote,
 })(Main);

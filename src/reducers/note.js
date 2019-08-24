@@ -12,14 +12,29 @@ let initState = {
 			text: 'tar tar',
 			title: 'tar tar',
 		},
+	],
+	setting: [
+		{
+			id: 1,
+			title: 'New note',
+			name: 'isShowCreateNewNote'
+		},
+		{
+			id: 2,
+			title: 'Select note',
+			name: 'isShowSelectNote'
+		}
 	]
 }
 
 export function note(state = initState, action) {
 	if (action.type === CREATE_NEW_NOTE) {
 		return {
+			...state,
 			activeNote: {
 				id: action.id,
+				text: action.text,
+				title: action.title,
 			},
 			noteItems: [
 			...state.noteItems,
