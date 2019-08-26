@@ -7,6 +7,8 @@ import {
 	selectSetting,
 } from '../../actions/index'
 
+import DropList from '../DropList';
+
 class Setting extends Component {
   constructor(props) {
 		super(props);
@@ -67,7 +69,7 @@ class Setting extends Component {
 	}
 
 	handSelectNote = (event) => {
-		const id = event.target.name;
+		const id = event.target.dataset.name;
 		this.props.selectNote(id)
 		this.props.selectSetting();
 	}
@@ -92,24 +94,14 @@ class Setting extends Component {
   				value="Setting"
   			/>
         {
-          isSettingShow &&
-          <div className="main-note_setting-buttons">
-            <ul>
-              {
-                note.setting.itemsSetting.map((item) => {
-                  return (
-                    <li key={item.id}>
-                      <div
-                        onClick={this.handleChengeIsShow}
-                        className="main-note_button"
-                        data-name={item.name}
-                      >{item.title}</div>
-                    </li>
-                  )
-                })
-              }
-            </ul>
-          </div>
+					isSettingShow &&
+					<DropList
+						arr={note.setting.itemsSetting}
+						onClick={this.handleChengeIsShow}
+						componentClassName="main-note_setting-buttons"
+						elementClassName="main-note_button"
+						title="Setting"
+					/>
         }
 				<div className="main-note__setting-form" >
 					{ (note.setting.isContentSetting === 'isShowCreateNewNote') &&
@@ -129,26 +121,14 @@ class Setting extends Component {
 						</div>
 					}
 					{(note.setting.isContentSetting === 'isShowSelectNote') &&
-						<div>
-							<div className="note-setting_items-title" >Select note</div>
-							<ul>
-								{
-									(note.noteItems.map((note) => {
-										return (
-											<li key={note.id}>
-												<input
-													className="main-note_button"
-													type='button'
-													name={note.id}
-													value={note.title}
-													onClick={this.handSelectNote}
-												/>
-											</li>
-										)
-									}))
-								}
-							</ul>
-						</div>
+
+					<DropList
+						arr={note.noteItems}
+						onClick={this.handSelectNote}
+						componentClassName="main-note_setting-buttons"
+						elementClassName="main-note_button"
+						title="Select note"
+					/>
 					}
 				</div>
       </div>
