@@ -34,7 +34,6 @@ class Setting extends Component {
 		}
 
 		this.props.selectSetting(name);
-			console.log('name', name);
 	}
 
 	handleCreateNewNote = () => {
@@ -71,7 +70,6 @@ class Setting extends Component {
 
 	handSelectNote = (event) => {
 		const id = event.target.dataset.name;
-		console.log(id);
 		this.props.selectNote(id)
 		this.props.selectSetting();
 	}
@@ -123,26 +121,14 @@ class Setting extends Component {
 						</div>
 					}
 					{(note.setting.isContentSetting === 'isShowSelectNote') &&
-						<div>
-							<div className="note-setting_items-title" >Select note</div>
-							<ul>
-								{
-									(note.noteItems.map((note) => {
-										return (
-											<li key={note.id}>
-												<input
-													className="main-note_button"
-													type='button'
-													data-name={note.id}
-													value={note.title}
-													onClick={this.handSelectNote}
-												/>
-											</li>
-										)
-									}))
-								}
-							</ul>
-						</div>
+
+					<DropList
+						arr={note.noteItems}
+						onClick={this.handSelectNote}
+						componentClassName="main-note_setting-buttons"
+						elementClassName="main-note_button"
+						title="Select note"
+					/>
 					}
 				</div>
       </div>

@@ -23,7 +23,7 @@ class DropList extends Component {
                   <div
                     onClick={onClick}
                     className={elementClassName}
-                    data-name={item.name}
+                    data-name={item.name ? item.name : item.id}
                   >{item.title}</div>
                 </li>
               )
