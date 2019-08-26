@@ -1,0 +1,11 @@
+.drop-List {
+  width: 200px;
+  border-radius: 5px;
+  position: absolute;
+  background-color: #C0C0C0;
+}
+
+.drop-List__title {
+  text-align: center;
+  border-bottom: 2px solid black;
+}

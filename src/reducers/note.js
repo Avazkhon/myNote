@@ -12,7 +12,7 @@ let initState = load({'namespace': 'reduxState'})
 if (!initState || !initState.note) {
 	initState = {
 		note: {
-			activeNote: null,
+			activeNote: {id: null},
 			noteItems: [
 				{
 					id: 1,

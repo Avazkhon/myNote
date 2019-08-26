@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import '../cssStyle/main.css';
 import '../cssStyle/main_element.css';
 import '../cssStyle/setting.css';
+import '../cssStyle/dropList.css'
 
 import Setting  from './setting/Setting';
 
@@ -32,11 +33,11 @@ class Main extends Component {
 	}
 	componentWillReceiveProps(nexProps) {
 
-		if (this.props.note.activeNote) {
+		if (nexProps.note.activeNote.id) {
 			this.setState((p) => ({
 				newChengeTetx: nexProps.note.activeNote.text,
 				chengeTetxId: nexProps.note.activeNote.id,
-			}), console.log('state', this.state));
+			}));
 		}
 	}
 
@@ -55,7 +56,7 @@ class Main extends Component {
 	}
 
 	handleDelete = () => {
-		const id = this.state.chengeTetxId;
+		const id = this.props.note.activeNote.id;
 		this.props.deleteNote(id);
 	}
 
@@ -68,15 +69,13 @@ class Main extends Component {
 		const {
 			newChengeTetx,
 		} = this.state;
-		console.log('newChengeTetx', newChengeTetx)
-		console.log('this.props.note.activeNote.text', this.props.note.activeNote)
 
 		return (
 			<div className="main-note">
 				<Setting />
 				<div className="note-canvas">
 					<h3>Note</h3>
-					{note.activeNote.title &&
+					{note.activeNote.id &&
 						<div>
 							<div>{note.activeNote.title}</div>
 							<textarea
