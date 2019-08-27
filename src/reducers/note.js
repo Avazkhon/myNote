@@ -5,19 +5,30 @@ import {
 	SELECT_NOTE,
 	SELECT_SETTING,
 	DELETE_NOTE,
+	SELECT_CHAPTER,
 } from '../constants/index';
 
 let initState = load({'namespace': 'reduxState'})
 
 if (!initState || !initState.note) {
+	const id = Date.now();
 	initState = {
 		note: {
 			activeNote: {id: null},
 			noteItems: [
 				{
-					id: 1,
+					id,
 					text: 'tar tar',
 					title: 'tar tar',
+					createDate: Date(Date.now()),
+					activeChapter: id,
+					chapters: [
+						{
+							title: 'tar tares',
+							text: 'more tar tares',
+							id: Date.now() + 27,
+						}
+					]
 				},
 			],
 			setting: {
@@ -43,18 +54,10 @@ export function note(state = initState.note, action) {
 	if (action.type === CREATE_NEW_NOTE) {
 		return {
 			...state,
-			activeNote: {
-				id: action.id,
-				text: action.text,
-				title: action.title,
-			},
+			activeNote: action.note,
 			noteItems: [
 			...state.noteItems,
-				{
-					id: action.id,
-					text: action.text,
-					title: action.title,
-				}
+				action.note,
 			]
 		}
 	}
@@ -90,6 +93,16 @@ export function note(state = initState.note, action) {
 		return {
 			...state,
 			activeNote: state.noteItems.find((n) => n.id === Number(action.activeNote))
+		}
+	}
+
+	if (action.type === SELECT_CHAPTER) {
+		return {
+			...state,
+			activeNote: {
+				...state.activeNote,
+				activeChapter: action.activeChapter,
+			}
 		}
 	}
 

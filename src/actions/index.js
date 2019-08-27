@@ -4,6 +4,7 @@ import {
 	SELECT_NOTE,
 	SELECT_SETTING,
 	DELETE_NOTE,
+	SELECT_CHAPTER,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -15,13 +16,11 @@ export function selectSetting(nameSetting) {
 	)
 };
 
-export function createNewNote(id, text, title) {
+export function createNewNote(note) {
 	return (
 		{
 			type: CREATE_NEW_NOTE,
-			id,
-			text,
-			title,
+			note,
 		}
 	)
 };
@@ -49,5 +48,12 @@ export function selectNote(id) {
 	return ({
 		type: SELECT_NOTE,
 		activeNote: id,
+	})
+}
+
+export function selectChapter(id) {
+	return ({
+		type: SELECT_CHAPTER,
+		activeChapter: id,
 	})
 }

@@ -39,8 +39,23 @@ class Setting extends Component {
 	handleCreateNewNote = () => {
 		const id = Date.now();
 		const title = this.state.newTitleNote;
+		const note = {
+			id,
+			title,
+			text: '',
+			createDate: Date(Date.now()),
+			activeChapter: null,
+			chapters: [
+				{
+					title: 'no name',
+					text: '',
+					id,
+				}
+			],
+		}
+
 		if (title.length >= 2) {
-			this.props.createNewNote(id, '', title)
+			this.props.createNewNote(note)
 			this.setState( prevProps =>(
 				{
 					chengeTetxId: id,

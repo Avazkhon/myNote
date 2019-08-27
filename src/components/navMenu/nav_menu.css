@@ -5,3 +5,8 @@
   float: left;
   background-color: #ccc;
 }
+
+.nav-menu__title {
+  text-align: center;
+  border-bottom: 2px solid black;
+}

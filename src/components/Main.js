@@ -21,24 +21,29 @@ class Main extends Component {
 		super(props);
 		this.state = {
 			newChengeTetx: '',
-			chengeTetxId: null,
 		}
 	}
 	componentDidMount() {
 		if (this.props.note.activeNote) {
 			this.setState({
 				newChengeTetx: this.props.note.activeNote.text,
-				chengeTetxId: this.props.note.activeNote.id,
 			});
 		}
 	}
 	componentWillReceiveProps(nexProps) {
 
 		if (nexProps.note.activeNote.id) {
-			this.setState((p) => ({
-				newChengeTetx: nexProps.note.activeNote.text,
-				chengeTetxId: nexProps.note.activeNote.id,
-			}));
+			if (nexProps.note.activeNote.id === nexProps.note.activeNote.activeChapter) {
+				this.setState((p) => ({
+					newChengeTetx: nexProps.note.activeNote.text,
+				}));
+			} else {
+				const chapter = nexProps.note.activeNote.chapters.find(chapter => chapter.id === nexProps.note.activeNote.activeChapter);
+				this.setState((p) => ({
+					newChengeTetx: chapter && chapter.text,
+				}));
+			}
+
 		}
 	}
 
@@ -50,7 +55,7 @@ class Main extends Component {
 
 
 	handleSave = () => {
-		const id = this.state.chengeTetxId;
+		const id = this.props.note.activeNote.id;
 		const text = this.state.newChengeTetx;
 		this.props.saveNote(id, text);
 		this.props.selectNote(id);
