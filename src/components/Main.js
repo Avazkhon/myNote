@@ -7,6 +7,7 @@ import '../cssStyle/setting.css';
 import '../cssStyle/dropList.css'
 
 import Setting  from './setting/Setting';
+import NavMenu from './navMenu/index'
 
 import {
 	saveNote,
@@ -73,23 +74,31 @@ class Main extends Component {
 		return (
 			<div className="main-note">
 				<Setting />
-				<div className="note-canvas">
-					<h3>Note</h3>
-					{note.activeNote.id &&
-						<div>
-							<div>{note.activeNote.title}</div>
-							<textarea
-								className="main-note__main-text"
-								name="newChengeTetx"
-								value={newChengeTetx}
-								onChange={this.handleChenge}
+				<div className="note-content" >
+					<div>
+						<NavMenu />
+					</div>
+					<div className="note-canvas">
+						<h3>Note</h3>
+						{note.activeNote.id &&
+							<div>
+								<div>{note.activeNote.title}</div>
+								<textarea
+									className="main-note__main-text"
+									name="newChengeTetx"
+									value={newChengeTetx}
+									onChange={this.handleChenge}
 								/>
-							<input
-								className="main-note_button"
-								type='button'
-								value='save'
-								onClick={this.handleSave}
-								/>
+							</div>
+						}
+						{ note.activeNote.id &&
+							<div className="main-note_btn-gruop ">
+								<input
+									className="main-note_button"
+									type='button'
+									value='save'
+									onClick={this.handleSave}
+									/>
 								{note.activeNote.id &&
 
 									<input
@@ -99,10 +108,11 @@ class Main extends Component {
 										onClick={this.handleDelete}
 									/>
 								}
-						</div>
-					}
+							</div>
+						}
+					</div>
 				</div>
-		</div>
+			</div>
 		)
 	}
 }

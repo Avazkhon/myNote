@@ -12,14 +12,23 @@ ul li {
   cursor: pointer;
 }
 
+.note-content {
+  width: 80%;
+  height: 800px;
+  margin: 0 20%;
+}
+
 
 .note-canvas {
-  width: 500px;
-  height: 500px;
-  margin: 0 auto;
 }
 
 .main-note__main-text {
   width: 500px;
   height: 380px;
+}
+
+.main-note_btn-gruop {
+  width: 80%;
+  height: 50px;
+  padding: 0 153px;
 }
