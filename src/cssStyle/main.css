@@ -13,9 +13,10 @@ ul li {
 }
 
 .note-content {
-  width: 80%;
+  width: 52%;
+  min-width: 660px;
   height: 800px;
-  margin: 0 20%;
+  margin: 0 auto;
 }
 
 
@@ -28,7 +29,7 @@ ul li {
 }
 
 .main-note_btn-gruop {
-  width: 80%;
+  min-width: 500px;
   height: 50px;
   padding: 0 153px;
 }

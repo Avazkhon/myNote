@@ -49,7 +49,7 @@ class Setting extends Component {
 				{
 					title: 'no name',
 					text: '',
-					id,
+					id: id + 1010,
 				}
 			],
 		}

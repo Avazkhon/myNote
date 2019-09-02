@@ -1,4 +1,5 @@
 .nav-menu {
+  font-size: 18px;
   width: 153px;
   height: 385px;
   margin-top: 58px;
@@ -9,4 +10,18 @@
 .nav-menu__title {
   text-align: center;
   border-bottom: 2px solid black;
+}
+
+.nav-menu-maine-text {
+  cursor: pointer;
+}
+
+.nav-menu__items {
+  margin-left: -15px;
+  cursor: pointer;
+}
+
+.nav-menu_active-chapter {
+  background-color:	#B0C4DE;
+  cursor: pointer;
 }

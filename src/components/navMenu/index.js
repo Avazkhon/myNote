@@ -32,17 +32,22 @@ class NavMenu extends Component {
 					note.activeNote.id &&
 					<div>
 						<div
+						className={`nav-menu-maine-text ${note.activeNote.id === note.activeNote.activeChapter ? 'nav-menu_active-chapter' : ''}`}
 						data-id={note.activeNote.id}
 						onClick={this.handleSelectchapter}
 						>
 							main text
 						</div>
-						<ul>
+						<ul className="nav-menu__items">
 							{note.activeNote.chapters.length >= 1 &&
 								note.activeNote.chapters.map((chapter) => {
 								return (
 									<li key={chapter.id}>
-										<div data-id={chapter.id} onClick={this.handleSelectchapter}>
+										<div
+											className={chapter.id === note.activeNote.activeChapter ? 'nav-menu_active-chapter' : ''}
+											data-id={chapter.id}
+											onClick={this.handleSelectchapter}
+										>
 											{chapter.title}
 										</div>
 									</li>
