@@ -38,7 +38,8 @@ class NavMenu extends Component {
 							main text
 						</div>
 						<ul>
-							{note.activeNote.chapters.map((chapter) => {
+							{note.activeNote.chapters.length >= 1 &&
+								note.activeNote.chapters.map((chapter) => {
 								return (
 									<li key={chapter.id}>
 										<div data-id={chapter.id} onClick={this.handleSelectchapter}>

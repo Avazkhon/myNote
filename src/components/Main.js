@@ -57,8 +57,9 @@ class Main extends Component {
 	handleSave = () => {
 		const id = this.props.note.activeNote.id;
 		const text = this.state.newChengeTetx;
-		this.props.saveNote(id, text);
-		this.props.selectNote(id);
+		const activeChapter = this.props.note.activeNote.activeChapter;
+		this.props.saveNote(id, text, activeChapter);
+		// this.props.selectNote(id);
 	}
 
 	handleDelete = () => {

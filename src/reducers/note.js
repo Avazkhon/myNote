@@ -65,12 +65,35 @@ export function note(state = initState.note, action) {
 	if (action.type === SAVE_NOTE) {
 		return {
 			...state,
+			activeNote: {
+				...state.activeNote,
+				text: action.activeChapter === action.id ? action.text : note.text,
+				chapters: state.activeNote.chapters.map((chapter) => {
+					if (chapter.id === action.activeChapter) {
+						return ({
+							...chapter,
+							text: action.text,
+						})
+					}
+					return chapter;
+				}),
+				activeChapter: action.activeChapter,
+			},
 			noteItems: [
 				...state.noteItems.map((note)=> {
 					if (note.id === Number(action.id)) {
 						return {
 							...note,
-							text: action.text
+							text: action.activeChapter === action.id ? action.text : note.text,
+							chapters: note.chapters.map((chapter) => {
+								if (chapter.id === action.activeChapter) {
+									return ({
+										...chapter,
+										text: action.text,
+									})
+								}
+								return chapter;
+							})
 						}
 					}
 					return note

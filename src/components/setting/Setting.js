@@ -44,7 +44,7 @@ class Setting extends Component {
 			title,
 			text: '',
 			createDate: Date(Date.now()),
-			activeChapter: null,
+			activeChapter: id,
 			chapters: [
 				{
 					title: 'no name',

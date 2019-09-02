@@ -25,12 +25,13 @@ export function createNewNote(note) {
 	)
 };
 
-export function saveNote(id, text) {
+export function saveNote(id, text, activeChapter) {
 	return (
 		{
 			type: SAVE_NOTE,
 			id,
 			text,
+			activeChapter,
 		}
 	)
 };
