@@ -5,6 +5,7 @@ import {
 	SELECT_SETTING,
 	DELETE_NOTE,
 	SELECT_CHAPTER,
+	CREATE_NEW_CHPATER,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -21,6 +22,16 @@ export function createNewNote(note) {
 		{
 			type: CREATE_NEW_NOTE,
 			note,
+		}
+	)
+};
+
+export function createNewChapter(id, chapter) {
+	return (
+		{
+			type: CREATE_NEW_CHPATER,
+			id,
+			chapter,
 		}
 	)
 };

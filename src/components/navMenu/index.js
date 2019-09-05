@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import './nav_menu.css'
+import './nav_menu.css';
+
+import DropList from '../DropList'
 
 import {
+	createNewChapter,
 	selectChapter,
 } from '../../actions/index';
 
@@ -12,6 +15,17 @@ class NavMenu extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			newTitleChapter: '',
+			setting: {
+				isContentSetting: false,
+				itemsSetting: [
+					{
+						id: 1,
+						title: 'Create chapter',
+						name: 'isShowCreateNewChapter'
+					},
+				]
+			}
 		}
 	}
 
@@ -20,14 +34,70 @@ class NavMenu extends Component {
 		this.props.selectChapter(Number(id))
 	}
 
+	handleShowSetting = (e) => {
+		const name = e.target.dataset.name;
+		const nameState = this.state.setting.isContentSetting;
+		if (name === nameState) {
+			this.setState((prevState) => ({
+				setting: {
+					...prevState.setting,
+					isContentSetting: null,
+				}
+			}))
+		}else {
+			this.setState((prevState) => ({
+				setting: {
+					...prevState.setting,
+					isContentSetting: name,
+				}
+			}))
+		}
+	}
+
+	handleChenge = (event) => {
+		const name = event.target.name;
+		const value = event.target.value;
+		this.setState({[name]: value});
+	}
+
+	handleCreateNewNote = (e) => {
+		const chapter =	{
+			title: this.state.newTitleChapter,
+			text: 'more tar tares',
+			id: Date.now() + 27,
+		}
+		const id = this.props.note.activeNote.id;
+
+		this.props.createNewChapter(id, chapter)
+		this.handleShowSetting(e)
+	}
+
 	render () {
+		const {
+			setting,
+			newTitleChapter,
+		} = this.state;
+
 		const {
 			note,
 		} = this.props;
 
 		return (
 			<div className="nav-menu">
-        <div className="nav-menu__title" >nav menu</div>
+        <div
+					data-name="dropList"
+					className="nav-menu__title"
+					onClick={this.handleShowSetting}
+				>Nav menu</div>
+				{(setting.isContentSetting === 'dropList') &&
+					<DropList
+						arr={setting.itemsSetting}
+						onClick={this.handleShowSetting}
+						componentClassName="main-note_setting-buttons"
+						elementClassName="main-note_button"
+						title="Nav menu setting"
+					/>
+				}
 				{
 					note.activeNote.id &&
 					<div>
@@ -38,6 +108,29 @@ class NavMenu extends Component {
 						>
 							main text
 						</div>
+						{
+							(setting.isContentSetting === 'isShowCreateNewChapter') &&
+							<div>
+								<div>Title for new note</div>
+								<input
+									type='text'
+									name='newTitleChapter'
+									value={newTitleChapter}
+									onChange={this.handleChenge}/>
+								<input
+									className="main-note_button"
+									type='button'
+									value='create new note'
+									onClick={this.handleCreateNewNote}
+							 />
+							 <input
+								 className="main-note_button"
+								 type='button'
+								 value='X'
+								 onClick={this.handleShowSetting}
+							/>
+							</div>
+						}
 						<ul className="nav-menu__items">
 							{note.activeNote.chapters.length >= 1 &&
 								note.activeNote.chapters.map((chapter) => {
@@ -65,6 +158,7 @@ class NavMenu extends Component {
 NavMenu.propType = {
 	note: PropTypes.object,
   selectChapter: PropTypes.func,
+	createNewChapter: PropTypes.func,
 }
 
 function mapStateToProps(state) {
@@ -74,5 +168,8 @@ function mapStateToProps(state) {
 
 export default connect(
 	mapStateToProps,
-	{selectChapter}
+	{
+		createNewChapter,
+		selectChapter,
+	}
 )(NavMenu);

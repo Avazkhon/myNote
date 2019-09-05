@@ -6,6 +6,7 @@ import {
 	SELECT_SETTING,
 	DELETE_NOTE,
 	SELECT_CHAPTER,
+	CREATE_NEW_CHPATER,
 } from '../constants/index';
 
 let initState = load({'namespace': 'reduxState'})
@@ -62,12 +63,37 @@ export function note(state = initState.note, action) {
 		}
 	}
 
+	if (action.type === CREATE_NEW_CHPATER) {
+		return {
+			...state,
+			activeNote:{
+				...state.activeNote,
+				chapters: [
+					...state.activeNote.chapters,
+					action.chapter,
+				],
+			},
+			noteItems: [
+				...state.noteItems.filter((note) => {
+					if (note.id === Number(action.id)) {
+						note.chapters = [
+							...note.chapters,
+							action.chapter,
+						]
+					}
+					return note;
+				})
+			]
+		}
+	}
+
 	if (action.type === SAVE_NOTE) {
+		console.log(state.activeNote.activeChapter === action.id ? action.text : note.text)
 		return {
 			...state,
 			activeNote: {
 				...state.activeNote,
-				text: action.activeChapter === action.id ? action.text : note.text,
+				text: state.activeNote.activeChapter === action.id ? action.text : state.activeNote.text,
 				chapters: state.activeNote.chapters.map((chapter) => {
 					if (chapter.id === action.activeChapter) {
 						return ({

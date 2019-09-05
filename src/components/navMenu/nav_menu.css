@@ -8,6 +8,7 @@
 }
 
 .nav-menu__title {
+  cursor: pointer;
   text-align: center;
   border-bottom: 2px solid black;
 }
