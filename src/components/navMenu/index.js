@@ -9,6 +9,7 @@ import DropList from '../DropList'
 import {
 	createNewChapter,
 	selectChapter,
+	showNavMenu,
 } from '../../actions/index';
 
 class NavMenu extends Component {
@@ -16,16 +17,6 @@ class NavMenu extends Component {
 		super(props);
 		this.state = {
 			newTitleChapter: '',
-			setting: {
-				isContentSetting: false,
-				itemsSetting: [
-					{
-						id: 1,
-						title: 'Create chapter',
-						name: 'isShowCreateNewChapter'
-					},
-				]
-			}
 		}
 	}
 
@@ -36,21 +27,23 @@ class NavMenu extends Component {
 
 	handleShowSetting = (e) => {
 		const name = e.target.dataset.name;
-		const nameState = this.state.setting.isContentSetting;
+		const nameState = this.props.note.navMenu.isContentSetting;
 		if (name === nameState) {
-			this.setState((prevState) => ({
-				setting: {
-					...prevState.setting,
-					isContentSetting: null,
-				}
-			}))
+			this.props.showNavMenu(null)
+			// this.setState((prevState) => ({
+			// 	setting: {
+			// 		...prevState.setting,
+			// 		isContentSetting: null,
+			// 	}
+			// }))
 		}else {
-			this.setState((prevState) => ({
-				setting: {
-					...prevState.setting,
-					isContentSetting: name,
-				}
-			}))
+			this.props.showNavMenu(name)
+			// this.setState((prevState) => ({
+			// 	setting: {
+			// 		...prevState.setting,
+			// 		isContentSetting: name,
+			// 	}
+			// }))
 		}
 	}
 
@@ -74,13 +67,15 @@ class NavMenu extends Component {
 
 	render () {
 		const {
-			setting,
+			// setting,
 			newTitleChapter,
 		} = this.state;
 
 		const {
 			note,
 		} = this.props;
+
+		const setting = note.navMenu;
 
 		return (
 			<div className="nav-menu">
@@ -159,6 +154,7 @@ NavMenu.propType = {
 	note: PropTypes.object,
   selectChapter: PropTypes.func,
 	createNewChapter: PropTypes.func,
+	showNavMenu: PropTypes.func,
 }
 
 function mapStateToProps(state) {
@@ -171,5 +167,6 @@ export default connect(
 	{
 		createNewChapter,
 		selectChapter,
+		showNavMenu,
 	}
 )(NavMenu);

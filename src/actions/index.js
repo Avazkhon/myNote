@@ -6,6 +6,7 @@ import {
 	DELETE_NOTE,
 	SELECT_CHAPTER,
 	CREATE_NEW_CHPATER,
+	SHOW_NAV_MENU,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -67,5 +68,12 @@ export function selectChapter(id) {
 	return ({
 		type: SELECT_CHAPTER,
 		activeChapter: id,
+	})
+}
+
+export function showNavMenu(name) {
+	return ({
+		type: SHOW_NAV_MENU,
+		name
 	})
 }

@@ -7,6 +7,7 @@ import {
 	DELETE_NOTE,
 	SELECT_CHAPTER,
 	CREATE_NEW_CHPATER,
+	SHOW_NAV_MENU,
 } from '../constants/index';
 
 let initState = load({'namespace': 'reduxState'})
@@ -45,6 +46,16 @@ if (!initState || !initState.note) {
 						title: 'Select note',
 						name: 'isShowSelectNote'
 					}
+				]
+			},
+			navMenu: {
+				isContentSetting: false,
+				itemsSetting: [
+					{
+						id: 1,
+						title: 'Create chapter',
+						name: 'isShowCreateNewChapter'
+					},
 				]
 			}
 		}
@@ -161,6 +172,16 @@ export function note(state = initState.note, action) {
 			mainSetting:{
 				...state.mainSetting,
 				isContentSetting: action.nameSetting,
+			}
+		}
+	}
+
+	if (action.type === SHOW_NAV_MENU) {
+		return {
+			...state,
+			navMenu:{
+				...state.navMenu,
+				isContentSetting: action.name,
 			}
 		}
 	}

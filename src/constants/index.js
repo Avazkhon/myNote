@@ -1,6 +1,7 @@
 export const CREATE_NEW_NOTE = 'CREATE_NEW_NOTE';
 export const SELECT_NOTE = 'SELECT_NOTE';
 export const SELECT_SETTING = 'SELECT_SETTING';
+export const SHOW_NAV_MENU = 'SHOW_NAV_MENU';
 export const SELECT_CHAPTER = 'SELECT_CHAPTER';
 export const CREATE_NEW_CHPATER = 'CREATE_NEW_CHPATER';
 
