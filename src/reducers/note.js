@@ -32,7 +32,7 @@ if (!initState || !initState.note) {
 					]
 				},
 			],
-			setting: {
+			mainSetting: {
 				isContentSetting: null,
 				itemsSetting: [
 					{
@@ -158,8 +158,8 @@ export function note(state = initState.note, action) {
 	if (action.type === SELECT_SETTING) {
 		return {
 			...state,
-			setting:{
-				...state.setting,
+			mainSetting:{
+				...state.mainSetting,
 				isContentSetting: action.nameSetting,
 			}
 		}

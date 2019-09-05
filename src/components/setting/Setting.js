@@ -111,7 +111,7 @@ class Setting extends Component {
         {
 					isSettingShow &&
 					<DropList
-						arr={note.setting.itemsSetting}
+						arr={note.mainSetting.itemsSetting}
 						onClick={this.handleChengeIsShow}
 						componentClassName="main-note_setting-buttons"
 						elementClassName="main-note_button"
@@ -119,7 +119,7 @@ class Setting extends Component {
 					/>
         }
 				<div className="main-note__setting-form" >
-					{ (note.setting.isContentSetting === 'isShowCreateNewNote') &&
+					{ (note.mainSetting.isContentSetting === 'isShowCreateNewNote') &&
 						<div>
 							<div>Title for new note</div>
 							<input
@@ -135,7 +135,7 @@ class Setting extends Component {
 			       />
 						</div>
 					}
-					{(note.setting.isContentSetting === 'isShowSelectNote') &&
+					{(note.mainSetting.isContentSetting === 'isShowSelectNote') &&
 
 					<DropList
 						arr={note.noteItems}
