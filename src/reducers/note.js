@@ -10,57 +10,9 @@ import {
 	SHOW_NAV_MENU,
 } from '../constants/index';
 
-let initState = load({'namespace': 'reduxState'})
+import getInitState from './getInitState';
 
-if (!initState || !initState.note) {
-	const id = Date.now();
-	initState = {
-		note: {
-			activeNote: {id: null},
-			noteItems: [
-				{
-					id,
-					text: 'tar tar',
-					title: 'tar tar',
-					createDate: Date(Date.now()),
-					activeChapter: id,
-					chapters: [
-						{
-							title: 'tar tares',
-							text: 'more tar tares',
-							id: Date.now() + 27,
-						}
-					]
-				},
-			],
-			mainSetting: {
-				isContentSetting: null,
-				itemsSetting: [
-					{
-						id: 1,
-						title: 'New note',
-						name: 'isShowCreateNewNote'
-					},
-					{
-						id: 2,
-						title: 'Select note',
-						name: 'isShowSelectNote'
-					}
-				]
-			},
-			navMenu: {
-				isContentSetting: false,
-				itemsSetting: [
-					{
-						id: 1,
-						title: 'Create chapter',
-						name: 'isShowCreateNewChapter'
-					},
-				]
-			}
-		}
-	};
-};
+const initState = getInitState(load({'namespace': 'reduxState'}));
 
 export function note(state = initState.note, action) {
 	if (action.type === CREATE_NEW_NOTE) {

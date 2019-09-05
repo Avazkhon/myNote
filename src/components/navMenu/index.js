@@ -30,20 +30,8 @@ class NavMenu extends Component {
 		const nameState = this.props.note.navMenu.isContentSetting;
 		if (name === nameState) {
 			this.props.showNavMenu(null)
-			// this.setState((prevState) => ({
-			// 	setting: {
-			// 		...prevState.setting,
-			// 		isContentSetting: null,
-			// 	}
-			// }))
 		}else {
 			this.props.showNavMenu(name)
-			// this.setState((prevState) => ({
-			// 	setting: {
-			// 		...prevState.setting,
-			// 		isContentSetting: name,
-			// 	}
-			// }))
 		}
 	}
 
@@ -56,7 +44,7 @@ class NavMenu extends Component {
 	handleCreateNewNote = (e) => {
 		const chapter =	{
 			title: this.state.newTitleChapter,
-			text: 'more tar tares',
+			text: '',
 			id: Date.now() + 27,
 		}
 		const id = this.props.note.activeNote.id;
