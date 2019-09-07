@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import './nav_menu.css';
 
+import DropList from 'widget/DropList'
 import CreateNewChaper from './components/CreateNewChaper';
 import Chapters from './components/Chapters'
-import DropList from '../DropList'
 
 import {
 	createNewChapter,

@@ -5,9 +5,9 @@ import {
 	createNewNote,
 	selectNote,
 	selectSetting,
-} from '../../actions/index'
+} from 'actions/index'
 
-import DropList from '../DropList';
+import DropList from 'widget/DropList';
 
 class Setting extends Component {
   constructor(props) {
