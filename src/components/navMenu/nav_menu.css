@@ -22,7 +22,23 @@
   cursor: pointer;
 }
 
+.nav-menu__item{
+  display: flow-root;
+  height: 25px;
+}
+
+/* .nav-menu__item:hover .chapter-dropList {
+  visibility: visible;
+} */
+
+.nav-menu_chapter {
+  float: left;
+  width: 90%;
+}
+
 .nav-menu_active-chapter {
+  float: left;
+  width: 90%;
   background-color:	#B0C4DE;
   cursor: pointer;
 }

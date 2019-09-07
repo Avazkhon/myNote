@@ -10,6 +10,8 @@ import {
 
 import DropList from 'widget/DropList';
 
+import '../style/chapter.css'
+
 class Chapters extends Component {
 
 	handleSelectchapter = (e) => {
@@ -48,15 +50,17 @@ class Chapters extends Component {
   				{note.activeNote.chapters.length >= 1 &&
   					note.activeNote.chapters.map((chapter) => {
   					return (
-  						<li key={chapter.id}>
+  						<li key={chapter.id} className="nav-menu__item">
+
   							<div
-  								className={chapter.id === note.activeNote.activeChapter ? 'nav-menu_active-chapter' : ''}
+  								className={chapter.id === note.activeNote.activeChapter ? 'nav-menu_active-chapter' : 'nav-menu_chapter'}
   								data-id={chapter.id}
   								onClick={this.handleSelectchapter}
   							>
   								{chapter.title}
   							</div>
-								<div>
+
+								<div className="chapter-dropList">
 									<div data-name={chapter.title} onClick={this.handleShowSettingChapter}>#</div>
 									{note.chapterSetting.isContentSetting === chapter.title &&
 										<DropList
@@ -69,6 +73,7 @@ class Chapters extends Component {
 										/>
 									}
 								</div>
+
   						</li>
   					)
   					})
