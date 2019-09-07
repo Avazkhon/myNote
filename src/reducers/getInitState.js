@@ -44,7 +44,17 @@ export default (initState) => {
   						name: 'isShowCreateNewChapter'
   					},
   				]
-  			}
+  			},
+        chapterSetting: {
+          isContentSetting: false,
+          itemsSetting: [
+            {
+              id: 1,
+              title: 'Create chapter',
+              name: 'isShowCreateNewChapter'
+            },
+          ]
+        }
   		}
   	};
   }else {

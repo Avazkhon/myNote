@@ -7,6 +7,7 @@ import {
 	SELECT_CHAPTER,
 	CREATE_NEW_CHPATER,
 	SHOW_NAV_MENU,
+	SELECT_SETTING_ALL,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -14,6 +15,16 @@ export function selectSetting(nameSetting) {
 		{
 			type: SELECT_SETTING,
 			nameSetting
+		}
+	)
+};
+
+export function selectSettingAll(nameSetting, isContentSetting) {
+	return (
+		{
+			type: SELECT_SETTING_ALL,
+			nameSetting,
+			isContentSetting,
 		}
 	)
 };

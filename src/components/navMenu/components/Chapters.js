@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import {
 	selectChapter,
+	selectSettingAll,
 } from 'actions/index';
 
 class Chapters extends Component {
@@ -11,6 +12,11 @@ class Chapters extends Component {
 	handleSelectchapter = (e) => {
 		const id = e.target.dataset.id;
 		this.props.selectChapter(Number(id))
+	}
+
+	handleShowSettingChapter = (e) => {
+		const { name } = e.target.dataset;
+		this.props.selectSettingAll('chapterSetting', name)
 	}
 
 	render () {
@@ -41,6 +47,14 @@ class Chapters extends Component {
   							>
   								{chapter.title}
   							</div>
+								<div>
+									<div data-name={chapter.title} onClick={this.handleShowSettingChapter}>#</div>
+									{note.chapterSetting.isContentSetting === chapter.title &&
+										<div>
+										hello worrld
+										</div>
+									}
+								</div>
   						</li>
   					)
   					})
@@ -53,6 +67,7 @@ class Chapters extends Component {
 
 Chapters.propType = {
 	note: PropTypes.object,
+	selectSettingAll: PropTypes.func,
 }
 
 function mapStateToProps(state) {
@@ -64,5 +79,6 @@ export default connect(
 	mapStateToProps,
 	{
 		selectChapter,
+		selectSettingAll,
 	}
 )(Chapters);

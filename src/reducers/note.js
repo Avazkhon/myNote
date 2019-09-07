@@ -8,6 +8,7 @@ import {
 	SELECT_CHAPTER,
 	CREATE_NEW_CHPATER,
 	SHOW_NAV_MENU,
+	SELECT_SETTING_ALL,
 } from '../constants/index';
 
 import getInitState from './getInitState';
@@ -51,7 +52,6 @@ export function note(state = initState.note, action) {
 	}
 
 	if (action.type === SAVE_NOTE) {
-		console.log(state.activeNote.activeChapter === action.id ? action.text : note.text)
 		return {
 			...state,
 			activeNote: {
@@ -124,6 +124,21 @@ export function note(state = initState.note, action) {
 			mainSetting:{
 				...state.mainSetting,
 				isContentSetting: action.nameSetting,
+			}
+		}
+	}
+
+	if (action.type === SELECT_SETTING_ALL) {
+		let isContentSetting = action.isContentSetting;
+		if (state[action.nameSetting].isContentSetting === action.isContentSetting) {
+			isContentSetting = null;
+		}
+
+		return {
+			...state,
+			[action.nameSetting]:{
+				...state[action.nameSetting],
+				isContentSetting: isContentSetting,
 			}
 		}
 	}
