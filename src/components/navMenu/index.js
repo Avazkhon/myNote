@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import './nav_menu.css';
 
+import CreateNewChaper from './components/CreateNewChaper';
 import DropList from '../DropList'
 
 import {
@@ -84,6 +85,12 @@ class NavMenu extends Component {
 				{
 					note.activeNote.id &&
 					<div>
+						{
+							(setting.isContentSetting === 'isShowCreateNewChapter') &&
+							<CreateNewChaper
+
+							/>
+						}
 						<div
 						className={`nav-menu-maine-text ${note.activeNote.id === note.activeNote.activeChapter ? 'nav-menu_active-chapter' : ''}`}
 						data-id={note.activeNote.id}
@@ -91,29 +98,6 @@ class NavMenu extends Component {
 						>
 							main text
 						</div>
-						{
-							(setting.isContentSetting === 'isShowCreateNewChapter') &&
-							<div>
-								<div>Title for new note</div>
-								<input
-									type='text'
-									name='newTitleChapter'
-									value={newTitleChapter}
-									onChange={this.handleChenge}/>
-								<input
-									className="main-note_button"
-									type='button'
-									value='create new note'
-									onClick={this.handleCreateNewNote}
-							 />
-							 <input
-								 className="main-note_button"
-								 type='button'
-								 value='X'
-								 onClick={this.handleShowSetting}
-							/>
-							</div>
-						}
 						<ul className="nav-menu__items">
 							{note.activeNote.chapters.length >= 1 &&
 								note.activeNote.chapters.map((chapter) => {
