@@ -50,8 +50,8 @@ export default (initState) => {
           itemsSetting: [
             {
               id: 1,
-              title: 'Create chapter',
-              name: 'isShowCreateNewChapter'
+              title: 'Delete chapter',
+              name: 'deleteChapter'
             },
           ]
         }

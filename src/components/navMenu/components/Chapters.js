@@ -7,6 +7,8 @@ import {
 	selectSettingAll,
 } from 'actions/index';
 
+import DropList from 'widget/DropList';
+
 class Chapters extends Component {
 
 	handleSelectchapter = (e) => {
@@ -17,6 +19,11 @@ class Chapters extends Component {
 	handleShowSettingChapter = (e) => {
 		const { name } = e.target.dataset;
 		this.props.selectSettingAll('chapterSetting', name)
+	}
+
+	handleChengeChpater = (e) => {
+		const name = e.target.dataset.name;
+		console.log(name)
 	}
 
 	render () {
@@ -50,9 +57,13 @@ class Chapters extends Component {
 								<div>
 									<div data-name={chapter.title} onClick={this.handleShowSettingChapter}>#</div>
 									{note.chapterSetting.isContentSetting === chapter.title &&
-										<div>
-										hello worrld
-										</div>
+										<DropList
+											arr={note.chapterSetting.itemsSetting}
+											onClick={this.handleChengeChpater}
+											componentClassName="main-note_setting-buttons"
+											elementClassName="main-note_button"
+											title="Chapter Setting"
+										/>
 									}
 								</div>
   						</li>
