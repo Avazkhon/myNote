@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {
 	selectChapter,
 	selectSettingAll,
+	deleteChapter,
 } from 'actions/index';
 
 import DropList from 'widget/DropList';
@@ -22,8 +23,9 @@ class Chapters extends Component {
 	}
 
 	handleChengeChpater = (e) => {
-		const name = e.target.dataset.name;
-		console.log(name)
+		const idNote = this.props.note.activeNote.id;
+		const id_chapter = Number(e.target.dataset.id_chapter);
+		this.props.deleteChapter(idNote, id_chapter)
 	}
 
 	render () {
@@ -58,6 +60,7 @@ class Chapters extends Component {
 									<div data-name={chapter.title} onClick={this.handleShowSettingChapter}>#</div>
 									{note.chapterSetting.isContentSetting === chapter.title &&
 										<DropList
+											idChapter={chapter.id}
 											arr={note.chapterSetting.itemsSetting}
 											onClick={this.handleChengeChpater}
 											componentClassName="main-note_setting-buttons"
@@ -91,5 +94,6 @@ export default connect(
 	{
 		selectChapter,
 		selectSettingAll,
+		deleteChapter,
 	}
 )(Chapters);

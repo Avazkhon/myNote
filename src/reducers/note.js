@@ -9,6 +9,7 @@ import {
 	CREATE_NEW_CHPATER,
 	SHOW_NAV_MENU,
 	SELECT_SETTING_ALL,
+	DELETE_CHAPTER,
 } from '../constants/index';
 
 import getInitState from './getInitState';
@@ -100,6 +101,30 @@ export function note(state = initState.note, action) {
 			]
 		}
 	}
+
+	if (action.type === DELETE_CHAPTER) {
+		const activeNote = [
+			...state.noteItems.filter( note => {
+				if (note.id === action.idNote) {
+					note.chapters = [
+							...note.chapters.filter( chapter => chapter.id !== action.idChapter)
+					]
+				}
+				return note
+			})
+		];
+
+		return {
+			...state,
+			activeNote: {
+				...state.activeNote,
+				chapters: [...state.activeNote.chapters.filter( chapter => chapter.id !== action.idChapter)]
+			},
+
+			noteItems: [...activeNote]
+		}
+	}
+
 
 	if (action.type === SELECT_NOTE) {
 		return {

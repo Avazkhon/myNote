@@ -8,6 +8,7 @@ import {
 	CREATE_NEW_CHPATER,
 	SHOW_NAV_MENU,
 	SELECT_SETTING_ALL,
+	DELETE_CHAPTER,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -64,6 +65,16 @@ export function deleteNote(id) {
 		{
 			type: DELETE_NOTE,
 			id,
+		}
+	)
+};
+
+export function deleteChapter(idNote, idChapter) {
+	return (
+		{
+			type: DELETE_CHAPTER,
+			idNote,
+			idChapter,
 		}
 	)
 };

@@ -8,3 +8,4 @@ export const CREATE_NEW_CHPATER = 'CREATE_NEW_CHPATER';
 
 export const SAVE_NOTE = 'SAVE_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
+export const DELETE_CHAPTER = 'DELETE_CHAPTER';
