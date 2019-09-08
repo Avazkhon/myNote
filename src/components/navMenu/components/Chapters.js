@@ -14,6 +14,14 @@ import '../style/chapter.css'
 
 class Chapters extends Component {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			idInput: '',
+			changeTitle: '',
+		}
+	}
+
 	handleSelectchapter = (e) => {
 		const id = e.target.dataset.id;
 		this.props.selectChapter(Number(id))
@@ -30,12 +38,28 @@ class Chapters extends Component {
 		this.props.deleteChapter(idNote, id_chapter)
 	}
 
+	getInput = (e) => {
+		const id = Number(e.target.dataset.id);
+		const title = e.target.dataset.title;
+		// console.log(e.target.dataset)
+		this.setState({idInput: id, changeTitle: title}, () => console.log(this.state));
+	}
+
+	handleChangeTitleChapter = (e) => {
+		const title = e.target.value
+		this.setState({changeTitle: title})
+	}
+
 	render () {
 
 		const {
 			note,
 		} = this.props;
 
+		const {
+			idInput,
+			changeTitle,
+		} = this.state
 
 		return (
       <div>
@@ -50,14 +74,26 @@ class Chapters extends Component {
   				{note.activeNote.chapters.length >= 1 &&
   					note.activeNote.chapters.map((chapter) => {
   					return (
-  						<li key={chapter.id} className="nav-menu__item">
+  						<li
+								className="nav-menu__item"
+								key={chapter.id}
+								onDoubleClick={this.getInput}
+							>
 
   							<div
   								className={chapter.id === note.activeNote.activeChapter ? 'nav-menu_active-chapter' : 'nav-menu_chapter'}
   								data-id={chapter.id}
+									data-title={chapter.title}
   								onClick={this.handleSelectchapter}
   							>
-  								{chapter.title}
+  								{!(idInput === chapter.id) && chapter.title}
+
+									{ idInput === chapter.id &&
+										<input
+											value={changeTitle}
+											onChange={this.handleChangeTitleChapter}
+										/>
+									}
   							</div>
 
 								<div className="chapter-dropList">

@@ -144,11 +144,12 @@ export function note(state = initState.note, action) {
 	}
 
 	if (action.type === SELECT_SETTING) {
+		const isContentSetting = action.nameSetting ? action.nameSetting : null;
 		return {
 			...state,
 			mainSetting:{
 				...state.mainSetting,
-				isContentSetting: action.nameSetting,
+				isContentSetting: isContentSetting,
 			}
 		}
 	}
