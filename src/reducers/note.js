@@ -5,56 +5,51 @@ import {
 	SELECT_NOTE,
 	SELECT_SETTING,
 	DELETE_NOTE,
+	SELECT_CHAPTER,
+	CREATE_NEW_CHPATER,
+	SHOW_NAV_MENU,
+	SELECT_SETTING_ALL,
+	DELETE_CHAPTER,
+	CHANGE_TITLE_CHAPTER,
+	CHANGE_TITLE_NOTE,
 } from '../constants/index';
 
-let initState = load({'namespace': 'reduxState'})
+import getInitState from './getInitState';
 
-if (!initState || !initState.note) {
-	initState = {
-		note: {
-			activeNote: {id: null},
-			noteItems: [
-				{
-					id: 1,
-					text: 'tar tar',
-					title: 'tar tar',
-				},
-			],
-			setting: {
-				isContentSetting: null,
-				itemsSetting: [
-					{
-						id: 1,
-						title: 'New note',
-						name: 'isShowCreateNewNote'
-					},
-					{
-						id: 2,
-						title: 'Select note',
-						name: 'isShowSelectNote'
-					}
-				]
-			}
-		}
-	};
-};
+const initState = getInitState(load({'namespace': 'reduxState'}));
 
 export function note(state = initState.note, action) {
 	if (action.type === CREATE_NEW_NOTE) {
 		return {
 			...state,
-			activeNote: {
-				id: action.id,
-				text: action.text,
-				title: action.title,
-			},
+			activeNote: action.note,
 			noteItems: [
 			...state.noteItems,
-				{
-					id: action.id,
-					text: action.text,
-					title: action.title,
-				}
+				action.note,
+			]
+		}
+	}
+
+	if (action.type === CREATE_NEW_CHPATER) {
+		return {
+			...state,
+			activeNote:{
+				...state.activeNote,
+				chapters: [
+					...state.activeNote.chapters,
+					action.chapter,
+				],
+			},
+			noteItems: [
+				...state.noteItems.filter((note) => {
+					if (note.id === Number(action.id)) {
+						note.chapters = [
+							...note.chapters,
+							action.chapter,
+						]
+					}
+					return note;
+				})
 			]
 		}
 	}
@@ -62,12 +57,35 @@ export function note(state = initState.note, action) {
 	if (action.type === SAVE_NOTE) {
 		return {
 			...state,
+			activeNote: {
+				...state.activeNote,
+				text: state.activeNote.activeChapter === action.id ? action.text : state.activeNote.text,
+				chapters: state.activeNote.chapters.map((chapter) => {
+					if (chapter.id === action.activeChapter) {
+						return ({
+							...chapter,
+							text: action.text,
+						})
+					}
+					return chapter;
+				}),
+				activeChapter: action.activeChapter,
+			},
 			noteItems: [
 				...state.noteItems.map((note)=> {
 					if (note.id === Number(action.id)) {
 						return {
 							...note,
-							text: action.text
+							text: action.activeChapter === action.id ? action.text : note.text,
+							chapters: note.chapters.map((chapter) => {
+								if (chapter.id === action.activeChapter) {
+									return ({
+										...chapter,
+										text: action.text,
+									})
+								}
+								return chapter;
+							})
 						}
 					}
 					return note
@@ -86,6 +104,30 @@ export function note(state = initState.note, action) {
 		}
 	}
 
+	if (action.type === DELETE_CHAPTER) {
+		const activeNote = [
+			...state.noteItems.filter( note => {
+				if (note.id === action.idNote) {
+					note.chapters = [
+							...note.chapters.filter( chapter => chapter.id !== action.idChapter)
+					]
+				}
+				return note
+			})
+		];
+
+		return {
+			...state,
+			activeNote: {
+				...state.activeNote,
+				chapters: [...state.activeNote.chapters.filter( chapter => chapter.id !== action.idChapter)]
+			},
+
+			noteItems: [...activeNote]
+		}
+	}
+
+
 	if (action.type === SELECT_NOTE) {
 		return {
 			...state,
@@ -93,15 +135,106 @@ export function note(state = initState.note, action) {
 		}
 	}
 
-	if (action.type === SELECT_SETTING) {
+	if (action.type === SELECT_CHAPTER) {
 		return {
 			...state,
-			setting:{
-				...state.setting,
-				isContentSetting: action.nameSetting,
+			activeNote: {
+				...state.activeNote,
+				activeChapter: action.activeChapter,
 			}
 		}
 	}
+
+	if (action.type === SELECT_SETTING) {
+		const isContentSetting = action.nameSetting ? action.nameSetting : null;
+		return {
+			...state,
+			mainSetting:{
+				...state.mainSetting,
+				isContentSetting: isContentSetting,
+			}
+		}
+	}
+
+	if (action.type === SELECT_SETTING_ALL) {
+		let isContentSetting = action.isContentSetting;
+		if (state[action.nameSetting].isContentSetting === action.isContentSetting) {
+			isContentSetting = null;
+		}
+
+		return {
+			...state,
+			[action.nameSetting]:{
+				...state[action.nameSetting],
+				isContentSetting: isContentSetting,
+			}
+		}
+	}
+
+	if (action.type === SHOW_NAV_MENU) {
+		return {
+			...state,
+			navMenu:{
+				...state.navMenu,
+				isContentSetting: action.name,
+			}
+		}
+	}
+
+
+	if (action.type === CHANGE_TITLE_CHAPTER) {
+		return {
+			...state,
+			activeNote: {
+				...state.activeNote,
+				chapters: [...state.activeNote.chapters.map( chapter => {
+					if (chapter.id === action.idChapter) {
+						chapter.title = action.title
+					}
+					return chapter
+				})]
+			},
+
+			noteItems: [
+				...state.noteItems.map( note => {
+					if (note.id === action.idNote) {
+
+						note.chapters = [
+							...note.chapters.map( chapter => {
+								if (chapter.id === action.idChapter) {
+									chapter.title = action.title
+								}
+								return chapter
+							})
+						]
+					}
+
+					return note
+				})
+			],
+		}
+	}
+
+	if (action.type === CHANGE_TITLE_NOTE) {
+		return {
+			...state,
+			activeNote: {
+				...state.activeNote,
+				title: action.title,
+			},
+
+			noteItems: [
+				...state.noteItems.map( note => {
+					if (note.id === action.idNote) {
+						note.title = action.title
+					}
+
+					return note
+				})
+			],
+		}
+	}
+
 
 	return state
 };

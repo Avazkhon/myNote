@@ -5,9 +5,9 @@ import {
 	createNewNote,
 	selectNote,
 	selectSetting,
-} from '../../actions/index'
+} from 'actions/index'
 
-import DropList from '../DropList';
+import DropList from 'widget/DropList';
 
 class Setting extends Component {
   constructor(props) {
@@ -39,8 +39,23 @@ class Setting extends Component {
 	handleCreateNewNote = () => {
 		const id = Date.now();
 		const title = this.state.newTitleNote;
+		const note = {
+			id,
+			title,
+			text: '',
+			createDate: Date(Date.now()),
+			activeChapter: id,
+			chapters: [
+				{
+					title: 'no name',
+					text: '',
+					id: id + 1010,
+				}
+			],
+		}
+
 		if (title.length >= 2) {
-			this.props.createNewNote(id, '', title)
+			this.props.createNewNote(note)
 			this.setState( prevProps =>(
 				{
 					chengeTetxId: id,
@@ -96,7 +111,7 @@ class Setting extends Component {
         {
 					isSettingShow &&
 					<DropList
-						arr={note.setting.itemsSetting}
+						arr={note.mainSetting.itemsSetting}
 						onClick={this.handleChengeIsShow}
 						componentClassName="main-note_setting-buttons"
 						elementClassName="main-note_button"
@@ -104,7 +119,7 @@ class Setting extends Component {
 					/>
         }
 				<div className="main-note__setting-form" >
-					{ (note.setting.isContentSetting === 'isShowCreateNewNote') &&
+					{ (note.mainSetting.isContentSetting === 'isShowCreateNewNote') &&
 						<div>
 							<div>Title for new note</div>
 							<input
@@ -120,7 +135,7 @@ class Setting extends Component {
 			       />
 						</div>
 					}
-					{(note.setting.isContentSetting === 'isShowSelectNote') &&
+					{(note.mainSetting.isContentSetting === 'isShowSelectNote') &&
 
 					<DropList
 						arr={note.noteItems}

@@ -7,11 +7,13 @@ import '../cssStyle/setting.css';
 import '../cssStyle/dropList.css'
 
 import Setting  from './setting/Setting';
+import NavMenu from './navMenu/index'
 
 import {
 	saveNote,
 	selectNote,
 	deleteNote,
+	changeTitleNote,
 } from '../actions/index'
 
 
@@ -20,24 +22,31 @@ class Main extends Component {
 		super(props);
 		this.state = {
 			newChengeTetx: '',
-			chengeTetxId: null,
+			idInput: '',
+			changeTitle: '',
 		}
 	}
 	componentDidMount() {
 		if (this.props.note.activeNote) {
 			this.setState({
 				newChengeTetx: this.props.note.activeNote.text,
-				chengeTetxId: this.props.note.activeNote.id,
 			});
 		}
 	}
 	componentWillReceiveProps(nexProps) {
 
 		if (nexProps.note.activeNote.id) {
-			this.setState((p) => ({
-				newChengeTetx: nexProps.note.activeNote.text,
-				chengeTetxId: nexProps.note.activeNote.id,
-			}));
+			if (nexProps.note.activeNote.id === nexProps.note.activeNote.activeChapter) {
+				this.setState((p) => ({
+					newChengeTetx: nexProps.note.activeNote.text,
+				}));
+			} else {
+				const chapter = nexProps.note.activeNote.chapters.find(chapter => chapter.id === nexProps.note.activeNote.activeChapter);
+				this.setState((p) => ({
+					newChengeTetx: chapter && chapter.text,
+				}));
+			}
+
 		}
 	}
 
@@ -49,15 +58,38 @@ class Main extends Component {
 
 
 	handleSave = () => {
-		const id = this.state.chengeTetxId;
+		const id = this.props.note.activeNote.id;
 		const text = this.state.newChengeTetx;
-		this.props.saveNote(id, text);
-		this.props.selectNote(id);
+		const activeChapter = this.props.note.activeNote.activeChapter;
+		this.props.saveNote(id, text, activeChapter);
+		// this.props.selectNote(id);
 	}
 
 	handleDelete = () => {
 		const id = this.props.note.activeNote.id;
 		this.props.deleteNote(id);
+	}
+
+
+	getInput = (e) => {
+		const id = Number(e.target.dataset.id);
+		const title = e.target.dataset.title;
+		this.setState({idInput: id, changeTitle: title});
+	}
+
+	handleChangeTitleNote = (e) => {
+		const title = e.target.value
+		this.setState({changeTitle: title})
+	}
+
+	pressEnter = (e) => {
+		if (e.key === 'Enter') {
+			const idNote = this.props.note.activeNote.id;
+			const value = e.target.value;
+			this.props.changeTitleNote(idNote, value)
+			this.setState({idInput: null, changeTitle: ''});
+
+		}
 	}
 
 
@@ -68,28 +100,54 @@ class Main extends Component {
 
 		const {
 			newChengeTetx,
+			idInput,
+			changeTitle,
 		} = this.state;
 
 		return (
 			<div className="main-note">
 				<Setting />
-				<div className="note-canvas">
-					<h3>Note</h3>
-					{note.activeNote.id &&
-						<div>
-							<div>{note.activeNote.title}</div>
-							<textarea
-								className="main-note__main-text"
-								name="newChengeTetx"
-								value={newChengeTetx}
-								onChange={this.handleChenge}
+				<div className="note-content" >
+					<div>
+						<NavMenu />
+					</div>
+					<div className="note-canvas">
+						<h3>Note</h3>
+						{note.activeNote.id &&
+							<div>
+								<div
+									data-id={note.activeNote.id}
+									data-title={note.activeNote.title}
+									onDoubleClick={this.getInput}
+								>
+								{!(idInput === note.activeNote.id) && note.activeNote.title}
+
+								{ idInput === note.activeNote.id &&
+									<input
+										name={note.activeNote.id}
+										type="text"
+										value={changeTitle}
+										onChange={this.handleChangeTitleNote}
+										onKeyPress={this.pressEnter}
+									/>
+								}
+								</div>
+								<textarea
+									className="main-note__main-text"
+									name="newChengeTetx"
+									value={newChengeTetx}
+									onChange={this.handleChenge}
 								/>
-							<input
-								className="main-note_button"
-								type='button'
-								value='save'
-								onClick={this.handleSave}
-								/>
+							</div>
+						}
+						{ note.activeNote.id &&
+							<div className="main-note_btn-gruop ">
+								<input
+									className="main-note_button"
+									type='button'
+									value='save'
+									onClick={this.handleSave}
+									/>
 								{note.activeNote.id &&
 
 									<input
@@ -99,10 +157,11 @@ class Main extends Component {
 										onClick={this.handleDelete}
 									/>
 								}
-						</div>
-					}
+							</div>
+						}
+					</div>
 				</div>
-		</div>
+			</div>
 		)
 	}
 }
@@ -116,4 +175,5 @@ export default connect(mapStateToProps, {
 	saveNote,
 	selectNote,
 	deleteNote,
+	changeTitleNote,
 })(Main);
