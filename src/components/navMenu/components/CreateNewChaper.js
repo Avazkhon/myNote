@@ -48,12 +48,6 @@ class CreateNewChapter extends Component {
 			newTitleChapter,
 		} = this.state;
 
-		const {
-			note,
-		} = this.props;
-
-		const setting = note.navMenu;
-
 		return (
 
 			<div>
