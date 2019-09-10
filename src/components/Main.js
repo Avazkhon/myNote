@@ -13,6 +13,7 @@ import {
 	saveNote,
 	selectNote,
 	deleteNote,
+	changeTitleNote,
 } from '../actions/index'
 
 
@@ -21,6 +22,8 @@ class Main extends Component {
 		super(props);
 		this.state = {
 			newChengeTetx: '',
+			idInput: '',
+			changeTitle: '',
 		}
 	}
 	componentDidMount() {
@@ -68,6 +71,28 @@ class Main extends Component {
 	}
 
 
+	getInput = (e) => {
+		const id = Number(e.target.dataset.id);
+		const title = e.target.dataset.title;
+		this.setState({idInput: id, changeTitle: title});
+	}
+
+	handleChangeTitleNote = (e) => {
+		const title = e.target.value
+		this.setState({changeTitle: title})
+	}
+
+	pressEnter = (e) => {
+		if (e.key === 'Enter') {
+			const idNote = this.props.note.activeNote.id;
+			const value = e.target.value;
+			this.props.changeTitleNote(idNote, value)
+			this.setState({idInput: null, changeTitle: ''});
+
+		}
+	}
+
+
 	render () {
 		const {
 			note,
@@ -75,6 +100,8 @@ class Main extends Component {
 
 		const {
 			newChengeTetx,
+			idInput,
+			changeTitle,
 		} = this.state;
 
 		return (
@@ -88,7 +115,23 @@ class Main extends Component {
 						<h3>Note</h3>
 						{note.activeNote.id &&
 							<div>
-								<div>{note.activeNote.title}</div>
+								<div
+									data-id={note.activeNote.id}
+									data-title={note.activeNote.title}
+									onDoubleClick={this.getInput}
+								>
+								{!(idInput === note.activeNote.id) && note.activeNote.title}
+
+								{ idInput === note.activeNote.id &&
+									<input
+										name={note.activeNote.id}
+										type="text"
+										value={changeTitle}
+										onChange={this.handleChangeTitleNote}
+										onKeyPress={this.pressEnter}
+									/>
+								}
+								</div>
 								<textarea
 									className="main-note__main-text"
 									name="newChengeTetx"
@@ -132,4 +175,5 @@ export default connect(mapStateToProps, {
 	saveNote,
 	selectNote,
 	deleteNote,
+	changeTitleNote,
 })(Main);

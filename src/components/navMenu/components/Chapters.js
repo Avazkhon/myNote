@@ -42,7 +42,6 @@ class Chapters extends Component {
 	getInput = (e) => {
 		const id = Number(e.target.dataset.id);
 		const title = e.target.dataset.title;
-		// console.log(e.target.dataset)
 		this.setState({idInput: id, changeTitle: title});
 	}
 
@@ -56,7 +55,6 @@ class Chapters extends Component {
 			const idNote = this.props.note.activeNote.id;
 			const idChapter = Number(e.target.name);
 			const value = e.target.value;
-			console.log(idNote, idChapter, value)
 			this.props.changeTitleChapter(idNote, idChapter, value)
 			this.setState({idInput: null, changeTitle: ''});
 

@@ -10,6 +10,7 @@ import {
 	SELECT_SETTING_ALL,
 	DELETE_CHAPTER,
 	CHANGE_TITLE_CHAPTER,
+	CHANGE_TITLE_NOTE,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -106,6 +107,14 @@ export function changeTitleChapter(idNote, idChapter, title) {
 		type: CHANGE_TITLE_CHAPTER,
 		idNote,
 		idChapter,
+		title
+	})
+}
+
+export function changeTitleNote(idNote, title) {
+	return ({
+		type: CHANGE_TITLE_NOTE,
+		idNote,
 		title
 	})
 }

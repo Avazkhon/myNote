@@ -11,6 +11,7 @@ import {
 	SELECT_SETTING_ALL,
 	DELETE_CHAPTER,
 	CHANGE_TITLE_CHAPTER,
+	CHANGE_TITLE_NOTE,
 } from '../constants/index';
 
 import getInitState from './getInitState';
@@ -201,7 +202,7 @@ export function note(state = initState.note, action) {
 						note.chapters = [
 							...note.chapters.map( chapter => {
 								if (chapter.id === action.idChapter) {
-									chapter.title = action.titie
+									chapter.title = action.title
 								}
 								return chapter
 							})
@@ -213,6 +214,27 @@ export function note(state = initState.note, action) {
 			],
 		}
 	}
+
+	if (action.type === CHANGE_TITLE_NOTE) {
+		return {
+			...state,
+			activeNote: {
+				...state.activeNote,
+				title: action.title,
+			},
+
+			noteItems: [
+				...state.noteItems.map( note => {
+					if (note.id === action.idNote) {
+						note.title = action.title
+					}
+
+					return note
+				})
+			],
+		}
+	}
+
 
 	return state
 };

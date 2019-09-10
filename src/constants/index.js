@@ -1,6 +1,7 @@
 export const CREATE_NEW_NOTE = 'CREATE_NEW_NOTE';
 export const SELECT_NOTE = 'SELECT_NOTE';
 export const SAVE_NOTE = 'SAVE_NOTE';
+export const CHANGE_TITLE_NOTE = 'CHANGE_TITLE_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
 
 export const SELECT_SETTING = 'SELECT_SETTING';
