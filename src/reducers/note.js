@@ -10,6 +10,7 @@ import {
 	SHOW_NAV_MENU,
 	SELECT_SETTING_ALL,
 	DELETE_CHAPTER,
+	CHANGE_TITLE_CHAPTER,
 } from '../constants/index';
 
 import getInitState from './getInitState';
@@ -176,6 +177,40 @@ export function note(state = initState.note, action) {
 				...state.navMenu,
 				isContentSetting: action.name,
 			}
+		}
+	}
+
+
+	if (action.type === CHANGE_TITLE_CHAPTER) {
+		return {
+			...state,
+			activeNote: {
+				...state.activeNote,
+				chapters: [...state.activeNote.chapters.map( chapter => {
+					if (chapter.id === action.idChapter) {
+						chapter.title = action.title
+					}
+					return chapter
+				})]
+			},
+
+			noteItems: [
+				...state.noteItems.map( note => {
+					if (note.id === action.idNote) {
+
+						note.chapters = [
+							...note.chapters.map( chapter => {
+								if (chapter.id === action.idChapter) {
+									chapter.title = action.titie
+								}
+								return chapter
+							})
+						]
+					}
+
+					return note
+				})
+			],
 		}
 	}
 

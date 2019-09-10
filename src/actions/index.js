@@ -9,6 +9,7 @@ import {
 	SHOW_NAV_MENU,
 	SELECT_SETTING_ALL,
 	DELETE_CHAPTER,
+	CHANGE_TITLE_CHAPTER,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -97,5 +98,14 @@ export function showNavMenu(name) {
 	return ({
 		type: SHOW_NAV_MENU,
 		name
+	})
+}
+
+export function changeTitleChapter(idNote, idChapter, title) {
+	return ({
+		type: CHANGE_TITLE_CHAPTER,
+		idNote,
+		idChapter,
+		title
 	})
 }

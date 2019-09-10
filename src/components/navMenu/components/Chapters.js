@@ -6,6 +6,7 @@ import {
 	selectChapter,
 	selectSettingAll,
 	deleteChapter,
+	changeTitleChapter,
 } from 'actions/index';
 
 import DropList from 'widget/DropList';
@@ -42,12 +43,24 @@ class Chapters extends Component {
 		const id = Number(e.target.dataset.id);
 		const title = e.target.dataset.title;
 		// console.log(e.target.dataset)
-		this.setState({idInput: id, changeTitle: title}, () => console.log(this.state));
+		this.setState({idInput: id, changeTitle: title});
 	}
 
 	handleChangeTitleChapter = (e) => {
 		const title = e.target.value
 		this.setState({changeTitle: title})
+	}
+
+	pressEnter = (e) => {
+		if (e.key === 'Enter') {
+			const idNote = this.props.note.activeNote.id;
+			const idChapter = Number(e.target.name);
+			const value = e.target.value;
+			console.log(idNote, idChapter, value)
+			this.props.changeTitleChapter(idNote, idChapter, value)
+			this.setState({idInput: null, changeTitle: ''});
+
+		}
 	}
 
 	render () {
@@ -90,8 +103,11 @@ class Chapters extends Component {
 
 									{ idInput === chapter.id &&
 										<input
+											name={chapter.id}
+											type="text"
 											value={changeTitle}
 											onChange={this.handleChangeTitleChapter}
+											onKeyPress={this.pressEnter}
 										/>
 									}
   							</div>
@@ -136,5 +152,6 @@ export default connect(
 		selectChapter,
 		selectSettingAll,
 		deleteChapter,
+		changeTitleChapter,
 	}
 )(Chapters);
