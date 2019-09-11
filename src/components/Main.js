@@ -106,6 +106,7 @@ class Main extends Component {
 			idInput,
 			changeTitle,
 		} = this.state;
+		const date = note.activeNote.id && note.activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
 
 		return (
 			<div className="main-note">
@@ -123,7 +124,8 @@ class Main extends Component {
 									data-title={note.activeNote.title}
 									onDoubleClick={this.getInput}
 								>
-								{!(idInput === note.activeNote.id) && note.activeNote.title}
+								{!(idInput === note.activeNote.id) && <div className="note_title" >{note.activeNote.title} </div>}
+								<div className="note_date" >create{date}</div>
 
 								{ idInput === note.activeNote.id &&
 									<input

@@ -7,6 +7,14 @@ ul li {
   min-width: 500px;
 }
 
+.note_title {
+  float: left;
+}
+
+.note_date {
+  float: right;
+}
+
 .main-note_button {
   border-radius: 5px;
   cursor: pointer;
