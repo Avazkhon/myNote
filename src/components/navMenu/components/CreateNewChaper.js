@@ -32,8 +32,12 @@ class CreateNewChapter extends Component {
 	}
 
 	handleCreateNewNote = (e) => {
+		const title = this.state.newTitleChapter
+		if (title.length <=1) {
+			return
+		}
 		const chapter =	{
-			title: this.state.newTitleChapter,
+			title,
 			text: '',
 			id: Date.now() + 27,
 		}

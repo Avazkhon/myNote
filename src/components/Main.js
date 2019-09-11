@@ -84,8 +84,11 @@ class Main extends Component {
 
 	pressEnter = (e) => {
 		if (e.key === 'Enter') {
-			const idNote = this.props.note.activeNote.id;
 			const value = e.target.value;
+			if (value.length <=1) {
+				return
+			}
+			const idNote = this.props.note.activeNote.id;
 			this.props.changeTitleNote(idNote, value)
 			this.setState({idInput: null, changeTitle: ''});
 

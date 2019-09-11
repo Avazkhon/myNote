@@ -52,9 +52,12 @@ class Chapters extends Component {
 
 	pressEnter = (e) => {
 		if (e.key === 'Enter') {
+			const value = e.target.value;
+			if (value.length <=1) {
+				return
+			}
 			const idNote = this.props.note.activeNote.id;
 			const idChapter = Number(e.target.name);
-			const value = e.target.value;
 			this.props.changeTitleChapter(idNote, idChapter, value)
 			this.setState({idInput: null, changeTitle: ''});
 
