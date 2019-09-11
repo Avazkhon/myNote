@@ -123,9 +123,9 @@ class Main extends Component {
 									data-id={note.activeNote.id}
 									data-title={note.activeNote.title}
 									onDoubleClick={this.getInput}
+									className="note_title"
 								>
-								{!(idInput === note.activeNote.id) && <div className="note_title" >{note.activeNote.title} </div>}
-								<div className="note_date" >Create - {date}</div>
+								{!(idInput === note.activeNote.id) && note.activeNote.title}
 
 								{ idInput === note.activeNote.id &&
 									<input
@@ -137,6 +137,7 @@ class Main extends Component {
 									/>
 								}
 								</div>
+								<div className="note_date" >Create - {date}</div>
 								<textarea
 									className="main-note__main-text"
 									name="newChengeTetx"
