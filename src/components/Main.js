@@ -125,7 +125,7 @@ class Main extends Component {
 									onDoubleClick={this.getInput}
 								>
 								{!(idInput === note.activeNote.id) && <div className="note_title" >{note.activeNote.title} </div>}
-								<div className="note_date" >create{date}</div>
+								<div className="note_date" >Create - {date}</div>
 
 								{ idInput === note.activeNote.id &&
 									<input
