@@ -10,6 +10,7 @@ class DropList extends Component {
       componentClassName,
       elementClassName,
       title,
+      idChapter,
     } = this.props;
 
     return (
@@ -21,6 +22,7 @@ class DropList extends Component {
               return (
                 <li key={item.id}>
                   <div
+                    data-id_chapter={idChapter}
                     onClick={onClick}
                     className={elementClassName}
                     data-name={item.name ? item.name : item.id}
@@ -41,6 +43,7 @@ DropList.propType = {
   componentClassName: PropTypes.string,
   elementClassName: PropTypes.string,
   title: PropTypes.string,
+  idChapter: PropTypes.number,
 }
 
 export default DropList
