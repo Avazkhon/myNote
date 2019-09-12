@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import {
+	getLengthTextNote,
+} from 'utils';
+
 import '../cssStyle/main.css';
 import '../cssStyle/main_element.css';
 import '../cssStyle/setting.css';
@@ -15,7 +19,6 @@ import {
 	deleteNote,
 	changeTitleNote,
 } from '../actions/index'
-
 
 class Main extends Component {
 	constructor(props) {
@@ -106,6 +109,7 @@ class Main extends Component {
 			idInput,
 			changeTitle,
 		} = this.state;
+
 		const date = note.activeNote.id && note.activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
 
 		return (
@@ -165,6 +169,7 @@ class Main extends Component {
 								}
 							</div>
 						}
+						<div>words in the text: {getLengthTextNote(note)}</div>
 					</div>
 				</div>
 			</div>
