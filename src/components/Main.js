@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import {
 	getLengthTextNote,
+	findText,
 } from 'utils';
 
 import DropList from 'widget/DropList';
@@ -23,17 +24,6 @@ import {
 	changeTitleNote,
 	selectChapter,
 } from '../actions/index';
-
-
-function findText (note, textFind) {
-	let item = note.activeNote.chapters.filter((item) => item.text.match(textFind))
-	let text2 = item.filter((chapter) => {
-			if (chapter.text.match(textFind)) {
-				return chapter.id;
-			}
-		})
-	return text2
-}
 
 class Main extends Component {
 	constructor(props) {
@@ -153,23 +143,25 @@ class Main extends Component {
 			<div className="main-note">
 				<Setting />
 				<div className="note-content" >
-					<div>
-						<input
-							value={searchText}
-							name="searchText"
-							type="search"
-							onChange={this.handleChengeSeacrh}
-						/>
-						{searchChapters.length !== 0 &&
-							<DropList
-								arr={searchChapters}
-								onClick={this.handleSelectchapter}
-								componentClassName="main-note_setting-buttons"
-								elementClassName="main-note_button"
-								title="Resilt search"
+					{ note.activeNote.id &&
+						<div>
+							<input
+								value={searchText}
+								name="searchText"
+								type="search"
+								onChange={this.handleChengeSeacrh}
 							/>
-						}
-					</div>
+							{searchChapters.length !== 0 &&
+								<DropList
+									arr={searchChapters}
+									onClick={this.handleSelectchapter}
+									componentClassName="main-note_setting-buttons"
+									elementClassName="main-note_button"
+									title="Resilt search"
+								/>
+							}
+						</div>
+					}
 					<div>
 						<NavMenu />
 					</div>
@@ -223,7 +215,9 @@ class Main extends Component {
 								}
 							</div>
 						}
-						<div>words in the text: {getLengthTextNote(note)}</div>
+						{note.activeNote.id &&
+							<div>words in the text: {getLengthTextNote(note)}</div>
+						}
 					</div>
 				</div>
 			</div>
