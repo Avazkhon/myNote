@@ -33,7 +33,8 @@ class CreateNewChapter extends Component {
 
 	handleCreateNewNote = (e) => {
 		const title = this.state.newTitleChapter
-		if (title.length <=1) {
+		const checkTitle = this.props.note.activeNote.chapters.find((chapter) => chapter.title === title)
+		if (title.length <=1 || checkTitle) {
 			return
 		}
 		const chapter =	{
