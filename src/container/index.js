@@ -9,13 +9,13 @@ import {
 import DropList from 'widget/DropList';
 
 
-import '../cssStyle/main.css';
-import '../cssStyle/main_element.css';
-import '../cssStyle/setting.css';
-import '../cssStyle/dropList.css'
+import 'cssStyle/main.css';
+import 'cssStyle/main_element.css';
+import 'cssStyle/setting.css';
+import 'cssStyle/dropList.css'
 
-import Setting  from './setting/Setting';
-import NavMenu from './navMenu/index'
+import Setting  from 'components/setting';
+import NavMenu from 'components/navMenu';
 
 import {
 	saveNote,
