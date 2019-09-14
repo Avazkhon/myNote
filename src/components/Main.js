@@ -5,6 +5,9 @@ import {
 	getLengthTextNote,
 } from 'utils';
 
+import DropList from 'widget/DropList';
+
+
 import '../cssStyle/main.css';
 import '../cssStyle/main_element.css';
 import '../cssStyle/setting.css';
@@ -18,7 +21,19 @@ import {
 	selectNote,
 	deleteNote,
 	changeTitleNote,
-} from '../actions/index'
+	selectChapter,
+} from '../actions/index';
+
+
+function findText (note, textFind) {
+	let item = note.activeNote.chapters.filter((item) => item.text.match(textFind))
+	let text2 = item.filter((chapter) => {
+			if (chapter.text.match(textFind)) {
+				return chapter.id;
+			}
+		})
+	return text2
+}
 
 class Main extends Component {
 	constructor(props) {
@@ -27,6 +42,8 @@ class Main extends Component {
 			newChengeTetx: '',
 			idInput: '',
 			changeTitle: '',
+			searchText: '',
+			searchChapters: [],
 		}
 	}
 	componentDidMount() {
@@ -98,6 +115,24 @@ class Main extends Component {
 		}
 	}
 
+	handleChengeSeacrh = (e) => {
+		const {
+			note
+		} = this.props;
+		this.handleChenge(e);
+		const text = findText(note, e.target.value);
+		this.setState({searchChapters: text})
+	}
+
+	handleSelectchapter = (e) => {
+		const id = e.target.dataset.id_chapter;
+		this.props.selectChapter(Number(id))
+		this.setState({
+			searchText: '',
+			searchChapters: [],
+		})
+	}
+
 
 	render () {
 		const {
@@ -108,6 +143,8 @@ class Main extends Component {
 			newChengeTetx,
 			idInput,
 			changeTitle,
+			searchText,
+			searchChapters,
 		} = this.state;
 
 		const date = note.activeNote.id && note.activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
@@ -116,6 +153,23 @@ class Main extends Component {
 			<div className="main-note">
 				<Setting />
 				<div className="note-content" >
+					<div>
+						<input
+							value={searchText}
+							name="searchText"
+							type="search"
+							onChange={this.handleChengeSeacrh}
+						/>
+						{searchChapters.length !== 0 &&
+							<DropList
+								arr={searchChapters}
+								onClick={this.handleSelectchapter}
+								componentClassName="main-note_setting-buttons"
+								elementClassName="main-note_button"
+								title="Resilt search"
+							/>
+						}
+					</div>
 					<div>
 						<NavMenu />
 					</div>
@@ -187,4 +241,5 @@ export default connect(mapStateToProps, {
 	selectNote,
 	deleteNote,
 	changeTitleNote,
+	selectChapter,
 })(Main);

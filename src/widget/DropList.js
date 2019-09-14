@@ -22,7 +22,7 @@ class DropList extends Component {
               return (
                 <li key={item.id}>
                   <div
-                    data-id_chapter={idChapter}
+                    data-id_chapter={idChapter || item.id}
                     onClick={onClick}
                     className={elementClassName}
                     data-name={item.name ? item.name : item.id}
