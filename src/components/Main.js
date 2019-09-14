@@ -150,6 +150,7 @@ class Main extends Component {
 								name="searchText"
 								type="search"
 								onChange={this.handleChengeSeacrh}
+								placeholder='Search text'
 							/>
 							{searchChapters.length !== 0 &&
 								<DropList

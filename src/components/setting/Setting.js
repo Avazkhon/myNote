@@ -37,8 +37,13 @@ class Setting extends Component {
 	}
 
 	handleCreateNewNote = () => {
-		const id = Date.now();
 		const title = this.state.newTitleNote;
+		const checkTitle = this.props.note.noteItems.find((note) => note.title === title)
+		if (checkTitle) {
+			return null;
+		}
+
+		const id = Date.now();
 		const note = {
 			id,
 			title,
