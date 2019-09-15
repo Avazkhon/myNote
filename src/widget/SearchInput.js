@@ -12,6 +12,8 @@ import {
 	selectChapter,
 } from '../actions/index';
 
+import './searchInput_style.css';
+
 class SearchInput extends Component {
 	constructor(props) {
 		super(props);
@@ -62,7 +64,7 @@ class SearchInput extends Component {
 		} = this.state;
 
 		return (
-			<div>
+			<div className="search-input">
 				<input
 					value={searchText}
 					name="searchText"
@@ -90,11 +92,6 @@ SearchInput.propType = {
   selectChapter: PropTypes.func,
 }
 
-function mapStateToProps(state) {
-//   const { note } = state
-//   return { note }
-}
-
-export default connect(mapStateToProps, {
+export default connect(null, {
 	selectChapter,
 })(SearchInput);

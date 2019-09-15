@@ -9,6 +9,8 @@ import {
 
 import DropList from 'widget/DropList';
 
+import './setting.css';
+
 class Setting extends Component {
   constructor(props) {
 		super(props);
@@ -106,7 +108,9 @@ class Setting extends Component {
     } = this.state;
 
     return(
-      <div onClick={this.handleCloseSettingShow}>
+      <div
+				className="main-note_setting"
+				onClick={this.handleCloseSettingShow}>
         <input
   				className="main-note_setting-show btn"
   				type="button"

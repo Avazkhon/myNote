@@ -12,7 +12,6 @@ import SearchInput from 'widget/SearchInput';
 
 import 'cssStyle/main.css';
 import 'cssStyle/main_element.css';
-import 'cssStyle/setting.css';
 import 'cssStyle/dropList.css'
 
 import Setting  from 'components/setting';
@@ -150,17 +149,11 @@ class Main extends Component {
 
 		return (
 			<div className="main-note">
-				<Setting />
 				<div className="note-content" >
-					{ note.activeNote.id &&
-
-					<SearchInput
-						note={note}
-					/>
-					}
+					<h3 className="main-note_title">Note</h3>
+					<Setting />
 					<NavMenu />
 					<div className="note-canvas">
-						<h3>Note</h3>
 						{note.activeNote.id &&
 							<>
 								<div
@@ -182,6 +175,8 @@ class Main extends Component {
 								}
 								</div>
 								<div className="note_date" >Create - {date}</div>
+								{ note.activeNote.id &&	<SearchInput	note={note} />}
+
 								<textarea
 									className="main-note__main-text"
 									name="newChengeTetx"
@@ -207,10 +202,12 @@ class Main extends Component {
 										onClick={this.handleDelete}
 									/>
 								}
+
+								{note.activeNote.id &&
+									<div className="length-text-note">words in the text: {getLengthTextNote(note)}</div>
+								}
+
 							</div>
-						}
-						{note.activeNote.id &&
-							<div>words in the text: {getLengthTextNote(note)}</div>
 						}
 					</div>
 				</div>

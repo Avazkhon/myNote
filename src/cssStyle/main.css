@@ -7,6 +7,11 @@ ul li {
   min-width: 500px;
 }
 
+.main-note_title {
+  width: 100%;
+  text-align: center;
+}
+
 .note_title {
   float: left;
 }
@@ -21,7 +26,7 @@ ul li {
 }
 
 .note-content {
-  width: 52%;
+  width: 65%;
   min-width: 660px;
   height: 800px;
   margin: 0 auto;
@@ -32,12 +37,16 @@ ul li {
 }
 
 .main-note__main-text {
-  width: 500px;
+  width: 663px;
   height: 380px;
 }
 
 .main-note_btn-gruop {
-  min-width: 500px;
+  min-width: 669px;
   height: 50px;
-  padding: 0 153px;
+  padding-left: 153px;
+}
+
+.length-text-note {
+  float: right;
 }

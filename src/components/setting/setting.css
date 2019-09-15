@@ -1,4 +1,14 @@
+.main-note_setting {
+  /* margin-top: 50px; */
+}
+
+.main-note_setting-show {
+  width: 150px;
+
+}
+
 .note-setting_create-note {
+  margin-top: 77px;
   width: 100px;
   border-radius: 5px;
   position: absolute;
