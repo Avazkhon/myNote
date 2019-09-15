@@ -7,6 +7,7 @@ import {
 } from 'utils';
 
 import DropList from 'widget/DropList';
+import SearchInput from 'widget/SearchInput';
 
 
 import 'cssStyle/main.css';
@@ -106,12 +107,20 @@ class Main extends Component {
 	}
 
 	handleChengeSeacrh = (e) => {
+		const value = e.target.value;
 		const {
 			note
 		} = this.props;
+		const result = findText(note, value);
+
 		this.handleChenge(e);
-		const text = findText(note, e.target.value);
-		this.setState({searchChapters: text})
+		if (result.length !== 0) {
+			this.setState({searchChapters: result})
+		}
+
+		if (value.length === 0) {
+			this.setState({searchChapters: []})
+		}
 	}
 
 	handleSelectchapter = (e) => {
@@ -144,32 +153,16 @@ class Main extends Component {
 				<Setting />
 				<div className="note-content" >
 					{ note.activeNote.id &&
-						<div>
-							<input
-								value={searchText}
-								name="searchText"
-								type="search"
-								onChange={this.handleChengeSeacrh}
-								placeholder='Search text'
-							/>
-							{searchChapters.length !== 0 &&
-								<DropList
-									arr={searchChapters}
-									onClick={this.handleSelectchapter}
-									componentClassName="main-note_setting-buttons"
-									elementClassName="main-note_button"
-									title="Resilt search"
-								/>
-							}
-						</div>
+
+					<SearchInput
+						note={note}
+					/>
 					}
-					<div>
-						<NavMenu />
-					</div>
+					<NavMenu />
 					<div className="note-canvas">
 						<h3>Note</h3>
 						{note.activeNote.id &&
-							<div>
+							<>
 								<div
 									data-id={note.activeNote.id}
 									data-title={note.activeNote.title}
@@ -195,7 +188,7 @@ class Main extends Component {
 									value={newChengeTetx}
 									onChange={this.handleChenge}
 								/>
-							</div>
+							</>
 						}
 						{ note.activeNote.id &&
 							<div className="main-note_btn-gruop ">

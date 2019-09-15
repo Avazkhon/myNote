@@ -1,4 +1,4 @@
-export function getLengthTextNote (note) {
+function getLengthTextNote (note) {
 	let size = note.noteItems.map((itm) => {
 
 		let size = itm.chapters.map((chapter) => {
@@ -17,7 +17,7 @@ export function getLengthTextNote (note) {
 	return size[0] - 0;
 }
 
-export function findText (note, textFind) {
+function findText (note, textFind) {
 	let item = note.activeNote.chapters.filter((item) => item.text.match(textFind))
 	let text2 = item.filter((chapter) => {
 			if (chapter.text.match(textFind)) {
@@ -25,4 +25,8 @@ export function findText (note, textFind) {
 			}
 		})
 	return text2
+}
+export {
+	getLengthTextNote,
+	findText,
 }
