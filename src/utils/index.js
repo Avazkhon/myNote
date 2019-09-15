@@ -1,7 +1,5 @@
-function getLengthTextNote (note) {
-	let size = note.noteItems.map((itm) => {
-
-		let size = itm.chapters.map((chapter) => {
+function getLengthTextNote (activeNote) {
+		let size = activeNote.chapters.map((chapter) => {
 			if (chapter.text.length === 0) {
 				return 0
 			}
@@ -9,11 +7,7 @@ function getLengthTextNote (note) {
 			return Number(chapter.text.split(' ').length);
 		})
 
-		size[0] += (itm.text.length > 0) && Number(itm.text.split(' ').length);
-
-		return size
-	});
-
+	size[0] += (activeNote.text.length > 0)  ? Number(activeNote.text.split(' ').length) : 0;
 	return size[0] - 0;
 }
 

@@ -6,13 +6,11 @@ import {
 	findText,
 } from 'utils';
 
-import DropList from 'widget/DropList';
 import SearchInput from 'widget/SearchInput';
 
 
 import 'cssStyle/main.css';
 import 'cssStyle/main_element.css';
-import 'cssStyle/dropList.css'
 
 import Setting  from 'components/setting';
 import NavMenu from 'components/navMenu';
@@ -32,8 +30,6 @@ class Main extends Component {
 			newChengeTetx: '',
 			idInput: '',
 			changeTitle: '',
-			searchText: '',
-			searchChapters: [],
 		}
 	}
 	componentDidMount() {
@@ -105,33 +101,6 @@ class Main extends Component {
 		}
 	}
 
-	handleChengeSeacrh = (e) => {
-		const value = e.target.value;
-		const {
-			note
-		} = this.props;
-		const result = findText(note, value);
-
-		this.handleChenge(e);
-		if (result.length !== 0) {
-			this.setState({searchChapters: result})
-		}
-
-		if (value.length === 0) {
-			this.setState({searchChapters: []})
-		}
-	}
-
-	handleSelectchapter = (e) => {
-		const id = e.target.dataset.id_chapter;
-		this.props.selectChapter(Number(id))
-		this.setState({
-			searchText: '',
-			searchChapters: [],
-		})
-	}
-
-
 	render () {
 		const {
 			note,
@@ -141,32 +110,39 @@ class Main extends Component {
 			newChengeTetx,
 			idInput,
 			changeTitle,
-			searchText,
-			searchChapters,
 		} = this.state;
 
-		const date = note.activeNote.id && note.activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
+		const {
+			activeNote,
+			backgroundImage,
+		} = note;
 
+		const img = backgroundImage && backgroundImage.image.find(img => img.id === backgroundImage.activeImg);
+		console.log(img)
+		const date = activeNote.id && activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
+		const style = {'backgroundImage': `url(${img.url})`}
 		return (
-			<div className="main-note">
+			<div
+			style={style}
+				className="main-note">
 				<div className="note-content" >
-					<h3 className="main-note_title">Note</h3>
+					<div className="main-note_title">Note</div>
 					<Setting />
 					<NavMenu />
 					<div className="note-canvas">
-						{note.activeNote.id &&
+						{activeNote.id &&
 							<>
 								<div
-									data-id={note.activeNote.id}
-									data-title={note.activeNote.title}
+									data-id={activeNote.id}
+									data-title={activeNote.title}
 									onDoubleClick={this.getInput}
 									className="note_title"
 								>
-								{!(idInput === note.activeNote.id) && note.activeNote.title}
+								{!(idInput === activeNote.id) && activeNote.title}
 
-								{ idInput === note.activeNote.id &&
+								{ idInput === activeNote.id &&
 									<input
-										name={note.activeNote.id}
+										name={activeNote.id}
 										type="text"
 										value={changeTitle}
 										onChange={this.handleChangeTitleNote}
@@ -175,7 +151,7 @@ class Main extends Component {
 								}
 								</div>
 								<div className="note_date" >Create - {date}</div>
-								{ note.activeNote.id &&	<SearchInput	note={note} />}
+								{ activeNote.id &&	<SearchInput	note={note} />}
 
 								<textarea
 									className="main-note__main-text"
@@ -185,7 +161,7 @@ class Main extends Component {
 								/>
 							</>
 						}
-						{ note.activeNote.id &&
+						{ activeNote.id &&
 							<div className="main-note_btn-gruop ">
 								<input
 									className="main-note_button"
@@ -193,7 +169,7 @@ class Main extends Component {
 									value='save'
 									onClick={this.handleSave}
 									/>
-								{note.activeNote.id &&
+								{activeNote.id &&
 
 									<input
 										className="main-note_button"
@@ -203,8 +179,8 @@ class Main extends Component {
 									/>
 								}
 
-								{note.activeNote.id &&
-									<div className="length-text-note">words in the text: {getLengthTextNote(note)}</div>
+								{activeNote.id &&
+									<div className="length-text-note">words in the text: {getLengthTextNote(activeNote)}</div>
 								}
 
 							</div>

@@ -5,7 +5,8 @@ import {
 	createNewNote,
 	selectNote,
 	selectSetting,
-} from 'actions/index'
+	selectBackgroundImage,
+} from 'actions'
 
 import DropList from 'widget/DropList';
 
@@ -96,6 +97,11 @@ class Setting extends Component {
 		this.props.selectSetting();
 	}
 
+	handleSelectBackgroundImg = (e) => {
+		const id = Number(e.target.dataset.id_chapter);
+		this.props.selectBackgroundImage(id);
+	}
+
   render() {
     const {
       note,
@@ -154,6 +160,15 @@ class Setting extends Component {
 						title="Select note"
 					/>
 					}
+					{ (note.mainSetting.isContentSetting === 'selectBackgroundImage') &&
+						<DropList
+						arr={note.backgroundImage.image}
+						onClick={this.handleSelectBackgroundImg}
+						componentClassName="main-note_setting-buttons"
+						elementClassName="main-note_button"
+						title="Select background image"
+						/>
+					}
 				</div>
       </div>
     )
@@ -170,4 +185,5 @@ export default connect(mapStateToProps, {
   createNewNote,
   selectNote,
 	selectSetting,
+	selectBackgroundImage,
 })(Setting);

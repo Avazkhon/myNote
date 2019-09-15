@@ -1,6 +1,6 @@
 .nav-menu {
   font-size: 18px;
-  width: 153px;
+  width: 181px;
   height: 430px;
   float: left;
   background-color: #ccc;
@@ -31,11 +31,17 @@
 } */
 
 .nav-menu_chapter {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   float: left;
   width: 90%;
 }
 
 .nav-menu_active-chapter {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   float: left;
   width: 90%;
   background-color:	#B0C4DE;

@@ -5,6 +5,7 @@ ul li {
 
 .main-note {
   min-width: 500px;
+  height: 900px;
 }
 
 .main-note_title {
@@ -14,6 +15,10 @@ ul li {
 
 .note_title {
   float: left;
+  width: 181px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .note_date {
@@ -26,9 +31,9 @@ ul li {
 }
 
 .note-content {
-  width: 65%;
+  background-color: #888379;
+  width: 850px;
   min-width: 660px;
-  height: 800px;
   margin: 0 auto;
 }
 

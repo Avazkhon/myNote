@@ -3,7 +3,7 @@
 }
 
 .main-note_setting-show {
-  width: 150px;
+  width: 180px;
 
 }
 
@@ -13,4 +13,9 @@
   border-radius: 5px;
   position: absolute;
   background-color: #C0C0C0;
+}
+
+.main-note__setting-form {
+  position: absolute;
+  background-color: #ccc;
 }

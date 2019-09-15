@@ -32,7 +32,12 @@ export default (initState) => {
   						id: 2,
   						title: 'Select note',
   						name: 'isShowSelectNote'
-  					}
+  					},
+            {
+              id: 3,
+              title: 'select backgroundImage',
+              name: 'selectBackgroundImage'
+            }
   				]
   			},
   			navMenu: {
@@ -53,6 +58,26 @@ export default (initState) => {
               title: 'Delete chapter',
               name: 'deleteChapter'
             },
+          ]
+        },
+        backgroundImage: {
+          activeImg: null,
+          image: [
+            {
+              id: 1,
+              title: 'Pen',
+              url: 'http://naslednick.online/netcat_files/917/1027/rukopis.jpg',
+            },
+            {
+              id: 2,
+              title: 'A. S. Pushkin',
+              url: 'https://imgtest.mir24.tv/uploaded/images/crops/2018/April/870x489_0x424_detail_crop_b8259ece499b91595106ed19b50e2ccf7baa3abae8e9d1358a56fa0290d60995.jpg',
+            },
+            {
+              id: 3,
+              title: 'Golden autumn',
+              url: 'http://danlik.ru/wp-content/uploads/2014/01/Zolotaya-osen.jpg',
+            }
           ]
         }
   		}

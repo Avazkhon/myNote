@@ -12,6 +12,7 @@ import {
 	DELETE_CHAPTER,
 	CHANGE_TITLE_CHAPTER,
 	CHANGE_TITLE_NOTE,
+	SELECT_BACKGROUND_IMG,
 } from '../constants/index';
 
 import getInitState from './getInitState';
@@ -235,6 +236,15 @@ export function note(state = initState.note, action) {
 		}
 	}
 
+	if (action.type === SELECT_BACKGROUND_IMG) {
+		return {
+			...state,
+			backgroundImage: {
+				...state.backgroundImage,
+				activeImg: action.id
+			}
+		}
+	}
 
 	return state
 };

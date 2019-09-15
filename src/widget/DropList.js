@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import './dropList.css';
+
+
 class DropList extends Component {
 
   render () {
