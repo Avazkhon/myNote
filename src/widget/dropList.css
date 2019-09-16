@@ -9,3 +9,12 @@
   text-align: center;
   border-bottom: 2px solid black;
 }
+
+.drop-List_item {
+  height: 23px;
+}
+
+.drop-List_item:hover {
+  background-color: #9a9898;
+  margin-left: -15px;
+}

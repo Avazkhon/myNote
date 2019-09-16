@@ -23,7 +23,7 @@ class DropList extends Component {
           {
             arr.map((item) => {
               return (
-                <li key={item.id}>
+                <li key={item.id} className="drop-List_item">
                   <div
                     data-id_chapter={idChapter || item.id}
                     onClick={onClick}

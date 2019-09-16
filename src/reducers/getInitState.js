@@ -35,7 +35,7 @@ export default (initState) => {
   					},
             {
               id: 3,
-              title: 'select backgroundImage',
+              title: 'Select backgroundImage',
               name: 'selectBackgroundImage'
             },
             {
