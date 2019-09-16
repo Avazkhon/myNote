@@ -6,6 +6,7 @@ import {
 	selectNote,
 	selectSetting,
 	selectBackgroundImage,
+	clearData,
 } from 'actions'
 
 import DropList from 'widget/DropList';
@@ -102,6 +103,11 @@ class Setting extends Component {
 		this.props.selectBackgroundImage(id);
 	}
 
+	clearLocalStorage = (e) => {
+		this.props.clearData();
+		this.handleChengeIsShow(e);
+	}
+
   render() {
     const {
       note,
@@ -162,12 +168,29 @@ class Setting extends Component {
 					}
 					{ (note.mainSetting.isContentSetting === 'selectBackgroundImage') &&
 						<DropList
-						arr={note.backgroundImage.image}
-						onClick={this.handleSelectBackgroundImg}
-						componentClassName="main-note_setting-buttons"
-						elementClassName="main-note_button"
-						title="Select background image"
+							arr={note.backgroundImage.image}
+							onClick={this.handleSelectBackgroundImg}
+							componentClassName="main-note_setting-buttons"
+							elementClassName="main-note_button"
+							title="Select background image"
 						/>
+					}
+					{ (note.mainSetting.isContentSetting === 'clearData') &&
+						<div className="main-note_setting-buttons clear-data">
+							<div className="clear-data_title">Are you sure?</div>
+							<input
+								type="button"
+								className="main-note_button clear-data_no"
+								value="no"
+								onClick={this.handleChengeIsShow}
+							/>
+							<input
+								type="button"
+								className="main-note_button clear-data_yes"
+								value="yes"
+								onClick={this.clearLocalStorage}
+							/>
+						</div>
 					}
 				</div>
       </div>
@@ -186,4 +209,5 @@ export default connect(mapStateToProps, {
   selectNote,
 	selectSetting,
 	selectBackgroundImage,
+	clearData,
 })(Setting);

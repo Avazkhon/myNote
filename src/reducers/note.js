@@ -13,6 +13,7 @@ import {
 	CHANGE_TITLE_CHAPTER,
 	CHANGE_TITLE_NOTE,
 	SELECT_BACKGROUND_IMG,
+	CLEAR_DATA,
 } from '../constants/index';
 
 import getInitState from './getInitState';
@@ -243,6 +244,13 @@ export function note(state = initState.note, action) {
 				...state.backgroundImage,
 				activeImg: action.id
 			}
+		}
+	}
+	if (action.type === CLEAR_DATA) {
+		return {
+			...state,
+			activeNote: {id: null},
+			noteItems: [],
 		}
 	}
 

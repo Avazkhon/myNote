@@ -19,3 +19,14 @@
   position: absolute;
   background-color: #ccc;
 }
+.clear-data {
+  width: 181px;
+}
+
+.clear-data_title {
+  text-align: center;
+}
+
+.clear-data_yes {
+  float: right;
+}

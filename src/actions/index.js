@@ -12,6 +12,7 @@ import {
 	CHANGE_TITLE_CHAPTER,
 	CHANGE_TITLE_NOTE,
 	SELECT_BACKGROUND_IMG,
+	CLEAR_DATA,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -124,5 +125,10 @@ export function selectBackgroundImage(id) {
 	return ({
 		type: SELECT_BACKGROUND_IMG,
 		id,
+	})
+}
+export function clearData(id) {
+	return ({
+		type: CLEAR_DATA,
 	})
 }
