@@ -118,17 +118,18 @@ class Main extends Component {
 		} = note;
 
 		const img = backgroundImage && backgroundImage.image.find(img => img.id === backgroundImage.activeImg);
-		console.log(img)
 		const date = activeNote.id && activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
-		const style = {'backgroundImage': `url(${img.url})`}
+		const style = {'backgroundImage': `url(${img && img.url})`}
 		return (
 			<div
 			style={style}
 				className="main-note">
 				<div className="note-content" >
-					<div className="main-note_title">Note</div>
+					<div className="main-note_title"></div>
 					<Setting />
-					<NavMenu />
+					{activeNote.id &&
+						<NavMenu />
+					}
 					<div className="note-canvas">
 						{activeNote.id &&
 							<>
