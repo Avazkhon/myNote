@@ -35,11 +35,16 @@ export default (initState) => {
   					},
             {
               id: 3,
-              title: 'Select backgroundImage',
+              title: 'Select background img',
               name: 'selectBackgroundImage'
             },
             {
               id: 4,
+              title: 'Select background color',
+              name: 'selectBackgroundColor'
+            },
+            {
+              id: 5,
               title: 'Clear data',
               name: 'clearData'
             }
@@ -94,7 +99,32 @@ export default (initState) => {
               url: null,
             }
           ]
-        }
+        },
+        backgroundColor: {
+          activeColor: null,
+          colors: [
+            {
+              id: 1,
+              title: 'White',
+              color: '#fff',
+            },
+            {
+              id: 2,
+              title: 'Dark',
+              color: '#404449',
+            },
+            {
+              id: 3,
+              title: 'Gray',
+              color: '#C0C0C0',
+            },
+            {
+              id: 4,
+              title: 'No background',
+              color: null,
+            },
+          ],
+        },
   		}
   	};
   }else {

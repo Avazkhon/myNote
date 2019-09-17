@@ -7,6 +7,7 @@ import {
 	selectSetting,
 	selectBackgroundImage,
 	clearData,
+	selectBackgroundColor,
 } from 'actions'
 
 import DropList from 'widget/DropList';
@@ -108,6 +109,12 @@ class Setting extends Component {
 		this.handleChengeIsShow(e);
 	}
 
+	handleSelectBackgroundColor = (e) => {
+		const id = Number(e.target.dataset.id_chapter);
+		this.props.selectBackgroundColor(id)
+		this.handleChengeIsShow(e);
+	}
+
   render() {
     const {
       note,
@@ -175,6 +182,17 @@ class Setting extends Component {
 							title="Select background image"
 						/>
 					}
+
+					{ (note.mainSetting.isContentSetting === 'selectBackgroundColor') &&
+						<DropList
+							arr={note.backgroundColor.colors}
+							onClick={this.handleSelectBackgroundColor}
+							componentClassName="main-note_setting-buttons"
+							elementClassName="main-note_button"
+							title="Select background color"
+						/>
+					}
+
 					{ (note.mainSetting.isContentSetting === 'clearData') &&
 						<div className="main-note_setting-buttons clear-data">
 							<div className="clear-data_title">Are you sure?</div>
@@ -210,4 +228,5 @@ export default connect(mapStateToProps, {
 	selectSetting,
 	selectBackgroundImage,
 	clearData,
+	selectBackgroundColor,
 })(Setting);

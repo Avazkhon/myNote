@@ -13,6 +13,7 @@ import {
 	CHANGE_TITLE_NOTE,
 	SELECT_BACKGROUND_IMG,
 	CLEAR_DATA,
+	SELECT_BACKGROUND_COLOR,
 } from '../constants/index';
 
 export function selectSetting(nameSetting) {
@@ -130,5 +131,11 @@ export function selectBackgroundImage(id) {
 export function clearData(id) {
 	return ({
 		type: CLEAR_DATA,
+	})
+}
+export function selectBackgroundColor(id) {
+	return ({
+		type: SELECT_BACKGROUND_COLOR,
+		id,
 	})
 }
