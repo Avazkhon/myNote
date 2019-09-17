@@ -260,7 +260,8 @@ export function note(state = initState.note, action) {
 			...state,
 			backgroundColor: {
 				...state.backgroundColor,
-				activeColor: action.id,
+				activeid: action.id,
+				activeColor: state.backgroundColor.colors[action.id - 1],
 			}
 		}
 	}

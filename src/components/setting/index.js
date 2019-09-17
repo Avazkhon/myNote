@@ -118,9 +118,8 @@ class Setting extends Component {
   render() {
     const {
       note,
-
     } = this.props;
-
+		
     const {
       newTitleNote,
       isSettingShow,
@@ -146,7 +145,9 @@ class Setting extends Component {
 						title="Setting"
 					/>
         }
-				<div className="main-note__setting-form" >
+				<div
+					className="main-note__setting-form"
+				>
 					{ (note.mainSetting.isContentSetting === 'isShowCreateNewNote') &&
 						<div>
 							<div>Title for new note</div>

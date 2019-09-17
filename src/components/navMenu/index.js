@@ -45,13 +45,12 @@ class NavMenu extends Component {
 			activeNote,
 		} = this.props.note;
 
-		// const setting = note.navMenu;
-		const background = backgroundColor.colors[backgroundColor.activeColor - 1];
+		const color = backgroundColor.activeColor && backgroundColor.activeColor.color;
 
 		return (
 			<div
 				className="nav-menu"
-				style={{backgroundColor: background && background.color}}
+				style={{backgroundColor: color}}
 			>
 
 				<div
