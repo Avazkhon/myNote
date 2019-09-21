@@ -14,6 +14,7 @@ ul li {
 }
 
 .note_title {
+  font-size: 22px;
   float: left;
   width: 181px;
   white-space: nowrap;
