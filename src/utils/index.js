@@ -8,7 +8,7 @@ function getLengthTextNote (activeNote) {
 		})
 
 	size[0] += (activeNote.text.length > 0)  ? Number(activeNote.text.split(' ').length) : 0;
-	return size[0] - 0;
+	return size[0] ? size[0] - 0 : 0;
 }
 
 function findText (note, textFind) {
