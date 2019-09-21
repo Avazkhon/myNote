@@ -32,7 +32,22 @@ export default (initState) => {
   						id: 2,
   						title: 'Select note',
   						name: 'isShowSelectNote'
-  					}
+  					},
+            {
+              id: 3,
+              title: 'Select background img',
+              name: 'selectBackgroundImage'
+            },
+            {
+              id: 4,
+              title: 'Select background color',
+              name: 'selectBackgroundColor'
+            },
+            {
+              id: 5,
+              title: 'Clear data',
+              name: 'clearData'
+            }
   				]
   			},
   			navMenu: {
@@ -54,7 +69,62 @@ export default (initState) => {
               name: 'deleteChapter'
             },
           ]
-        }
+        },
+        backgroundImage: {
+          activeImg: null,
+          image: [
+            {
+              id: 1,
+              title: 'Golden autumn',
+              url: 'http://danlik.ru/wp-content/uploads/2014/01/Zolotaya-osen.jpg',
+            },
+            {
+              id: 2,
+              title: 'Line',
+              url: 'https://w-dog.ru/wallpapers/12/13/452112797392758.jpg',
+            },
+            {
+              id: 3,
+              title: 'A. S. Pushkin',
+              url: 'https://imgtest.mir24.tv/uploaded/images/crops/2018/April/870x489_0x424_detail_crop_b8259ece499b91595106ed19b50e2ccf7baa3abae8e9d1358a56fa0290d60995.jpg',
+            },
+            {
+              id: 4,
+              title: 'Red circles',
+              url: 'http://luxfon.com/images/201503/luxfon.com_35034.jpg',
+            },
+            {
+              id: 10,
+              title: 'Not background',
+              url: null,
+            }
+          ]
+        },
+        backgroundColor: {
+          activeColor: null,
+          colors: [
+            {
+              id: 1,
+              title: 'White',
+              color: '#fff',
+            },
+            {
+              id: 2,
+              title: 'Dark',
+              color: '#404449',
+            },
+            {
+              id: 3,
+              title: 'Gray',
+              color: '#C0C0C0',
+            },
+            {
+              id: 4,
+              title: 'No background',
+              color: null,
+            },
+          ],
+        },
   		}
   	};
   }else {

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import './dropList.css';
+
+
 class DropList extends Component {
 
   render () {
@@ -20,9 +23,9 @@ class DropList extends Component {
           {
             arr.map((item) => {
               return (
-                <li key={item.id}>
+                <li key={item.id} className="drop-List_item">
                   <div
-                    data-id_chapter={idChapter}
+                    data-id_chapter={idChapter || item.id}
                     onClick={onClick}
                     className={elementClassName}
                     data-name={item.name ? item.name : item.id}

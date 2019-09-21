@@ -5,6 +5,24 @@ ul li {
 
 .main-note {
   min-width: 500px;
+  height: 900px;
+}
+
+.main-note_title {
+  width: 100%;
+  text-align: center;
+}
+
+.note_title {
+  float: left;
+  width: 181px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note_date {
+  float: right;
 }
 
 .main-note_button {
@@ -13,9 +31,9 @@ ul li {
 }
 
 .note-content {
-  width: 52%;
+  /* background-color: #888379; */
+  width: 850px;
   min-width: 660px;
-  height: 800px;
   margin: 0 auto;
 }
 
@@ -24,12 +42,16 @@ ul li {
 }
 
 .main-note__main-text {
-  width: 500px;
+  width: 663px;
   height: 380px;
 }
 
 .main-note_btn-gruop {
-  min-width: 500px;
+  min-width: 669px;
   height: 50px;
-  padding: 0 153px;
+  padding-left: 153px;
+}
+
+.length-text-note {
+  float: right;
 }

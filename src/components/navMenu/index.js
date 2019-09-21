@@ -40,13 +40,18 @@ class NavMenu extends Component {
 
 	render () {
 		const {
-			note,
-		} = this.props;
+			backgroundColor,
+			navMenu,
+			activeNote,
+		} = this.props.note;
 
-		const setting = note.navMenu;
+		const color = backgroundColor.activeColor && backgroundColor.activeColor.color;
 
 		return (
-			<div className="nav-menu">
+			<div
+				className="nav-menu"
+				style={{backgroundColor: color}}
+			>
 
 				<div
 					data-name="dropList"
@@ -56,9 +61,9 @@ class NavMenu extends Component {
 				Nav menu
 				</div>
 
-					{(setting.isContentSetting === 'dropList') &&
+					{(navMenu.isContentSetting === 'dropList') &&
 						<DropList
-							arr={setting.itemsSetting}
+							arr={navMenu.itemsSetting}
 							onClick={this.handleShowSetting}
 							componentClassName="main-note_setting-buttons"
 							elementClassName="main-note_button"
@@ -66,10 +71,10 @@ class NavMenu extends Component {
 						/>
 					}
 
-					{ note.activeNote.id &&
+					{ activeNote.id &&
 						<div>
 							{
-								(setting.isContentSetting === 'isShowCreateNewChapter') &&
+								(navMenu.isContentSetting === 'isShowCreateNewChapter') &&
 								<CreateNewChaper
 
 								/>

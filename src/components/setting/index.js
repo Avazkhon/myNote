@@ -5,9 +5,14 @@ import {
 	createNewNote,
 	selectNote,
 	selectSetting,
-} from 'actions/index'
+	selectBackgroundImage,
+	clearData,
+	selectBackgroundColor,
+} from 'actions'
 
 import DropList from 'widget/DropList';
+
+import './setting.css';
 
 class Setting extends Component {
   constructor(props) {
@@ -37,8 +42,13 @@ class Setting extends Component {
 	}
 
 	handleCreateNewNote = () => {
-		const id = Date.now();
 		const title = this.state.newTitleNote;
+		const checkTitle = this.props.note.noteItems.find((note) => note.title === title)
+		if (checkTitle) {
+			return null;
+		}
+
+		const id = Date.now();
 		const note = {
 			id,
 			title,
@@ -89,19 +99,36 @@ class Setting extends Component {
 		this.props.selectSetting();
 	}
 
+	handleSelectBackgroundImg = (e) => {
+		const id = Number(e.target.dataset.id_chapter);
+		this.props.selectBackgroundImage(id);
+	}
+
+	clearLocalStorage = (e) => {
+		this.props.clearData();
+		this.handleChengeIsShow(e);
+	}
+
+	handleSelectBackgroundColor = (e) => {
+		const id = Number(e.target.dataset.id_chapter);
+		this.props.selectBackgroundColor(id)
+		this.handleChengeIsShow(e);
+	}
+
   render() {
     const {
       note,
-
     } = this.props;
-
+		
     const {
       newTitleNote,
       isSettingShow,
     } = this.state;
 
     return(
-      <div onClick={this.handleCloseSettingShow}>
+      <div
+				className="main-note_setting"
+				onClick={this.handleCloseSettingShow}>
         <input
   				className="main-note_setting-show btn"
   				type="button"
@@ -118,7 +145,9 @@ class Setting extends Component {
 						title="Setting"
 					/>
         }
-				<div className="main-note__setting-form" >
+				<div
+					className="main-note__setting-form"
+				>
 					{ (note.mainSetting.isContentSetting === 'isShowCreateNewNote') &&
 						<div>
 							<div>Title for new note</div>
@@ -145,6 +174,43 @@ class Setting extends Component {
 						title="Select note"
 					/>
 					}
+					{ (note.mainSetting.isContentSetting === 'selectBackgroundImage') &&
+						<DropList
+							arr={note.backgroundImage.image}
+							onClick={this.handleSelectBackgroundImg}
+							componentClassName="main-note_setting-buttons"
+							elementClassName="main-note_button"
+							title="Select background image"
+						/>
+					}
+
+					{ (note.mainSetting.isContentSetting === 'selectBackgroundColor') &&
+						<DropList
+							arr={note.backgroundColor.colors}
+							onClick={this.handleSelectBackgroundColor}
+							componentClassName="main-note_setting-buttons"
+							elementClassName="main-note_button"
+							title="Select background color"
+						/>
+					}
+
+					{ (note.mainSetting.isContentSetting === 'clearData') &&
+						<div className="main-note_setting-buttons clear-data">
+							<div className="clear-data_title">Are you sure?</div>
+							<input
+								type="button"
+								className="main-note_button clear-data_no"
+								value="no"
+								onClick={this.handleChengeIsShow}
+							/>
+							<input
+								type="button"
+								className="main-note_button clear-data_yes"
+								value="yes"
+								onClick={this.clearLocalStorage}
+							/>
+						</div>
+					}
 				</div>
       </div>
     )
@@ -161,4 +227,7 @@ export default connect(mapStateToProps, {
   createNewNote,
   selectNote,
 	selectSetting,
+	selectBackgroundImage,
+	clearData,
+	selectBackgroundColor,
 })(Setting);

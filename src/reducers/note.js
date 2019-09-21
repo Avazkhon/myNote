@@ -12,6 +12,9 @@ import {
 	DELETE_CHAPTER,
 	CHANGE_TITLE_CHAPTER,
 	CHANGE_TITLE_NOTE,
+	SELECT_BACKGROUND_IMG,
+	CLEAR_DATA,
+	SELECT_BACKGROUND_COLOR,
 } from '../constants/index';
 
 import getInitState from './getInitState';
@@ -235,6 +238,33 @@ export function note(state = initState.note, action) {
 		}
 	}
 
+	if (action.type === SELECT_BACKGROUND_IMG) {
+		return {
+			...state,
+			backgroundImage: {
+				...state.backgroundImage,
+				activeImg: action.id
+			}
+		}
+	}
+	if (action.type === CLEAR_DATA) {
+		return {
+			...state,
+			activeNote: {id: null},
+			noteItems: [],
+		}
+	}
+
+	if (action.type === SELECT_BACKGROUND_COLOR) {
+		return {
+			...state,
+			backgroundColor: {
+				...state.backgroundColor,
+				activeid: action.id,
+				activeColor: state.backgroundColor.colors[action.id - 1],
+			}
+		}
+	}
 
 	return state
 };

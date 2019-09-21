@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import '../cssStyle/main.css';
-import '../cssStyle/main_element.css';
-import '../cssStyle/setting.css';
-import '../cssStyle/dropList.css'
+import {
+	getLengthTextNote,
+	findText,
+} from 'utils';
 
-import Setting  from './setting/Setting';
-import NavMenu from './navMenu/index'
+import SearchInput from 'widget/SearchInput';
+
+
+import 'cssStyle/main.css';
+import 'cssStyle/main_element.css';
+
+import Setting  from 'components/setting';
+import NavMenu from 'components/navMenu';
 
 import {
 	saveNote,
 	selectNote,
 	deleteNote,
 	changeTitleNote,
-} from '../actions/index'
-
+	selectChapter,
+} from '../actions/index';
 
 class Main extends Component {
 	constructor(props) {
@@ -84,14 +90,16 @@ class Main extends Component {
 
 	pressEnter = (e) => {
 		if (e.key === 'Enter') {
-			const idNote = this.props.note.activeNote.id;
 			const value = e.target.value;
+			if (value.length <=1) {
+				return
+			}
+			const idNote = this.props.note.activeNote.id;
 			this.props.changeTitleNote(idNote, value)
 			this.setState({idInput: null, changeTitle: ''});
 
 		}
 	}
-
 
 	render () {
 		const {
@@ -104,27 +112,38 @@ class Main extends Component {
 			changeTitle,
 		} = this.state;
 
-		return (
-			<div className="main-note">
-				<Setting />
-				<div className="note-content" >
-					<div>
-						<NavMenu />
-					</div>
-					<div className="note-canvas">
-						<h3>Note</h3>
-						{note.activeNote.id &&
-							<div>
-								<div
-									data-id={note.activeNote.id}
-									data-title={note.activeNote.title}
-									onDoubleClick={this.getInput}
-								>
-								{!(idInput === note.activeNote.id) && note.activeNote.title}
+		const {
+			activeNote,
+			backgroundImage,
+		} = note;
 
-								{ idInput === note.activeNote.id &&
+		const img = backgroundImage && backgroundImage.image.find(img => img.id === backgroundImage.activeImg);
+		const date = activeNote.id && activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
+		const style = {'backgroundImage': `url(${img && img.url})`}
+		return (
+			<div
+			style={style}
+				className="main-note">
+				<div className="note-content" >
+					<div className="main-note_title"></div>
+					<Setting />
+					{activeNote.id &&
+						<NavMenu />
+					}
+					<div className="note-canvas">
+						{activeNote.id &&
+							<>
+								<div
+									data-id={activeNote.id}
+									data-title={activeNote.title}
+									onDoubleClick={this.getInput}
+									className="note_title"
+								>
+								{!(idInput === activeNote.id) && activeNote.title}
+
+								{ idInput === activeNote.id &&
 									<input
-										name={note.activeNote.id}
+										name={activeNote.id}
 										type="text"
 										value={changeTitle}
 										onChange={this.handleChangeTitleNote}
@@ -132,15 +151,18 @@ class Main extends Component {
 									/>
 								}
 								</div>
+								<div className="note_date" >Create - {date}</div>
+								{ activeNote.id &&	<SearchInput	note={note} />}
+
 								<textarea
 									className="main-note__main-text"
 									name="newChengeTetx"
 									value={newChengeTetx}
 									onChange={this.handleChenge}
 								/>
-							</div>
+							</>
 						}
-						{ note.activeNote.id &&
+						{ activeNote.id &&
 							<div className="main-note_btn-gruop ">
 								<input
 									className="main-note_button"
@@ -148,7 +170,7 @@ class Main extends Component {
 									value='save'
 									onClick={this.handleSave}
 									/>
-								{note.activeNote.id &&
+								{activeNote.id &&
 
 									<input
 										className="main-note_button"
@@ -157,6 +179,11 @@ class Main extends Component {
 										onClick={this.handleDelete}
 									/>
 								}
+
+								{activeNote.id &&
+									<div className="length-text-note">words in the text: {getLengthTextNote(activeNote)}</div>
+								}
+
 							</div>
 						}
 					</div>
@@ -176,4 +203,5 @@ export default connect(mapStateToProps, {
 	selectNote,
 	deleteNote,
 	changeTitleNote,
+	selectChapter,
 })(Main);

@@ -1,0 +1,32 @@
+.main-note_setting {
+  /* margin-top: 50px; */
+}
+
+.main-note_setting-show {
+  width: 180px;
+
+}
+
+.note-setting_create-note {
+  margin-top: 77px;
+  width: 100px;
+  border-radius: 5px;
+  position: absolute;
+  background-color: #C0C0C0;
+}
+
+.main-note__setting-form {
+  position: absolute;
+  /* background-color: #ccc; */
+}
+.clear-data {
+  width: 181px;
+}
+
+.clear-data_title {
+  text-align: center;
+}
+
+.clear-data_yes {
+  float: right;
+}
