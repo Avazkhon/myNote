@@ -12,7 +12,7 @@
     "redux-localstorage-simple": "^2.1.6"
   },
   "scripts": {
-    "start": "POERT=2727 BROWSER=none react-scripts start",
+    "start": "PORT=7070 BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
