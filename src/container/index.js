@@ -13,6 +13,7 @@ import 'cssStyle/main.css';
 import 'cssStyle/main_element.css';
 
 import Setting  from 'components/setting';
+import SettingAll from 'components/SettingAll';
 import NavMenu from 'components/navMenu';
 
 import {
@@ -120,13 +121,31 @@ class Main extends Component {
 		const img = backgroundImage && backgroundImage.image.find(img => img.id === backgroundImage.activeImg);
 		const date = activeNote.id && activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
 		const style = {'backgroundImage': `url(${img && img.url})`}
+
+		const arr = [
+
+		]
 		return (
 			<div
 			style={style}
 				className="main-note">
 				<div className="note-content" >
 					<div className="main-note_title"></div>
-					<Setting />
+					<div className="setting-gruop">
+						<Setting />
+						{
+							activeNote.id &&
+							<SettingAll
+								title="Setting file"
+								setingArr={
+									[
+										{name: 'save', onClick: this.handleSave},
+										{name: 'delete', onClick: this.handleDelete}
+									]
+								}
+							/>
+						}
+					</div>
 					{activeNote.id &&
 						<NavMenu />
 					}
@@ -162,14 +181,15 @@ class Main extends Component {
 								/>
 							</>
 						}
-						{ activeNote.id &&
+						{
+							activeNote.id &&
 							<div className="main-note_btn-gruop ">
 								<input
 									className="main-note_button"
 									type='button'
 									value='save'
 									onClick={this.handleSave}
-									/>
+								/>
 								{activeNote.id &&
 
 									<input
