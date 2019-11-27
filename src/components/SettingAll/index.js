@@ -1,20 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-// import {
-// 	createNewNote,
-// 	selectNote,
-// 	selectSetting,
-// 	selectBackgroundImage,
-// 	clearData,
-// 	selectBackgroundColor,
-// } from 'actions'
-
-// import DropList from 'widget/DropList';
-
-// import './setting.css';
-
-class Setting extends Component {
+class SettingAll extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -28,14 +14,11 @@ class Setting extends Component {
 
   render() {
     const {
-      // note,
       setingArr,
       title,
     } = this.props;
 
     const {
-      // newTitleNote,
-      // isSettingShow,
       isShow,
     } = this.state;
 
@@ -55,8 +38,9 @@ class Setting extends Component {
               {
                 setingArr.map((item) => {
                   return (
-                    <li key={item.name} className="drop-List_item">
+                    <li key={item.id} className="drop-List_item">
                       <div
+                        title={item.title}
                         onClick={item.onClick}
                         className="main-note_button"
                         data-name={item.name}
@@ -73,17 +57,4 @@ class Setting extends Component {
   }
 }
 
-function mapStateToProps({
-  note,
-}) {
-  return { note }
-}
-
-export default connect(mapStateToProps, {
-  // createNewNote,
-  // selectNote,
-	// selectSetting,
-	// selectBackgroundImage,
-	// clearData,
-	// selectBackgroundColor,
-})(Setting);
+export default SettingAll;

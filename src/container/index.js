@@ -118,6 +118,11 @@ class Main extends Component {
 			backgroundImage,
 		} = note;
 
+		const setingArr = [
+			{id: 1, title:'Save changes', name: 'save', onClick: this.handleSave},
+			{id: 2, title: 'Delete this note ', name: 'delete', onClick: this.handleDelete}
+		]
+
 		const img = backgroundImage && backgroundImage.image.find(img => img.id === backgroundImage.activeImg);
 		const date = activeNote.id && activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
 		const style = {'backgroundImage': `url(${img && img.url})`}
@@ -137,12 +142,7 @@ class Main extends Component {
 							activeNote.id &&
 							<SettingAll
 								title="Setting file"
-								setingArr={
-									[
-										{name: 'save', onClick: this.handleSave},
-										{name: 'delete', onClick: this.handleDelete}
-									]
-								}
+								setingArr={setingArr}
 							/>
 						}
 					</div>
@@ -184,26 +184,7 @@ class Main extends Component {
 						{
 							activeNote.id &&
 							<div className="main-note_btn-gruop ">
-								<input
-									className="main-note_button"
-									type='button'
-									value='save'
-									onClick={this.handleSave}
-								/>
-								{activeNote.id &&
-
-									<input
-										className="main-note_button"
-										type='button'
-										value='delete'
-										onClick={this.handleDelete}
-									/>
-								}
-
-								{activeNote.id &&
-									<div className="length-text-note">words in the text: {getLengthTextNote(activeNote)}</div>
-								}
-
+								<div className="length-text-note">words in the text: {getLengthTextNote(activeNote)}</div>
 							</div>
 						}
 					</div>
