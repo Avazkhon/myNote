@@ -13,6 +13,7 @@ import 'cssStyle/main.css';
 import 'cssStyle/main_element.css';
 
 import Setting  from 'components/setting';
+import SettingAll from 'components/SettingAll';
 import NavMenu from 'components/navMenu';
 
 import {
@@ -117,16 +118,34 @@ class Main extends Component {
 			backgroundImage,
 		} = note;
 
+		const setingArr = [
+			{id: 1, title:'Save changes', name: 'save', onClick: this.handleSave},
+			{id: 2, title: 'Delete this note ', name: 'delete', onClick: this.handleDelete}
+		]
+
 		const img = backgroundImage && backgroundImage.image.find(img => img.id === backgroundImage.activeImg);
 		const date = activeNote.id && activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
 		const style = {'backgroundImage': `url(${img && img.url})`}
+
+		const arr = [
+
+		]
 		return (
 			<div
 			style={style}
 				className="main-note">
 				<div className="note-content" >
 					<div className="main-note_title"></div>
-					<Setting />
+					<div className="setting-gruop">
+						<Setting />
+						{
+							activeNote.id &&
+							<SettingAll
+								title="Setting file"
+								setingArr={setingArr}
+							/>
+						}
+					</div>
 					{activeNote.id &&
 						<NavMenu />
 					}
@@ -162,28 +181,10 @@ class Main extends Component {
 								/>
 							</>
 						}
-						{ activeNote.id &&
+						{
+							activeNote.id &&
 							<div className="main-note_btn-gruop ">
-								<input
-									className="main-note_button"
-									type='button'
-									value='save'
-									onClick={this.handleSave}
-									/>
-								{activeNote.id &&
-
-									<input
-										className="main-note_button"
-										type='button'
-										value='delete'
-										onClick={this.handleDelete}
-									/>
-								}
-
-								{activeNote.id &&
-									<div className="length-text-note">words in the text: {getLengthTextNote(activeNote)}</div>
-								}
-
+								<div className="length-text-note">words in the text: {getLengthTextNote(activeNote)}</div>
 							</div>
 						}
 					</div>
