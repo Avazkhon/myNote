@@ -6,7 +6,26 @@ class SettingAll extends Component {
 		this.state = {
       isShow: false,
 		}
+    this.settingRef = React.createRef();
 	}
+
+  componentDidMount() {
+    window.addEventListener('click', this.showSetting);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.showSetting);
+  }
+
+  showSetting = (e) => {
+    const {
+      isShow
+    } = this.state;
+    const id = this.settingRef.current.id;
+    if (id !== e.target.name) {
+      this.setState({isShow: false});
+    }
+  }
 
   handleShow = () => {
     this.setState(preState => ({isShow: !preState.isShow}))
@@ -23,7 +42,11 @@ class SettingAll extends Component {
     } = this.state;
 
     return(
-      <div className="main-note_setting">
+      <div
+        className="main-note_setting"
+        name="file-setting"
+        ref={this.settingRef}
+        >
         <input
           className="main-note_setting-show btn"
           type="button"
