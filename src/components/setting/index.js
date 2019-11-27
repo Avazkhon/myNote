@@ -24,6 +24,25 @@ class Setting extends Component {
 			isShowCreateNewNote: false,
 			isShowSelectNote: false,
 		}
+
+		this.settingRef = React.createRef();
+	}
+	componentDidMount() {
+		window.addEventListener('click', this.showSetting);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('click', this.showSetting);
+	}
+
+	showSetting = (e) => {
+		const {
+			isSettingShow
+		} = this.state;
+		const id = this.settingRef.current.id;
+		if (id !== e.target.name) {
+			this.setState({isSettingShow: false});
+		}
 	}
 
 	handleChenge = (event) => {
@@ -119,7 +138,7 @@ class Setting extends Component {
     const {
       note,
     } = this.props;
-		
+
     const {
       newTitleNote,
       isSettingShow,
@@ -127,6 +146,8 @@ class Setting extends Component {
 
     return(
       <div
+				ref={this.settingRef}
+				name="main-setting"
 				className="main-note_setting"
 				onClick={this.handleCloseSettingShow}>
         <input

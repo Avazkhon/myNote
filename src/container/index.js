@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import {
 	getLengthTextNote,
-	findText,
 } from 'utils';
 
 import SearchInput from 'widget/SearchInput';
@@ -127,9 +126,6 @@ class Main extends Component {
 		const date = activeNote.id && activeNote.createDate.match(/[0-9]+\ [0-9]+\ [0-9]+:[0-9]+/gm)[0];
 		const style = {'backgroundImage': `url(${img && img.url})`}
 
-		const arr = [
-
-		]
 		return (
 			<div
 			style={style}
