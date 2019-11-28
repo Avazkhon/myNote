@@ -15,11 +15,9 @@ import {
 } from 'actions/index';
 
 class NavMenu extends Component {
-	constructor(props) {
-		super(props);
-
-		this.settingRef = React.createRef();
-	}
+	// constructor(props) {
+	// 	super(props);
+	// }
 
 	componentDidMount() {
 		window.addEventListener('click', this.showSetting);
@@ -30,9 +28,8 @@ class NavMenu extends Component {
 	}
 
 	showSetting = (e) => {
-		const id = this.settingRef.current.id;
 		const name = e.target.dataset.name
-		if (id !== name) {
+		if (this.name !== name) {
 		this.props.showNavMenu(name)
 		}
 	}
@@ -40,6 +37,7 @@ class NavMenu extends Component {
 	handleShowSetting = (e) => {
 		const name = e.target.dataset.name;
 		const nameState = this.props.note.navMenu.isContentSetting;
+		this.name = name;
 		if (name === nameState) {
 			this.props.showNavMenu(null)
 		}else {
@@ -66,7 +64,6 @@ class NavMenu extends Component {
 			<div
 				className="nav-menu"
 				style={{backgroundColor: color}}
-				ref={this.settingRef}
 				name="nav-menu"
 			>
 
