@@ -18,9 +18,6 @@ class SettingAll extends Component {
   }
 
   showSetting = (e) => {
-    const {
-      isShow
-    } = this.state;
     const id = this.settingRef.current.id;
     if (id !== e.target.name) {
       this.setState({isShow: false});

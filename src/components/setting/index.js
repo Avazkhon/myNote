@@ -36,9 +36,6 @@ class Setting extends Component {
 	}
 
 	showSetting = (e) => {
-		const {
-			isSettingShow
-		} = this.state;
 		const id = this.settingRef.current.id;
 		if (id !== e.target.name) {
 			this.setState({isSettingShow: false});
