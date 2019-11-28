@@ -12,6 +12,10 @@
   border-bottom: 2px solid black;
 }
 
+.nav-menu__title:hover {
+  background-color: #ccc;
+}
+
 .nav-menu-maine-text {
   cursor: pointer;
 }

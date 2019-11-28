@@ -17,14 +17,27 @@ import {
 class NavMenu extends Component {
 	// constructor(props) {
 	// 	super(props);
-	// 	this.state = {
-	// 		newTitleChapter: '',
-	// 	}
 	// }
+
+	componentDidMount() {
+		window.addEventListener('click', this.showSetting);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('click', this.showSetting);
+	}
+
+	showSetting = (e) => {
+		const name = e.target.dataset.name
+		if (this.name !== name) {
+		this.props.showNavMenu(name)
+		}
+	}
 
 	handleShowSetting = (e) => {
 		const name = e.target.dataset.name;
 		const nameState = this.props.note.navMenu.isContentSetting;
+		this.name = name;
 		if (name === nameState) {
 			this.props.showNavMenu(null)
 		}else {
@@ -51,6 +64,7 @@ class NavMenu extends Component {
 			<div
 				className="nav-menu"
 				style={{backgroundColor: color}}
+				name="nav-menu"
 			>
 
 				<div

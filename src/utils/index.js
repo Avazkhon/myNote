@@ -14,11 +14,12 @@ function getLengthTextNote (activeNote) {
 function findText (note, textFind) {
 	let item = note.activeNote.chapters.filter((item) => item.text.match(textFind))
 	let text2 = item.filter((chapter) => {
-			if (chapter.text.match(textFind)) {
-				return chapter.id;
-			}
-		})
-	return text2
+		if (chapter.text.match(textFind)) {
+			return chapter.id;
+		}
+		return null;
+	})
+	return text2;
 }
 export {
 	getLengthTextNote,
