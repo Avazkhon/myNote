@@ -23,6 +23,21 @@ class Chapters extends Component {
 		}
 	}
 
+	componentDidMount() {
+		window.addEventListener('click', this.showSetting);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('click', this.showSetting);
+	}
+
+	showSetting = (e) => {
+		const name = e.target.dataset.name;
+		if (this.name !== name) {
+		this.props.selectSettingAll('chapterSetting', name)
+		}
+	}
+
 	handleSelectchapter = (e) => {
 		const id = e.target.dataset.id;
 		this.props.selectChapter(Number(id))
@@ -30,6 +45,7 @@ class Chapters extends Component {
 
 	handleShowSettingChapter = (e) => {
 		const { name } = e.target.dataset;
+		this.name = name;
 		this.props.selectSettingAll('chapterSetting', name)
 	}
 
