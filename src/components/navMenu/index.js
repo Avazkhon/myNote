@@ -15,12 +15,27 @@ import {
 } from 'actions/index';
 
 class NavMenu extends Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		newTitleChapter: '',
-	// 	}
-	// }
+	constructor(props) {
+		super(props);
+
+		this.settingRef = React.createRef();
+	}
+
+	componentDidMount() {
+		window.addEventListener('click', this.showSetting);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('click', this.showSetting);
+	}
+
+	showSetting = (e) => {
+		const id = this.settingRef.current.id;
+		const name = e.target.dataset.name
+		if (id !== name) {
+		this.props.showNavMenu(name)
+		}
+	}
 
 	handleShowSetting = (e) => {
 		const name = e.target.dataset.name;
@@ -51,6 +66,8 @@ class NavMenu extends Component {
 			<div
 				className="nav-menu"
 				style={{backgroundColor: color}}
+				ref={this.settingRef}
+				name="nav-menu"
 			>
 
 				<div
