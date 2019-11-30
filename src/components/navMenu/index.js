@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -28,8 +29,13 @@ class NavMenu extends Component {
 	}
 
 	showSetting = (e) => {
-		const name = e.target.dataset.name
-		if (this.name !== name) {
+		const name = e.target.dataset.name;
+		// console.log('1', this.name);
+		// console.log('2', name);
+		// console.log(e.path.includes(this.name));
+		const domNode = ReactDOM.findDOMNode(this);
+		console.log(domNode);
+		if ((!domNode || !domNode.contains(e.target))) {
 		this.props.showNavMenu(name)
 		}
 	}
@@ -37,7 +43,7 @@ class NavMenu extends Component {
 	handleShowSetting = (e) => {
 		const name = e.target.dataset.name;
 		const nameState = this.props.note.navMenu.isContentSetting;
-		this.name = name;
+			this.name = name;
 		if (name === nameState) {
 			this.props.showNavMenu(null)
 		}else {
