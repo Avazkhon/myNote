@@ -30,11 +30,7 @@ class NavMenu extends Component {
 
 	showSetting = (e) => {
 		const name = e.target.dataset.name;
-		// console.log('1', this.name);
-		// console.log('2', name);
-		// console.log(e.path.includes(this.name));
 		const domNode = ReactDOM.findDOMNode(this);
-		console.log(domNode);
 		if ((!domNode || !domNode.contains(e.target))) {
 		this.props.showNavMenu(name)
 		}
