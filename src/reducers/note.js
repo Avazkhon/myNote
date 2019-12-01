@@ -18,10 +18,11 @@ import {
 } from '../constants/index';
 
 import getInitState from './getInitState';
+import middleware from './middleware';
 
 const initState = getInitState(load({'namespace': 'reduxState'}));
-
 export function note(state = initState.note, action) {
+	state = middleware(state, action);
 	if (action.type === CREATE_NEW_NOTE) {
 		return {
 			...state,

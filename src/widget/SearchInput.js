@@ -10,6 +10,7 @@ import DropList from 'widget/DropList';
 
 import {
 	selectChapter,
+	selectNote,
 } from '../actions/index';
 
 import './searchInput_style.css';
@@ -94,4 +95,5 @@ SearchInput.propType = {
 
 export default connect(null, {
 	selectChapter,
+	selectNote,
 })(SearchInput);

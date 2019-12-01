@@ -39,6 +39,7 @@ class Main extends Component {
 			});
 		}
 	}
+
 	componentWillReceiveProps(nexProps) {
 
 		if (nexProps.note.activeNote.id) {
