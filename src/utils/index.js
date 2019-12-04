@@ -12,7 +12,7 @@ function getLengthTextNote (activeNote) {
 }
 
 function findText (note, textFind) {
-	let item = note.activeNote.chapters.filter((item) => item.text.match(textFind))
+	let item = note.plainItem.filter((item) => item.text.match(textFind))
 	let text2 = item.filter((chapter) => {
 		if (chapter.text.match(textFind)) {
 			return chapter.id;

@@ -84,10 +84,11 @@ export function deleteChapter(idNote, idChapter) {
 	)
 };
 
-export function selectNote(id) {
+export function selectNote(id, activeChapterID) {
 	return ({
 		type: SELECT_NOTE,
 		activeNote: id,
+		activeChapterID: activeChapterID,
 	})
 }
 

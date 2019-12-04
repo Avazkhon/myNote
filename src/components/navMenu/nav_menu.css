@@ -18,6 +18,8 @@
 
 .nav-menu-maine-text {
   cursor: pointer;
+  width: 100%;
+  float: left;
 }
 
 .nav-menu__items {

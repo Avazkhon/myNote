@@ -18,10 +18,11 @@ import {
 } from '../constants/index';
 
 import getInitState from './getInitState';
+import middleware from './middleware';
 
 const initState = getInitState(load({'namespace': 'reduxState'}));
-
 export function note(state = initState.note, action) {
+	state = middleware(state, action);
 	if (action.type === CREATE_NEW_NOTE) {
 		return {
 			...state,
@@ -132,10 +133,25 @@ export function note(state = initState.note, action) {
 
 
 	if (action.type === SELECT_NOTE) {
-		return {
-			...state,
-			activeNote: state.noteItems.find((n) => n.id === Number(action.activeNote))
+		console.log(action);
+		if (action.activeChapterID) {
+			state = {
+				...state,
+				activeNote: {
+					...state.noteItems.find((n) => n.id === Number(action.activeNote)),
+					activeChapter: action.activeChapterID,
+				}
+			}
+		} else {
+			state = {
+				...state,
+				activeNote: {
+					...state.noteItems.find((n) => n.id === Number(action.activeNote)),
+				}
+			}
 		}
+
+		return state;
 	}
 
 	if (action.type === SELECT_CHAPTER) {

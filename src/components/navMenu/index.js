@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -19,25 +20,26 @@ class NavMenu extends Component {
 	// 	super(props);
 	// }
 
-	componentDidMount() {
-		window.addEventListener('click', this.showSetting);
-	}
+	// componentDidMount() {
+	// 	window.addEventListener('click', this.showSetting);
+	// }
+	//
+	// componentWillUnmount() {
+	// 	window.removeEventListener('click', this.showSetting);
+	// }
 
-	componentWillUnmount() {
-		window.removeEventListener('click', this.showSetting);
-	}
-
-	showSetting = (e) => {
-		const name = e.target.dataset.name
-		if (this.name !== name) {
-		this.props.showNavMenu(name)
-		}
-	}
+	// showSetting = (e) => {
+	// 	const name = e.target.dataset.name;
+	// 	const domNode = ReactDOM.findDOMNode(this);
+	// 	if ((!domNode || !domNode.contains(e.target))) {
+	// 	this.props.showNavMenu(name)
+	// 	}
+	// }
 
 	handleShowSetting = (e) => {
 		const name = e.target.dataset.name;
 		const nameState = this.props.note.navMenu.isContentSetting;
-		this.name = name;
+			this.name = name;
 		if (name === nameState) {
 			this.props.showNavMenu(null)
 		}else {
@@ -64,7 +66,7 @@ class NavMenu extends Component {
 			<div
 				className="nav-menu"
 				style={{backgroundColor: color}}
-				name="nav-menu"
+				// name="nav-menu"
 			>
 
 				<div

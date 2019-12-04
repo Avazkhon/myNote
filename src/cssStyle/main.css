@@ -38,8 +38,6 @@ ul li {
 }
 
 .note-content {
-  /* background-color: #888379; */
-  width: 850px;
   min-width: 660px;
   margin: 0 auto;
 }
@@ -49,12 +47,11 @@ ul li {
 }
 
 .main-note__main-text {
-  width: 663px;
+  width: calc(100% - 190px);
   height: 380px;
 }
 
 .main-note_btn-gruop {
-  min-width: 669px;
   height: 50px;
   padding-left: 153px;
 }
