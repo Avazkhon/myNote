@@ -133,10 +133,25 @@ export function note(state = initState.note, action) {
 
 
 	if (action.type === SELECT_NOTE) {
-		return {
-			...state,
-			activeNote: state.noteItems.find((n) => n.id === Number(action.activeNote))
+		console.log(action);
+		if (action.activeChapterID) {
+			state = {
+				...state,
+				activeNote: {
+					...state.noteItems.find((n) => n.id === Number(action.activeNote)),
+					activeChapter: action.activeChapterID,
+				}
+			}
+		} else {
+			state = {
+				...state,
+				activeNote: {
+					...state.noteItems.find((n) => n.id === Number(action.activeNote)),
+				}
+			}
 		}
+
+		return state;
 	}
 
 	if (action.type === SELECT_CHAPTER) {

@@ -44,12 +44,12 @@ class Main extends Component {
 
 		if (nexProps.note.activeNote.id) {
 			if (nexProps.note.activeNote.id === nexProps.note.activeNote.activeChapter) {
-				this.setState((p) => ({
+				this.setState(p => ({
 					newChengeTetx: nexProps.note.activeNote.text,
 				}));
 			} else {
 				const chapter = nexProps.note.activeNote.chapters.find(chapter => chapter.id === nexProps.note.activeNote.activeChapter);
-				this.setState((p) => ({
+				this.setState(p => ({
 					newChengeTetx: chapter && chapter.text,
 				}));
 			}
@@ -116,6 +116,7 @@ class Main extends Component {
 		const {
 			activeNote,
 			backgroundImage,
+			plainItem,
 		} = note;
 
 		const setingArr = [

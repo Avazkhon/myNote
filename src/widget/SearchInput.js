@@ -40,17 +40,37 @@ class SearchInput extends Component {
 
 		this.handleChenge(e);
 		if (result.length !== 0) {
-			this.setState({searchChapters: result})
+			this.setState({searchChapters: result});
 		}
 
 		if (value.length === 0) {
-			this.setState({searchChapters: []})
+			this.setState({searchChapters: []});
 		}
 	}
 
 	handleSelectchapter = (e) => {
-		const id = e.target.dataset.id_chapter;
-		this.props.selectChapter(Number(id))
+		const id = Number(e.target.dataset.id_chapter);
+		const {
+			searchChapters,
+		} = this.state;
+		const {
+			plainItem,
+			activeNote,
+			noteItems,
+		} = this.props.note;
+
+		const seacrhChapter = plainItem.find(item => item.id === id);
+		const seacrhNote = noteItems.find(item => item.id === id);
+		for (let i = 0; i < plainItem.length; i++) {
+			if (plainItem[i].chapters && plainItem[i].chapters.length) {
+				for (let j = 0; j < plainItem[i].chapters.length; j++) {
+					if (plainItem[i].chapters[j].id === id) {
+						this.props.selectNote(plainItem[i].id, plainItem[i].chapters[j].id);
+					} else if (plainItem.length === i ) {
+					}
+				}
+			}
+		}
 		this.setState({
 			searchText: '',
 			searchChapters: [],
