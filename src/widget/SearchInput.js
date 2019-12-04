@@ -66,7 +66,9 @@ class SearchInput extends Component {
 				for (let j = 0; j < plainItem[i].chapters.length; j++) {
 					if (plainItem[i].chapters[j].id === id) {
 						this.props.selectNote(plainItem[i].id, plainItem[i].chapters[j].id);
-					} else if (plainItem.length === i ) {
+					}
+					 if (plainItem[i].id === id ) {
+						this.props.selectNote(plainItem[i].id)
 					}
 				}
 			}
