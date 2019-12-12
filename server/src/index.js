@@ -59,7 +59,15 @@ app.get('/user', (req, res) => {
   const {
     user,
   } = req.session;
-  const findUser = user && Users.find(itm => itm.id === user.id);
+  const {
+    id
+  } = req.query;
+  const findUser = user && Users.find(itm => itm.id === id || user.id);
+  if (findUser && id) {
+    res.status = 200
+    res.send(findUser);
+    return null;
+  }
   if (findUser) {
     res.status = 200
     res.send(Users);
