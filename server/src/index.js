@@ -1,5 +1,7 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const cookieParser = require('cookie-parser')
 
 const app = express();
 
@@ -7,41 +9,64 @@ app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(cookieParser())
+app.use(session({
+  secret: 'keyboard cat',
+  cookie: { maxAge: 60000 }
+}))
 
-const users = [
+let Users = [
   {
     id: 1,
-    name: 'Vlad',
+    userName: 'Vlad',
     password: 123,
   }
 ]
 
-app.get('/', (req, res) => {
-  res.status = 200;
-  res.send('my note');
-});
-
-app.post('/user', (req, res) => {
-  if (req.body) {
-    res.status = 400;
-  }
+app.post('/user', (req, res)  => {
   const {
-    name,
+    userName,
     password,
   } = req.body;
-  if (name && password && name.length && password.length) {
-    users.push({
-      id: Date.now(),
-      name,
-      password
-    })
-    res.status = 200;
+  let findUser = null;
+  if (!userName || !password) {
+    res.status(400);
+    return res.send('нет данных')
   }
-  res.send();
+  findUser = Users.find(itm => itm.userName === userName);
+  if (!findUser) {
+    const newUser = {
+      id: Date.now(),
+      userName,
+      password,
+    }
+    Users = [...Users, newUser];
+    res.status = 200;
+    req.session.user = newUser
+    res.send('Пользователь успешно создан!');
+  } else if (findUser && findUser.password === password) {
+    res.status = 200;
+    req.session.user = findUser
+    res.send('Пользователь успешно авторизован!');
+  } else {
+    res.status = 401;
+    res.send('Пользователь не может быть зарегистрирован!')
+  }
+  return null;
 });
 
 app.get('/user', (req, res) => {
-  res.send(users);
+  const {
+    user,
+  } = req.session;
+  const findUser = user && Users.find(itm => itm.id === user.id);
+  if (findUser) {
+    res.status = 200
+    res.send(Users);
+  } else {
+    res.status = 401;
+    res.send('Пользователя нет прав!')
+  }
 })
 
 app.listen(3000, () => {
