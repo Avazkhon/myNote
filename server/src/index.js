@@ -27,6 +27,7 @@ app.post('/user', (req, res)  => {
   const {
     userName,
     password,
+    isAdmin,
   } = req.body;
   let findUser = null;
   if (!userName || !password) {
@@ -39,12 +40,13 @@ app.post('/user', (req, res)  => {
       id: Date.now(),
       userName,
       password,
+      isAdmin,
     }
     Users = [...Users, newUser];
     res.status = 200;
     req.session.user = newUser
     res.send('Пользователь успешно создан!');
-  } else if (findUser && findUser.password === password) {
+  } else if (findUser && findUser.password == password) {
     res.status = 200;
     req.session.user = findUser
     res.send('Пользователь успешно авторизован!');
@@ -60,15 +62,21 @@ app.get('/user', (req, res) => {
     user,
   } = req.session;
   const {
-    id
+    id,
   } = req.query;
-  const findUser = user && Users.find(itm => itm.id === id || user.id);
-  if (findUser && id) {
-    res.status = 200
-    res.send(findUser);
+  const findUser = user && Users.find(itm => itm.id === user.id);
+  if (findUser && id && user.isAdmin) {
+    const getUser = Users.find(itm => itm.id === Number(id));
+    if (getUser) {
+      res.status = 200
+      res.send(getUser);
+      return null;
+    }
+    res.status = 404
+    res.send('User не найден!');
     return null;
   }
-  if (findUser) {
+  if (findUser && user.isAdmin) {
     res.status = 200
     res.send(Users);
   } else {
