@@ -1,4 +1,5 @@
 const userModels = require('../models/user');
+const getOne = require('./getOne');
 
 
 exports.all = (req, res) => userModels.all((err, result) => {
@@ -9,21 +10,13 @@ exports.all = (req, res) => userModels.all((err, result) => {
   res.status = 200;
   res.send(result);
 })
+
+
 exports.getOne = (req, res) => {
   const {
     id,
-  } = req.params;
-
-  userModels.getOne((err, result) => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    if (!result) {
-      res.status = 404
-      return res.send('User не найден!');
-    }
-    res.status = 200
-    res.send(result);
-  }, id)
+    name,
+    all,
+  } = req.query;
+  getOne.getOneById(id, res);
 }
