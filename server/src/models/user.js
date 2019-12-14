@@ -24,3 +24,12 @@ exports.postAddOne = (user, callback) => {
   db.get().collection('Users')
   .insertOne(user , (err, result) => callback(err, result));
 }
+
+exports.updateOne = (id , user, callback) => {
+  db.get().collection('Users')
+  .updateOne(
+    { _id: ObjectID(id) },
+    { $set: user },
+    (err, result) => callback(err, result)
+  );
+}

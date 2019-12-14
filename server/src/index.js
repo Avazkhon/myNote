@@ -21,26 +21,7 @@ app.use(session({
 
 app.get('/user', userControllers.getUser); // обрабатывает запросы по userName, id и all
 app.post('/user', userControllers.postAddOne);
-
-app.put('/user/:id', (req, res) => {
-  const { userName, password, isAdmin } = req.body;
-  const { id } = req.params;
-  const user = { userName, password, isAdmin };
-
-  db.get().collection('Users')
-  .updateOne(
-    { _id: ObjectID(id) },
-    { $set: user },
-    (err, result) => {
-      if (err) {
-        console.log(err);
-        return res.sendStatus(500);
-      }
-      res.status = 200;
-      res.send('Пользователь успешно обнавлен!')
-    }
-  )
-})
+app.put('/user', userControllers.updateOne);
 
 app.delete('/user/:id', (req, res) => {
   const { id } = req.params;

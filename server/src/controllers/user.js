@@ -52,3 +52,23 @@ exports.postAddOne = (req, res) => {
   );
 
 }
+
+exports.updateOne = (req, res) => {
+  const { userName, password, isAdmin } = req.body;
+  const { id } = req.query;
+  const user = { userName, password, isAdmin };
+  if (!id) {
+    res.status = 400;
+    return res.send('Не хватает данных для изменения!')
+  }
+
+  userModels.updateOne(id, user, (err, result) => {
+     if (err) {
+       console.log(err);
+       return res.sendStatus(500);
+     }
+     console.log(result);
+     res.status = 200;
+     res.send('Пользователь успешно обнавлен!')
+  })
+}
