@@ -98,22 +98,12 @@ app.get('/users', (req, res) => {
 })
 
 app.put('/user/:id', (req, res) => {
-  const {
-    userName,
-    password,
-    isAdmin,
-  } = req.body;
+  const { userName, password, isAdmin } = req.body;
+  const { id } = req.params;
+  const user = { userName, password, isAdmin };
 
-  const {
-    id,
-  } = req.params;
-
-  const user = {
-    userName,
-    password,
-    isAdmin,
-  };
-  db.get().collection('Users').updateOne(
+  db.get().collection('Users')
+  .updateOne(
     { _id: ObjectID(id) },
     { $set: user },
     (err, result) => {
@@ -122,7 +112,23 @@ app.put('/user/:id', (req, res) => {
         return res.sendStatus(500);
       }
       res.status = 200;
-      res.send('Пользователь успешно обнавлен')
+      res.send('Пользователь успешно обнавлен!')
+    }
+  )
+})
+
+app.delete('/user/:id', (req, res) => {
+  const { id } = req.params;
+  db.get().collection('Users')
+  .deleteOne(
+    { _id: ObjectID(id) },
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(500)
+      }
+      res.status = 200;
+      res.send('Пользователь успешно удален!')
     }
   )
 })
