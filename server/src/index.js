@@ -8,6 +8,7 @@ const db = require('./db');
 const userControllers = require('./controllers/user');
 
 const app = express();
+const router = express.Router()
 
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
@@ -19,10 +20,11 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }))
 
-app.get('/user', userControllers.getUser); // обрабатывает запросы по userName, id и all
-app.post('/user', userControllers.postAddOne);
-app.put('/user', userControllers.updateOne);
-app.delete('/user', userControllers.deleteOne);
+app.route('/user')
+  .get(userControllers.getUser) // обрабатывает запросы по userName, id и all
+  .post(userControllers.postAddOne)
+  .put(userControllers.updateOne)
+  .delete(userControllers.deleteOne)
 
 
 db.connect((err) => {
