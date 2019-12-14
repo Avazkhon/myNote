@@ -9,18 +9,21 @@ exports.all = (req, res) => userModels.all((err, result) => {
   res.status = 200;
   res.send(result);
 })
-exports.getOne = (req, res) => userModels.getOne((err, result) => {
+exports.getOne = (req, res) => {
   const {
     id,
   } = req.params;
-  if (err) {
-    console.log(err);
-    return res.sendStatus(500);
-  }
-  if (!result) {
-    res.status = 404
-    return res.send('User не найден!');
-  }
-  res.status = 200
-  res.send(result);
-})
+
+  userModels.getOne((err, result) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    if (!result) {
+      res.status = 404
+      return res.send('User не найден!');
+    }
+    res.status = 200
+    res.send(result);
+  }, id)
+}

@@ -19,7 +19,8 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }))
 
-app.get('/user', userControllers.all)
+app.get('/user', userControllers.all);
+app.get('/user/:id', userControllers.getOne);
 
 app.post('/user', (req, res)  => {
   const {
@@ -64,25 +65,6 @@ app.post('/user', (req, res)  => {
     res.send('Пользователь не может быть зарегистрирован!')
   })
 });
-
-app.get('/user/:id', (req, res) => {
-  const {
-    id,
-  } = req.params;
-  db.get().collection('Users')
-  .findOne({ _id: ObjectID(id)}, (err, result) => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    if (!result) {
-      res.status = 404
-      return res.send('User не найден!');
-    }
-    res.status = 200
-    res.send(result);
-  })
-})
 
 app.put('/user/:id', (req, res) => {
   const { userName, password, isAdmin } = req.body;
