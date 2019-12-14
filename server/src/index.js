@@ -19,6 +19,8 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }))
 
+
+// обрабатывает запросы по userName, id и all
 app.get('/user', userControllers.getUser);
 
 app.post('/user', (req, res)  => {
