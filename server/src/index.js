@@ -19,8 +19,7 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }))
 
-// app.get('/user', userControllers.all);
-app.get('/user', userControllers.getOne);
+app.get('/user', userControllers.getUser);
 
 app.post('/user', (req, res)  => {
   const {

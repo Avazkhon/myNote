@@ -12,9 +12,17 @@ exports.all = (callback) => {
 }
 
 
-exports.getOne = (callback, id) => {
+exports.getOneById = (callback, id) => {
   db.get().collection('Users')
   .findOne({ _id: ObjectID(id)}, (err, result) => {
+    callback(err,result);
+  })
+}
+
+
+exports.getOneByUserName = (callback, userName) => {
+  db.get().collection('Users')
+  .findOne({ userName }, (err, result) => {
     callback(err,result);
   })
 }

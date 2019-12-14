@@ -1,22 +1,17 @@
 const userModels = require('../models/user');
-const getOne = require('./getOne');
+const getUser = require('./getUser');
 
-
-exports.all = (req, res) => userModels.all((err, result) => {
-  if (err) {
-    console.log(err);
-    return res.sendStatus(500);
-  }
-  res.status = 200;
-  res.send(result);
-})
-
-
-exports.getOne = (req, res) => {
+exports.getUser = (req, res) => {
   const {
     id,
-    name,
+    userName,
     all,
   } = req.query;
-  getOne.getOneById(id, res);
+  const params = (id && {id}) || (userName && {userName}) || (all === 'true' && {all});
+  if (params) {
+    return getUser.getOne(params, res);
+  }
+
+  res.status = 400;
+  res.send('Нет параметров!')
 }
