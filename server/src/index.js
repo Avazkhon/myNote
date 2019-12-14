@@ -19,53 +19,8 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }))
 
-
-// обрабатывает запросы по userName, id и all
-app.get('/user', userControllers.getUser);
-
-app.post('/user', (req, res)  => {
-  const {
-    userName,
-    password,
-    isAdmin,
-  } = req.body;
-
-  const user = {
-    userName,
-    password,
-    isAdmin,
-  };
-
-  if (!userName || !password) {
-    res.status(400);
-    return res.send('нет данных')
-  }
-
-  db.get().collection('Users')
-  .findOne({ userName }, (err, result) => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-
-    if (!result) {
-      db.get().collection('Users')
-      .insertOne(user , (err, result) => {
-        if (err) {
-          console.log(err);
-          return res.sendStatus(500);
-        }
-        req.session.user = user;
-        res.status = 200;
-        return res.send('Пользователь успешно зарегистрирован!');
-      })
-      return null;
-    }
-
-    res.status = 401;
-    res.send('Пользователь не может быть зарегистрирован!')
-  })
-});
+app.get('/user', userControllers.getUser); // обрабатывает запросы по userName, id и all
+app.post('/user', userControllers.postAddOne);
 
 app.put('/user/:id', (req, res) => {
   const { userName, password, isAdmin } = req.body;

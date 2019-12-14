@@ -10,16 +10,17 @@ exports.all = (callback) => {
   );
 }
 
-exports.getOneById = (callback, id) => {
+exports.getOneById = (id, callback) => {
   db.get().collection('Users')
-  .findOne({ _id: ObjectID(id)}, (err, result) => {
-    callback(err,result);
-  })
+  .findOne({ _id: ObjectID(id)}, (err, result) => callback(err, result))
 }
 
-exports.getOneByUserName = (callback, userName) => {
+exports.getOneByUserName = (userName, callback) => {
   db.get().collection('Users')
-  .findOne({ userName }, (err, result) => {
-    callback(err,result);
-  })
+  .findOne({ userName }, (err, result) => callback(err, result))
+}
+
+exports.postAddOne = (user, callback) => {
+  db.get().collection('Users')
+  .insertOne(user , (err, result) => callback(err, result));
 }
