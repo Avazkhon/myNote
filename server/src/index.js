@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const ObjectID = require('mongodb').ObjectID;
 
 const db = require('./db');
+const userControllers = require('./controllers/user');
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.use(session({
   secret: 'keyboard cat',
   cookie: { maxAge: 60000 }
 }))
+
+app.get('/user', userControllers.all)
 
 app.post('/user', (req, res)  => {
   const {
@@ -52,7 +55,7 @@ app.post('/user', (req, res)  => {
         }
         req.session.user = user;
         res.status = 200;
-        return res.send('Пользователь успешно создан!');
+        return res.send('Пользователь успешно зарегистрирован!');
       })
       return null;
     }
@@ -63,9 +66,6 @@ app.post('/user', (req, res)  => {
 });
 
 app.get('/user/:id', (req, res) => {
-  const {
-    user,
-  } = req.session;
   const {
     id,
   } = req.params;
@@ -82,19 +82,6 @@ app.get('/user/:id', (req, res) => {
     res.status = 200
     res.send(result);
   })
-})
-
-app.get('/users', (req, res) => {
-
-  db.get()
-  .collection("Users")
-  .find()
-  .toArray(
-    (err, result) => {
-      if (err) return res.sendStatus(500);
-      res.send(result);
-    }
-  );
 })
 
 app.put('/user/:id', (req, res) => {
