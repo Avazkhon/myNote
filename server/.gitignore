@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/password.js
 /.pnp
 .pnp.js
 

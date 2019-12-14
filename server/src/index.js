@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const ObjectID = require('mongodb').ObjectID;
+
+const db = require('./db');
 
 const app = express();
 
@@ -15,76 +18,90 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }))
 
-let Users = [
-  {
-    id: 1,
-    userName: 'Vlad',
-    password: 123,
-  }
-]
-
 app.post('/user', (req, res)  => {
   const {
     userName,
     password,
     isAdmin,
   } = req.body;
-  let findUser = null;
+
+  const user = {
+    userName,
+    password,
+    isAdmin,
+  };
+
   if (!userName || !password) {
     res.status(400);
     return res.send('нет данных')
   }
-  findUser = Users.find(itm => itm.userName === userName);
-  if (!findUser) {
-    const newUser = {
-      id: Date.now(),
-      userName,
-      password,
-      isAdmin,
+
+  db.get().collection('Users')
+  .findOne({ userName }, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
     }
-    Users = [...Users, newUser];
-    res.status = 200;
-    req.session.user = newUser
-    res.send('Пользователь успешно создан!');
-  } else if (findUser && findUser.password == password) {
-    res.status = 200;
-    req.session.user = findUser
-    res.send('Пользователь успешно авторизован!');
-  } else {
+
+    if (!result) {
+      db.get().collection('Users')
+      .insertOne(user , (err, result) => {
+        if (err) {
+          console.log(err);
+          return res.sendStatus(500);
+        }
+        req.session.user = user;
+        res.status = 200;
+        return res.send('Пользователь успешно создан!');
+      })
+      return null;
+    }
+
     res.status = 401;
     res.send('Пользователь не может быть зарегистрирован!')
-  }
-  return null;
+  })
 });
 
-app.get('/user', (req, res) => {
+app.get('/user/:id', (req, res) => {
   const {
     user,
   } = req.session;
   const {
     id,
-  } = req.query;
-  const findUser = user && Users.find(itm => itm.id === user.id);
-  if (findUser && id && user.isAdmin) {
-    const getUser = Users.find(itm => itm.id === Number(id));
-    if (getUser) {
-      res.status = 200
-      res.send(getUser);
-      return null;
+  } = req.params;
+  db.get().collection('Users')
+  .findOne({ _id: ObjectID(id)}, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
     }
-    res.status = 404
-    res.send('User не найден!');
-    return null;
-  }
-  if (findUser && user.isAdmin) {
+    if (!result) {
+      res.status = 404
+      return res.send('User не найден!');
+    }
     res.status = 200
-    res.send(Users);
-  } else {
-    res.status = 401;
-    res.send('Пользователя нет прав!')
-  }
+    res.send(result);
+  })
 })
 
-app.listen(3000, () => {
-  console.log('app my note starting!');
+app.get('/users', (req, res) => {
+
+  db.get()
+  .collection("Users")
+  .find()
+  .toArray(
+    (err, result) => {
+      if (err) return res.sendStatus(500);
+      res.send(result);
+    }
+  );
+})
+
+db.connect((err) => {
+  if (err) {
+    return console.log(err);
+  }
+  app.listen(3000, () => {
+    console.log('app my note starting!');
+  })
 });
