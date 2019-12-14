@@ -33,3 +33,11 @@ exports.updateOne = (id , user, callback) => {
     (err, result) => callback(err, result)
   );
 }
+
+exports.deleteOne = (id, callback) => {
+  db.get().collection('Users')
+  .deleteOne(
+    { _id: ObjectID(id) },
+    (err, result) => callback(err, result)
+  );
+}

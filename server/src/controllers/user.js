@@ -43,7 +43,7 @@ exports.postAddOne = (req, res) => {
             return res.sendStatus(500);
           }
 
-          res.status = 200;
+          res.status = 201;
           res.send('Пользователь успешно зарегистрирован!')
         }
       );
@@ -63,12 +63,29 @@ exports.updateOne = (req, res) => {
   }
 
   userModels.updateOne(id, user, (err, result) => {
-     if (err) {
-       console.log(err);
-       return res.sendStatus(500);
-     }
-     console.log(result);
-     res.status = 200;
-     res.send('Пользователь успешно обнавлен!')
+    if (err) {
+     console.log(err);
+     return res.sendStatus(500);
+    }
+   res.status = 200;
+   res.send('Пользователь успешно обновлен!')
+  })
+}
+
+exports.deleteOne = (req, res) => {
+  const { id } = req.query;
+
+  userModels.deleteOne(id, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500)
+    }
+    console.log(result.deletedCount);
+    if (!result.deletedCount) {
+      res.status = 404;
+      return res.send('Пользователя нет!')
+    }
+    res.status = 200;
+    res.send('Пользователь успешно удален!')
   })
 }
