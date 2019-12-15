@@ -29,6 +29,7 @@ app.route('/user')
   .put(userControllers.updateOne)
   .delete(userControllers.deleteOne);
 
+app.post('/auth', userControllers.auth);
 
 db.connect((err) => {
   if (err) {

@@ -80,7 +80,7 @@ exports.deleteOne = (req, res) => {
       console.log(err);
       return res.sendStatus(500)
     }
-    console.log(result.deletedCount);
+
     if (!result.deletedCount) {
       res.status = 404;
       return res.send('Пользователя нет!')
@@ -88,4 +88,36 @@ exports.deleteOne = (req, res) => {
     res.status = 200;
     res.send('Пользователь успешно удален!')
   })
+}
+
+exports.auth = (req, res) => {
+  let client = req.session.user;
+  const { userName, password } = req.body;
+  if (!userName || !password) {
+    res.status = 400;
+    return res.send('Заполните данные!');
+  }
+
+  if (req.session.user) {
+    res.status = 200;
+    req.session.user = null;
+    return res.send('Пользователь успешно вышел из системы!')
+  }
+
+  userModels.getOneByUserName(userName, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500)
+    }
+    if (result
+      && result.userName === userName
+      && result.password === password
+    ) {
+      res.status = 201;
+      req.session.user = result;
+      return res.send('Пользователь успешно авторизован!');
+    }
+    res.status = 401;
+    return res.send('Не правельный имя или пароль!');
+  });
 }
