@@ -2,10 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const ObjectID = require('mongodb').ObjectID;
 
 const db = require('./db');
+
 const userControllers = require('./controllers/user');
+const notesControllers = require('./controllers/notes');
 
 const app = express();
 const router = express.Router()
@@ -14,7 +15,6 @@ app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
 app.use(cookieParser());
 app.use(session({
   secret: 'keyboard cat',
@@ -29,7 +29,10 @@ app.route('/user')
   .put(userControllers.updateOne)
   .delete(userControllers.deleteOne);
 
-app.post('/auth', userControllers.auth);
+app.post('/auth', userControllers.auth); // один роут для входа и выхода
+
+app.route('/notes')
+  .post(notesControllers.save);
 
 db.connect((err) => {
   if (err) {
