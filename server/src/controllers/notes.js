@@ -20,8 +20,21 @@ exports.save = (req, res) => {
   })
 }
 
-exports.find = (req, res) => {
-  notes.find({}, (err, result) => {
+exports.get = (req, res) => {
+  const {
+    id
+  } = req.query
+  if (id) {
+    return notes.findById(id, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(500);
+      }
+      res.send(result);
+    });
+  }
+
+  notes.findAll({}, (err, result) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);

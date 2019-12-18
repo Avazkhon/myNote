@@ -9,6 +9,10 @@ exports.save = (data, callBack) => {
   note.save((err, result) => callBack(err, result));
 }
 
-exports.find = (data, callBack) => {
+exports.findAll = (data, callBack) => {
   Note.find({}, (err, result) => callBack(err, result));
+}
+
+exports.findById = (id, callBack) => {
+  Note.find({_id: id}, (err, result) => callBack(err, result));
 }
