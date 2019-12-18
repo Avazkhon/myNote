@@ -33,7 +33,8 @@ app.post('/auth', userControllers.auth); // один роут для входа 
 
 app.route('/notes')
   .get(notesControllers.get)
-  .post(notesControllers.save);
+  .post(notesControllers.save)
+  .delete(notesControllers.delete);
 
 db.connect((err) => {
   if (err) {
