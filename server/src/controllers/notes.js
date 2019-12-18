@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const users = require('../models/notes')
+const notes = require('../models/notes')
 
 exports.save = (req, res) => {
   const {
@@ -11,11 +11,21 @@ exports.save = (req, res) => {
     res.status = 400;
     return res.send('Не достаточно небходимых данных!')
   }
-  users.save(req.body, (err, result) => {
+  notes.save(req.body, (err, result) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
     }
     res.send(result);
   })
+}
+
+exports.find = (req, res) => {
+  notes.find({}, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    res.send(result);
+  });
 }
