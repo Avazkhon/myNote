@@ -23,17 +23,18 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }));
 
+app.post('/auth', userControllers.auth); // один роут для входа и выхода
+
 app.route('/user')
   .get(userControllers.getUser) // обрабатывает запросы по userName, id и all
   .post(userControllers.postAddOne)
   .put(userControllers.updateOne)
   .delete(userControllers.deleteOne);
 
-app.post('/auth', userControllers.auth); // один роут для входа и выхода
-
 app.route('/notes')
   .get(notesControllers.get)
   .post(notesControllers.save)
+  .put(notesControllers.findByIdAndUpdate)
   .delete(notesControllers.delete);
 
 db.connect((err) => {

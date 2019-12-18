@@ -18,5 +18,9 @@ exports.findById = (id, callBack) => {
 }
 
 exports.deleteOne = (id, callBack) => {
-  Note.deleteOne({_id: id}, result => callBack(result));
+  Note.deleteOne({_id: id}, (result, err) => callBack(result, err));
+}
+
+exports.findByIdAndUpdate = (id, data, callBack) => {
+  Note.findByIdAndUpdate({_id: id}, data, (result, err) => callBack(result, err));
 }

@@ -48,24 +48,46 @@ exports.delete = (req, res) => {
   const {
     id
   } = req.query;
-
-  notes.findById(id, (err, result) => {
+  notes.deleteOne(id, (err, result) => {
     if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    if (!result.length) {
-      res.status(404);
-      return res.send('Запись не найдена!');
+      res.status(500);
+      return res.send('Запись не удалина!');
     }
 
-    notes.deleteOne(result[0]._id, (result) => {
-      if (result) {
-        res.status(404);
-        res.send('Запись не удалина!');
-      }
+    if (result.deletedCount) {
       res.status(200);
       return res.send('Запись удалина!');
-    });
+    }
+    res.status(404);
+    res.send('Запись не удалина!');
+  });
+}
+
+exports.findByIdAndUpdate = (req, res) => {
+  const {
+    id
+  } = req.query;
+  const {
+    text,
+    title
+  } = req.body;
+
+  if (!id || !text || !title) {
+    res.status(400);
+    return res.send('Не хватает данных!');
+  }
+
+  const data = {
+    text,
+    title
+  };
+
+  notes.findByIdAndUpdate(id, data, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.send(err);
+    }
+    res.status = 200;
+    res.send("Запись успешно обновлен!")
   });
 }
