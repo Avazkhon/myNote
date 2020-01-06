@@ -5,7 +5,7 @@ const passwords = require('../password');
 
 const uri = `mongodb+srv://Avazkhon:${passwords.passwordMongoDB}@cluster0-sgdif.mongodb.net/myNote?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useUnifiedTopology: true });
-
+mongoose.set('useFindAndModify', false);
 async function connect(done) {
   await mongoose.connect(uri, {
     useNewUrlParser: true,
