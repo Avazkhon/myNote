@@ -42,10 +42,12 @@ exports.delete = (req, res) => {
   const {
     id
   } = req.query;
-  notes.deleteOne(id, (err, result) => {
+  req.session.user.id
+  const data = { id, author: req.session.user.id };
+  notes.deleteOne(data, (err, result) => {
     if (err) {
       res.status(500);
-      return res.send('Запись не удалина!');
+      return res.send('Запись не удалина!', err);
     }
 
     if (result.deletedCount) {
@@ -70,7 +72,7 @@ exports.findByIdAndUpdate = (req, res) => {
   const data = {
     text,
     title,
-    author: author || req.session.id,
+    author: author || req.session.user.id,
   };
 
   notes.findByIdAndUpdate(id, data, (err, result) => {
