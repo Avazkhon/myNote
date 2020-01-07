@@ -15,9 +15,8 @@ exports.all = (callBack) => {
   Note.find({}, (err, result) => callBack(err, result));
 }
 
-exports.getOneById = (id, callback) => {
-  db.get().collection('Users')
-  .findOne({ _id: ObjectID(id)}, (err, result) => callback(err, result))
+exports.getOneById = (id, callBack) => {
+  Note.find({_id: id}, (err, result) => callBack(err, result));
 }
 
 exports.getOneByUserName = (userName, callback) => {
