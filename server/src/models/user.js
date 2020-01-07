@@ -8,25 +8,25 @@ const Note = mongoose.model('Users', schema.userSchema);
 
 exports.postAddOne = (data, callBack) => {
   const note = new Note(data);
-  note.save((err, result) => callBack(err, result));
+  note.save(callBack);
 }
 
 exports.all = (callBack) => {
-  Note.find({}, (err, result) => callBack(err, result));
+  Note.find({}, callBack);
 }
 
 exports.getOneById = (id, callBack) => {
-  Note.find({_id: id}, (err, result) => callBack(err, result));
+  Note.find({_id: id}, callBack);
 }
 
 exports.getOneByUserName = (userName, callBack) => {
-  Note.find({userName: userName}, (err, result) => callBack(err, result));
+  Note.find({userName: userName}, callBack);
 }
 
 exports.updateOne = (id, data, callBack) => {
-  Note.findByIdAndUpdate({_id: id}, data, (err, result) => callBack(err, result));
+  Note.findByIdAndUpdate({_id: id}, data, callBack);
 }
 
 exports.deleteOne = (id, callBack) => {
-  Note.deleteOne({_id: id}, (result, err) => callBack(result, err));
+  Note.deleteOne({_id: id}, callBack);
 }
