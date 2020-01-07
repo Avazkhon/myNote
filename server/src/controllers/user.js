@@ -14,43 +14,22 @@ exports.getUser = (req, res) => {
 }
 
 exports.postAddOne = (req, res) => {
-  const { userName, password, isAdmin } = req.body;
-  const user = { userName, password, isAdmin };
+  const { email, userName, password, isAdmin } = req.body;
+  const user = { email, userName, password, isAdmin };
 
-  if (!userName || !password) {
-    res.status(400);
-    return res.send('нет данных')
-  }
-
-  userModels.getOneByUserName(
-    userName,
+  userModels.postAddOne(
+    user,
     (err, result) => {
       if (err) {
         console.log(err);
-        return res.sendStatus(500);
+        res.status(500);
+        return res.send(err);
       }
 
-      if (result) {
-        res.status = 401;
-        return res.send('Пользователь не может быть зарегистрирован!')
-      }
-
-      userModels.postAddOne(
-        user,
-        (err, result) => {
-          if (err) {
-            console.log(err);
-            return res.sendStatus(500);
-          }
-
-          res.status = 201;
-          res.send('Пользователь успешно зарегистрирован!')
-        }
-      );
-
+      res.status = 201;
+      res.send('Пользователь успешно зарегистрирован!')
     }
   );
-
 }
 
 exports.updateOne = (req, res) => {

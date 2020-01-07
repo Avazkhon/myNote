@@ -17,3 +17,14 @@ exports.noteSchema = new Schema(
   },
   { collection: 'Notes' }
 );
+
+exports.userSchema = new Schema(
+  {
+    userName: { type: String, required: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    isAdmin: { type: Boolean },
+    notesList: [{ idNote: mongoose.ObjectId }]
+  },
+  { collection: 'Users' }
+);
