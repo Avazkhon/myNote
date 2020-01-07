@@ -15,7 +15,11 @@ exports.getUser = (req, res) => {
 
 exports.postAddOne = (req, res) => {
   const { email, userName, password, isAdmin } = req.body;
-  const user = { email, userName, password, isAdmin };
+  const user = { email, userName, password, isAdmin: false };
+
+  if (req.session.user && req.session.user.isAdmin) {
+    user.isAdmin = isAdmin || false;
+  }
 
   userModels.postAddOne(
     user,
@@ -90,8 +94,7 @@ exports.auth = (req, res) => {
       res.status(500);
       return res.send(err);
     }
-    console.log(req.body);
-    console.log(result);
+
     if (result
       && result.email === email
       && result.password === password
