@@ -3,10 +3,11 @@ const Schema = mongoose.Schema;
 
 exports.noteSchema = new Schema(
   {
-    title: String,
-    text: String,
+    title: { type: String, required: true },
+    text: { type: String, required: true },
     createDate: { type: Date, default: Date.now },
     activeChapter: String,
+    author: { type: String, required: true },
     chapters: [
       {
         title: String,

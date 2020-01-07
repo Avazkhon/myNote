@@ -1,36 +1,35 @@
-const db = require('../db');
 const ObjectID = require('mongodb').ObjectID;
 
 const mongoose = require('mongoose');
 const schema = require('./schema');
 
-const Note = mongoose.model('Users', schema.userSchema);
+const User = mongoose.model('Users', schema.userSchema);
 
 exports.postAddOne = (data, callBack) => {
-  const note = new Note(data);
+  const note = new User(data);
   note.save(callBack);
 }
 
 exports.all = (callBack) => {
-  Note.find({}, callBack);
+  User.find({}, callBack);
 }
 
 exports.getOneById = (id, callBack) => {
-  Note.find({_id: id}, callBack);
+  User.find({_id: id}, callBack);
 }
 
 exports.getOneByUserName = (userName, callBack) => {
-  Note.findOne({userName: userName}, callBack);
+  User.findOne({userName: userName}, callBack);
 }
 
 exports.getOneByUserEmail = (email, callBack) => {
-  Note.findOne({ email }, callBack);
+  User.findOne({ email }, callBack);
 }
 
 exports.updateOne = (id, data, callBack) => {
-  Note.findByIdAndUpdate({_id: id}, data, callBack);
+  User.findByIdAndUpdate({_id: id}, data, callBack);
 }
 
 exports.deleteOne = (id, callBack) => {
-  Note.deleteOne({_id: id}, callBack);
+  User.deleteOne({_id: id}, callBack);
 }

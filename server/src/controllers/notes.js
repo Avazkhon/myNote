@@ -3,30 +3,24 @@ const mongoose = require('mongoose');
 const notes = require('../models/notes');
 
 exports.save = (req, res) => {
-  const {
-    title,
-    text,
-  } = req.body;
-  if (!title && !text) {
-    res.status = 400;
-    return res.send('Не достаточно небходимых данных!');
+  if (!req.body.author) {
+    req.body.author = req.session.user.id;
   }
   notes.save(req.body, (err, result) => {
     if (err) {
       console.log(err);
-      return res.sendStatus(500);
+      res.status(500);
+      return res.send(err);
     }
     res.send(result);
   })
 }
 
 exports.get = (req, res) => {
-  const {
-    id
-  } = req.query;
-
+  const { id } = req.query;
+  const author = req.session.user.id;
   if (id) {
-    return notes.findById(id, (err, result) => {
+    return notes.findById({ id, author }, (err, result) => {
       if (err) {
         console.log(err);
         return res.sendStatus(500);
@@ -35,7 +29,7 @@ exports.get = (req, res) => {
     });
   }
 
-  notes.findAll({}, (err, result) => {
+  notes.findAll(author, (err, result) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
@@ -69,17 +63,14 @@ exports.findByIdAndUpdate = (req, res) => {
   } = req.query;
   const {
     text,
-    title
+    title,
+    author
   } = req.body;
-
-  if (!id || !text || !title) {
-    res.status(400);
-    return res.send('Не хватает данных!');
-  }
 
   const data = {
     text,
-    title
+    title,
+    author: author || req.session.id,
   };
 
   notes.findByIdAndUpdate(id, data, (err, result) => {

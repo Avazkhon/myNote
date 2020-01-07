@@ -9,12 +9,12 @@ exports.save = (data, callBack) => {
   note.save(callBack);
 }
 
-exports.findAll = (data, callBack) => {
-  Note.find({}, callBack);
+exports.findAll = (author, callBack) => {
+  Note.find({ author }, callBack);
 }
 
-exports.findById = (id, callBack) => {
-  Note.find({_id: id}, callBack);
+exports.findById = (data, callBack) => {
+  Note.findOne({ _id: data.id, author: data.author }, callBack);
 }
 
 exports.deleteOne = (id, callBack) => {
