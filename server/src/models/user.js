@@ -11,13 +11,8 @@ exports.postAddOne = (data, callBack) => {
   note.save((err, result) => callBack(err, result));
 }
 
-exports.all = (callback) => {
-  db.get()
-  .collection("Users")
-  .find()
-  .toArray(
-    (err, result) => callback(err, result)
-  );
+exports.all = (callBack) => {
+  Note.find({}, (err, result) => callBack(err, result));
 }
 
 exports.getOneById = (id, callback) => {
