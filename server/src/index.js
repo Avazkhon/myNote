@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 
 const db = require('./db');
@@ -20,7 +22,8 @@ app.use(session({
   secret: 'my notes for all and every',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 60000 },
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
 }));
 
 app.use('/notes', function (req, res, next) {
@@ -29,7 +32,7 @@ app.use('/notes', function (req, res, next) {
   } else {
     console.log('Пользователь не авторизован!');
     res.status(401);
-    res.send('Пользователь не авторизован!')
+    res.send('Пользователь не авторизован!');
   }
 });
 
