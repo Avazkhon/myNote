@@ -9,7 +9,8 @@ mongoose.set('useFindAndModify', false);
 async function connect(done) {
   await mongoose.connect(uri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true,
   }).then(() => {
       var db = mongoose.connection;
       db.on('error', console.error.bind(console, 'connection error:'));
@@ -17,23 +18,25 @@ async function connect(done) {
   });
 }
 
-const state = {
-  db: null,
-};
+exports.connect = connect;
 
-function connectMonoDb (done) {
-  client.connect(err => {
-    if (err) {
-      done(err);
-      return null;
-    }
-    const collection = client.db("myNote");
-    state.db = collection;
-  });
-}
-
-exports.get = () => state.db;
-
-exports.connect = function(done) {
-  connectMonoDb(connect(done))
-}
+// const state = {
+//   db: null,
+// };
+//
+// function connectMonoDb (done) {
+//   client.connect(err => {
+//     if (err) {
+//       done(err);
+//       return null;
+//     }
+//     const collection = client.db("myNote");
+//     state.db = collection;
+//   });
+// }
+//
+// exports.get = () => state.db;
+//
+// exports.connect = function(done) {
+//   connectMonoDb(connect(done))
+// }
