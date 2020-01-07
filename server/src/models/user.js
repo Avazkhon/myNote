@@ -20,7 +20,11 @@ exports.getOneById = (id, callBack) => {
 }
 
 exports.getOneByUserName = (userName, callBack) => {
-  Note.find({userName: userName}, callBack);
+  Note.findOne({userName: userName}, callBack);
+}
+
+exports.getOneByUserEmail = (email, callBack) => {
+  Note.findOne({ email }, callBack);
 }
 
 exports.updateOne = (id, data, callBack) => {

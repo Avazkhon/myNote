@@ -33,9 +33,9 @@ exports.postAddOne = (req, res) => {
 }
 
 exports.updateOne = (req, res) => {
-  const { userName, password, isAdmin } = req.body;
   const { id } = req.query;
-  const user = { userName, password, isAdmin };
+  const { email, userName, password, isAdmin } = req.body;
+  const user = { email, userName, password, isAdmin };
   if (!id) {
     res.status = 400;
     return res.send('Не хватает данных для изменения!')
@@ -43,8 +43,9 @@ exports.updateOne = (req, res) => {
 
   userModels.updateOne(id, user, (err, result) => {
     if (err) {
-     console.log(err);
-     return res.sendStatus(500);
+      console.log(err);
+      res.status(500);
+      return res.send(err);
     }
    res.status = 200;
    res.send('Пользователь успешно обновлен!')
@@ -57,7 +58,8 @@ exports.deleteOne = (req, res) => {
   userModels.deleteOne(id, (err, result) => {
     if (err) {
       console.log(err);
-      return res.sendStatus(500)
+      res.status(500);
+      return res.send(err);
     }
 
     if (!result.deletedCount) {
@@ -70,9 +72,8 @@ exports.deleteOne = (req, res) => {
 }
 
 exports.auth = (req, res) => {
-  let client = req.session.user;
-  const { userName, password } = req.body;
-  if (!userName || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     res.status = 400;
     return res.send('Заполните данные!');
   }
@@ -83,13 +84,16 @@ exports.auth = (req, res) => {
     return res.send('Пользователь успешно вышел из системы!')
   }
 
-  userModels.getOneByUserName(userName, (err, result) => {
+  userModels.getOneByUserEmail(email, (err, result) => {
     if (err) {
       console.log(err);
-      return res.sendStatus(500)
+      res.status(500);
+      return res.send(err);
     }
+    console.log(req.body);
+    console.log(result);
     if (result
-      && result.userName === userName
+      && result.email === email
       && result.password === password
     ) {
       res.status = 201;
@@ -97,6 +101,6 @@ exports.auth = (req, res) => {
       return res.send('Пользователь успешно авторизован!');
     }
     res.status = 401;
-    return res.send('Не правельный имя или пароль!');
+    return res.send('Не правельный email или пароль!');
   });
 }
