@@ -39,20 +39,48 @@ exports.postAddOne = (req, res) => {
 exports.updateOne = (req, res) => {
   const { id } = req.query;
   const { email, userName, password, isAdmin } = req.body;
-  const user = { email, userName, password, isAdmin };
+  const user = { email, userName, password, isAdmin: false };
+
+  if (!req.session.user) {
+    res.status = 403;
+    return res.send('Нет прав!');
+  }
+
+  if (req.session.user.isAdmin) {
+    user.isAdmin = isAdmin || false;
+  }
+
   if (!id) {
     res.status = 400;
     return res.send('Не хватает данных для изменения!')
   }
 
-  userModels.updateOne(id, user, (err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(500);
-      return res.send(err);
+  let promise = new Promise((resolve, reject) => {
+    userModels.getOneById(id, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(500);
+        return res.send(err);
+      }
+      resolve(result);
+    });
+  });
+
+  promise.then((result) => {
+    if (result && result.length) {
+      userModels.updateOne(id, user, (err, result) => {
+        if (err) {
+          console.log(err);
+          res.status(500);
+          return res.send(err);
+        }
+       res.status = 200;
+       return res.send('Пользователь успешно обновлен!');
+      })
+    } else {
+      res.status = 400;
+      res.send('Пользователь не найден!');
     }
-   res.status = 200;
-   res.send('Пользователь успешно обновлен!')
   })
 }
 
