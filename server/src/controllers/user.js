@@ -128,7 +128,7 @@ exports.auth = (req, res) => {
       && result.password === password
     ) {
       res.status = 201;
-      req.session.user = result;
+      req.session.user = {email, password, isAdmin: result.isAdmin, id: result._id};
       return res.send('Пользователь успешно авторизован!');
     }
     res.status = 401;
