@@ -11,17 +11,27 @@ const notesControllers = require('./controllers/notes');
 const app = express();
 const router = express.Router()
 
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
 app.use(session({
-  secret: 'keyboard cat',
+  secret: 'my notes for all and every',
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 60000 }
 }));
+
+app.use('/notes', function (req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    console.log('Пользователь не авторизован!');
+    res.status(401);
+    res.send('Пользователь не авторизован!')
+  }
+});
 
 app.post('/auth', userControllers.auth); // один роут для входа и выхода
 
