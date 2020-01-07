@@ -19,24 +19,14 @@ exports.getOneById = (id, callBack) => {
   Note.find({_id: id}, (err, result) => callBack(err, result));
 }
 
-exports.getOneByUserName = (userName, callback) => {
-  db.get().collection('Users')
-  .findOne({ userName }, (err, result) => callback(err, result))
+exports.getOneByUserName = (userName, callBack) => {
+  Note.find({userName: userName}, (err, result) => callBack(err, result));
 }
 
-exports.updateOne = (id , user, callback) => {
-  db.get().collection('Users')
-  .updateOne(
-    { _id: ObjectID(id) },
-    { $set: user },
-    (err, result) => callback(err, result)
-  );
+exports.updateOne = (id, data, callBack) => {
+  Note.findByIdAndUpdate({_id: id}, data, (err, result) => callBack(err, result));
 }
 
-exports.deleteOne = (id, callback) => {
-  db.get().collection('Users')
-  .deleteOne(
-    { _id: ObjectID(id) },
-    (err, result) => callback(err, result)
-  );
+exports.deleteOne = (id, callBack) => {
+  Note.deleteOne({_id: id}, (result, err) => callBack(result, err));
 }
