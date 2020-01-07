@@ -9,6 +9,7 @@ const db = require('./db');
 
 const userControllers = require('./controllers/user');
 const notesControllers = require('./controllers/notes');
+const passwords = require('../password');
 
 const app = express();
 const router = express.Router()
@@ -19,7 +20,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(session({
-  secret: 'my notes for all and every',
+  secret: passwords.secret,
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 60000 },
