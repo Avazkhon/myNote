@@ -6,19 +6,19 @@ const Note = mongoose.model('Note', schema.noteSchema);
 
 exports.save = (data, callBack) => {
   const note = new Note(data);
-  note.save((err, result) => callBack(err, result));
+  note.save(callBack);
 }
 
 exports.findAll = (data, callBack) => {
-  Note.find({}, (err, result) => callBack(err, result));
+  Note.find({}, callBack);
 }
 
 exports.findById = (id, callBack) => {
-  Note.find({_id: id}, (err, result) => callBack(err, result));
+  Note.find({_id: id}, callBack);
 }
 
 exports.deleteOne = (id, callBack) => {
-  Note.deleteOne({_id: id}, (result, err) => callBack(result, err));
+  Note.deleteOne({_id: id}, callBack);
 }
 
 exports.findByIdAndUpdate = (id, data, callBack) => {
