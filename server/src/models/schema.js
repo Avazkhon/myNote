@@ -7,7 +7,7 @@ exports.noteSchema = new Schema(
     text: { type: String, required: true },
     createDate: { type: Date, default: Date.now },
     activeChapter: String,
-    author: { type: String, required: true },
+    author: { type: mongoose.ObjectId, required: true },
     chapters: [
       {
         title: String,

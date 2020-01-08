@@ -12,7 +12,7 @@ const notesControllers = require('./controllers/notes');
 const passwords = require('../password');
 
 const app = express();
-const router = express.Router()
+const router = express.Router();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
