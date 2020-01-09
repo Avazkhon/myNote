@@ -16,7 +16,7 @@ ul li {
 
 .setting-gruop {
   display: grid;
-  grid-template-columns: 1fr 1fr 10fr;
+  grid-template-columns: 1fr 1fr 9fr 1fr;
 }
 
 .note_title {

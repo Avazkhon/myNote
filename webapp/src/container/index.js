@@ -6,6 +6,7 @@ import {
 } from 'utils';
 
 import SearchInput from 'widget/SearchInput';
+import ModalWindows from 'widget/ModalWindows';
 
 
 import 'cssStyle/main.css';
@@ -143,10 +144,19 @@ class Main extends Component {
 								setingArr={setingArr}
 							/>
 						}
+						<div></div>
+						<ModalWindows
+							title="Welcome"
+							titleButton="Login"
+						>
+							<div>modal</div>
+						</ModalWindows>
+
 					</div>
 					{activeNote.id &&
 						<NavMenu />
 					}
+
 					<div className="note-canvas">
 						{activeNote.id &&
 							<>
