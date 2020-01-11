@@ -15,6 +15,7 @@ import 'cssStyle/main_element.css';
 import Setting  from 'components/setting';
 import SettingAll from 'components/SettingAll';
 import NavMenu from 'components/navMenu';
+import Login from 'components/Login';
 
 import {
 	saveNote,
@@ -149,7 +150,7 @@ class Main extends Component {
 							title="Welcome"
 							titleButton="Login"
 						>
-							<div>modal</div>
+							<Login />
 						</ModalWindows>
 
 					</div>

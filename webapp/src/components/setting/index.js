@@ -146,7 +146,8 @@ class Setting extends Component {
 				ref={this.settingRef}
 				name="main-setting"
 				className="main-note_setting"
-				onClick={this.handleCloseSettingShow}>
+				onClick={this.handleCloseSettingShow}
+			>
         <input
   				className="main-note_setting-show btn"
   				type="button"

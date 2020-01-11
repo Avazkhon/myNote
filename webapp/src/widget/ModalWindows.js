@@ -14,7 +14,8 @@ const customStyles = {
 };
 
 
-// Modal.setAppElement('#yourAppElement')
+// Modal.setAppElement()
+// Modal.setAppElement('#app-base');
 
 class ModalWindows extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class ModalWindows extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    Modal.setAppElement('body');
   }
 
   openModal() {
@@ -70,5 +72,5 @@ class ModalWindows extends React.Component {
     );
   }
 }
-
+// Modal.setAppElement('#app-base');
 export default ModalWindows;
